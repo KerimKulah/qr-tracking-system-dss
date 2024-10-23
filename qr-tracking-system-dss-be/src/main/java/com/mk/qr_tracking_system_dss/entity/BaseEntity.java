@@ -11,6 +11,6 @@ import lombok.Data;
 public abstract class BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Identify yapılmazsa _seq tabloları oluşturuyor.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Identity yapılmazsa _seq tabloları oluşturuyor.
     private Long id;
 }
