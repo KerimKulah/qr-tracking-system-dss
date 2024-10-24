@@ -3,10 +3,15 @@ package com.mk.qr_tracking_system_dss.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Package extends  BaseEntity{
 

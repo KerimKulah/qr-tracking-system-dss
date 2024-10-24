@@ -2,12 +2,16 @@ package com.mk.qr_tracking_system_dss.entity;
 
 import com.mk.qr_tracking_system_dss.enums.MovementType;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-@Data
 public class Movement extends BaseEntity{
 
     @Temporal(TemporalType.TIMESTAMP)
