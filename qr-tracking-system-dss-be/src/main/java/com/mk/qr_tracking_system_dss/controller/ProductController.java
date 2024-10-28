@@ -51,7 +51,7 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    @GetMapping
+    @GetMapping //Bu direkt /products isteğinde çalışır ve tüm productsları çağırır.
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
