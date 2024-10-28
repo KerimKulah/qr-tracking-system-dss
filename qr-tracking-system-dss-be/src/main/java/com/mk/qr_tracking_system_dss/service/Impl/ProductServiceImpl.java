@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public void createProduct(Product product) {
+    public void addProduct(Product product) {
         try {
             productRepository.save(product);
         } catch (DataIntegrityViolationException e) {
@@ -37,14 +37,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductByName(String name) {
-        return productRepository.findByProductName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Bu isimle ürün bulunamadı."));
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> searchProducts(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return List.of(); // Boş bir liste döndür
+        }
+        List<Product> products = productRepository.findByProductNameContainingIgnoreCase(name);
+        if (products.isEmpty()) {
+            throw new IllegalArgumentException("Arama kriterine uygun hiçbir ürün bulunamadı.");
+        }
+        return products;
     }
 
     @Override

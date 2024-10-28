@@ -1,9 +1,76 @@
 package com.mk.qr_tracking_system_dss.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.mk.qr_tracking_system_dss.entity.Product;
+import com.mk.qr_tracking_system_dss.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
+
+    @Autowired
+    private ProductService productService;
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+        try {
+            productService.addProduct(product);
+            return ResponseEntity.ok("Ürün başarıyla sisteme eklendi.");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("Bu isimle zaten bir ürün mevcut.");
+        }
+    }
+
+    @PostMapping("/addAll") //Toplu ürün ekleme
+    public ResponseEntity<String> addProducts(@RequestBody List<Product> products) {
+        for (Product product : products) {
+            try {
+                productService.addProduct(product);
+            } catch (DataIntegrityViolationException e) {
+                return ResponseEntity.badRequest()
+                        .body("Aynı isimli ürün var: " + product.getProductName());
+            }
+        }
+        return ResponseEntity.ok("Tüm ürünler başarıyla sisteme eklendi.");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+        productService.deleteProductById(id);
+        return ResponseEntity.ok("Ürün başarıyla silindi.");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/search")  // /products/search?name=Sample şeklinde çağrılır.
+    public List<Product> searchProducts(@RequestParam String name) {
+        return productService.searchProducts(name);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateProduct(@RequestBody Product product) {
+        productService.updateProduct(product);
+        return ResponseEntity.ok("Ürün başarıyla güncellendi.");
+    }
+
+    @GetMapping("/{productId}/packages")
+    public ResponseEntity<List<Package>> getProductPackagesById(@PathVariable Long productId) {
+        List<Package> packages = productService.getProductPackagesById(productId);
+        return ResponseEntity.ok(packages);
+    }
 }
