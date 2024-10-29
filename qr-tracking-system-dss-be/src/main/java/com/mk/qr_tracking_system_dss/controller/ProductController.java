@@ -2,11 +2,11 @@ package com.mk.qr_tracking_system_dss.controller;
 
 import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -17,7 +17,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+    public ResponseEntity<String> addProduct(@Valid @RequestBody Product product) {
         try {
             productService.addProduct(product);
             return ResponseEntity.ok("Ürün başarıyla sisteme eklendi.");
@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping("/addAll") //Toplu ürün ekleme
-    public ResponseEntity<String> addProducts(@RequestBody List<Product> products) {
+    public ResponseEntity<String> addProducts(@Valid @RequestBody List<Product> products) {
         for (Product product : products) {
             try {
                 productService.addProduct(product);
