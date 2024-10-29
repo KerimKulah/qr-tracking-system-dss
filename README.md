@@ -3,6 +3,7 @@
 ## 1. Proje Tanımı
 QR Kodlu Ürün Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
 Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgilerine erişim sağlanabilmesi, stokların güncellenmesi ve web üzerinden ürünlerin yönetilmesi üzerine kuruludur.
+**Not:** Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
 
 ## 2. Hedef Kullanıcılar
 - **E-Ticaret Depoları**: Online siparişleri hızlı bir şekilde karşılamak isteyen firmalar.
@@ -20,8 +21,7 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Raf Yönetimi**: Ürünlerin konumları ve raf yerleşimleri takip edilir.
 - **Raporlama ve Analiz**: Personel performansı ve ürün hareketleri izlenir.
 
-## 4. Proje Geliştirme Süreci
-Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
+## 4. İş Süreci
 
 ### 4.1 Ürün Tedarik Süreci
 - **Tedarik ve Sipariş**: Tedarikçilerden ürün siparişleri gerçekleştirilir.
