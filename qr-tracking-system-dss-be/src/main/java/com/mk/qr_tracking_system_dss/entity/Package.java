@@ -6,7 +6,6 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.Date;
 
 @Getter
@@ -28,3 +27,4 @@ public class Package extends  BaseEntity{
     @JoinColumn(name = "rack_id")
     private Rack rack;
 }
+
