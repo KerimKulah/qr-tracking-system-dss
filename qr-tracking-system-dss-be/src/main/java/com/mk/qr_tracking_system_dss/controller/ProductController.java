@@ -1,5 +1,4 @@
 package com.mk.qr_tracking_system_dss.controller;
-
 import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.service.ProductService;
 import jakarta.validation.Valid;

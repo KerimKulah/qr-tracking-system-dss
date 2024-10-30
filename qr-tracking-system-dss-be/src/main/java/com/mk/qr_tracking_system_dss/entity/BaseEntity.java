@@ -1,5 +1,4 @@
 package com.mk.qr_tracking_system_dss.entity;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;

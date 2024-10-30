@@ -1,5 +1,4 @@
 package com.mk.qr_tracking_system_dss.entity;
-
 import com.mk.qr_tracking_system_dss.enums.MovementType;
 import jakarta.persistence.*;
 import lombok.Getter;

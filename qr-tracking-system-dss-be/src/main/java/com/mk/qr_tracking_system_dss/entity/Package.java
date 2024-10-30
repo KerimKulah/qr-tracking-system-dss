@@ -1,5 +1,4 @@
 package com.mk.qr_tracking_system_dss.entity;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
