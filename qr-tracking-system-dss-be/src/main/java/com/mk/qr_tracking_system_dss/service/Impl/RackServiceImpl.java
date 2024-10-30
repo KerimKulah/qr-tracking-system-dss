@@ -1,6 +1,8 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 
+import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.entity.Rack;
+import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.RackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class RackServiceImpl implements RackService {
 
     @Autowired
     private RackRepository rackRepository;
+
+    @Autowired
+    private PackageRepository packageRepository;
 
     @Override
     public void addRack(Rack rack) {
@@ -32,16 +37,32 @@ public class RackServiceImpl implements RackService {
     }
 
     @Override
+    public List<Rack> getAllRacks() {
+        return rackRepository.findAll();
+    }
+
+    @Override
+    public Rack getRackById(Long id) {
+        return rackRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile raf bulunamadı."));
+    }
+
+    @Override
     public List<Package> getAllPackagesInRack(Long rackId) {
-        return List.of();
+        try {
+            return packageRepository.findByRackId(rackId);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("Bu ID ile raf bulunamadı.");
+        }
     }
 
     @Override
     public void updateCurrentWeight(Long rackId) {
+        // Bakılacak
     }
 
     @Override
     public List<Rack> getAvailableRacks(double packageWeight) {
-        return List.of();
+        return List.of(); // Bakılacak
     }
 }

@@ -4,8 +4,7 @@ import com.mk.qr_tracking_system_dss.entity.Product;
 import java.util.List;
 
 
-public interface ProductService
-{
+public interface ProductService {
     void addProduct(Product product); // Ürün yaratma
     void deleteProductById(Long id); // Ürün silme
     Product getProductById(Long id); // ID ile ürün getirir
