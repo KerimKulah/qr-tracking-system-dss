@@ -1,3 +1,4 @@
+/*
 package com.mk.qr_tracking_system_dss.service;
 import com.mk.qr_tracking_system_dss.entity.Package;
 
@@ -10,3 +11,4 @@ public interface PackageService {
     List<Package> getAllPackages(); // Tüm paketleri getirir
     Package getPackageById(Long id); // ID ile paket getirir
 }
+*/

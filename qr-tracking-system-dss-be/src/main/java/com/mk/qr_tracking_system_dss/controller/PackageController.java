@@ -1,3 +1,4 @@
+/*
 package com.mk.qr_tracking_system_dss.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,3 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/packages")
 public class PackageController {
 }
+*/

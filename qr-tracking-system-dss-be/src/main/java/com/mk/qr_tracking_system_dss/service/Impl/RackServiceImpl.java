@@ -1,3 +1,4 @@
+/*
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.entity.Rack;
@@ -65,3 +66,4 @@ public class RackServiceImpl implements RackService {
         return List.of(); // Bakılacak
     }
 }
+*/

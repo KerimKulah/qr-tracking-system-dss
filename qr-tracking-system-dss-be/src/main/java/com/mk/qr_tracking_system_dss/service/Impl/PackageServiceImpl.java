@@ -1,3 +1,4 @@
+/*
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
@@ -50,3 +51,4 @@ public class PackageServiceImpl implements PackageService {
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile paket bulunamadı."));
     }
 }
+*/

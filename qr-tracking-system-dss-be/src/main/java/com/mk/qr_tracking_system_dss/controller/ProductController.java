@@ -3,7 +3,6 @@ import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,24 +16,13 @@ public class ProductController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addProduct(@Valid @RequestBody Product product) {
-        try {
-            productService.addProduct(product);
-            return ResponseEntity.ok("Ürün başarıyla sisteme eklendi.");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("Bu isimle zaten bir ürün mevcut.");
-        }
+        productService.addProduct(product);
+        return ResponseEntity.ok("Ürün başarıyla sisteme eklendi.");
     }
 
     @PostMapping("/addAll") //Toplu ürün ekleme
     public ResponseEntity<String> addProducts(@Valid @RequestBody List<Product> products) {
-        for (Product product : products) {
-            try {
-                productService.addProduct(product);
-            } catch (DataIntegrityViolationException e) {
-                return ResponseEntity.badRequest()
-                        .body("Aynı isimli ürün var: " + product.getProductName());
-            }
-        }
+        products.forEach(product -> productService.addProduct(product));
         return ResponseEntity.ok("Tüm ürünler başarıyla sisteme eklendi.");
     }
 
