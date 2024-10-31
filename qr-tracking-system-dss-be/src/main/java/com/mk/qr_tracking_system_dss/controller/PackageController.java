@@ -50,4 +50,10 @@ public class PackageController {
         return ResponseEntity.ok("Paket başarıyla güncellendi.");
     }
 
+    @PutMapping("/changeRack/{packageId}/{newRackId}")
+    public ResponseEntity<String> changeRack(@PathVariable Long packageId, @PathVariable Long newRackId) {
+        packageService.changePackageRack(packageId, newRackId);
+        return ResponseEntity.ok("Paket rafı başarıyla değiştirildi.");
+    }
+
 }
