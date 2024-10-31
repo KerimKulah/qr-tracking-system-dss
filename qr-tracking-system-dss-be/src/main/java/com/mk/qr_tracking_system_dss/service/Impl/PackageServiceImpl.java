@@ -82,9 +82,9 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public void updatePackage(Package pkg) {
+    public void updatePackage(Package pkg, Long packageId) {
         // Güncellenmek istenen paketin mevcut olup olmadığını kontrol et
-        Package existingPackage = packageRepository.findById(pkg.getId())
+        Package existingPackage = packageRepository.findById(packageId)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile paket bulunamadı."));
 
         // Ürün kontrolü
@@ -95,16 +95,22 @@ public class PackageServiceImpl implements PackageService {
         Rack rack = rackRepository.findById(pkg.getRack().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile raf bulunamadı."));
 
-        // Rafın boş yeri kontrol edilir
-        double pckWeight = product.getProductWeight() * pkg.getQuantityOfProduct();
-        if (pckWeight > rack.getFreeWeight()) {
-            throw new IllegalArgumentException("Rafın ağırlığı yetersiz.");
+        // Paket ağırlığını hesapla
+        double newPackageWeight = product.getProductWeight() * pkg.getQuantityOfProduct();
+
+        // Rafın boş yerini kontrol et
+        double availableWeightAfterUpdate = rack.getMaxWeightCapacity() - rack.getCurrentWeight() + existingPackage.getPackageWeight();
+        if (newPackageWeight > availableWeightAfterUpdate) {
+            throw new IllegalArgumentException("Rafın ağırlık kapasitesi yetersiz, önce uygun bir rafa alınmalı.");
         }
 
-        // Paket ve Rafı güncelle
-        existingPackage.setPackageWeight(pckWeight);
+        // Paket bilgilerini güncelle
+        existingPackage.setQuantityOfProduct(pkg.getQuantityOfProduct());
+        existingPackage.setPackageWeight(newPackageWeight);
         existingPackage.setProduct(product);
         existingPackage.setRack(rack);
+
+        // Güncellemeleri kaydet
         packageRepository.save(existingPackage);
         rackService.updateCurrentWeight(rack.getId());
     }

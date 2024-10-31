@@ -67,9 +67,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(Product product, Long productId) {
-        if (!productRepository.existsById(productId)) {
-            throw new IllegalArgumentException("Bu ID ile ürün bulunamadı.");
-        }
+        // Ürünün mevcut olup olmadığını kontrol et
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
 
         // Ürünün herhangi bir pakette olup olmadığını kontrol et
         List<Package> packages = getProductPackagesById(productId);
@@ -77,8 +77,13 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Bu ürün paketlerde bulunduğu için güncellenemez.");
         }
 
-        // IDsi verilen ürünü güncelle
-        product.setId(productId);
-        productRepository.save(product);
+        // Güncellenmesi gereken alanları mevcut ürüne set et
+        existingProduct.setProductName(product.getProductName());
+        existingProduct.setProductWeight(product.getProductWeight());
+        existingProduct.setProductDescription(product.getProductDescription());
+        existingProduct.setProductCategory(product.getProductCategory());
+
+        // Değişiklikleri kaydet
+        productRepository.save(existingProduct);
     }
 }

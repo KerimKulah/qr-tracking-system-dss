@@ -6,4 +6,5 @@ import com.mk.qr_tracking_system_dss.entity.Package;
 public interface PackageRepository extends JpaRepository<Package, Long> {
     List<Package> findByRackId(Long rackId); // Raf ID'sine göre o raftaki paketleri getirir.
     List<Package> findByProductId(Long productId);
+    boolean existsByRackId(Long rackId);
 }

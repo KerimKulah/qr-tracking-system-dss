@@ -45,8 +45,8 @@ public class PackageController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updatePackage(@PathVariable Long id, @Valid @RequestBody Package pkg) {
-        packageService.updatePackage(pkg);
+    public ResponseEntity<String> updatePackage(@Valid @RequestBody Package pkg, @PathVariable Long id) {
+        packageService.updatePackage(pkg, id);
         return ResponseEntity.ok("Paket başarıyla güncellendi.");
     }
 
