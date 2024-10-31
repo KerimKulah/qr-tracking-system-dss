@@ -1,4 +1,3 @@
-/*
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.entity.Rack;
@@ -23,9 +22,10 @@ public class RackServiceImpl implements RackService {
     public void addRack(Rack rack) {
         try {
             rack.setCurrentWeight(0);
+            rack.setFreeWeight(rack.getMaxWeightCapacity()); // Başlangıçta free weight maxweightcapacity kadar olmalı
             rackRepository.save(rack);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Bu raf sistemde zaten mevcut.");
+            throw new IllegalArgumentException("Bu raf sistemde zaten mevcut."); // Locationa (A1 vs.) bakıyor
         }
     }
 
@@ -58,7 +58,23 @@ public class RackServiceImpl implements RackService {
 
     @Override
     public void updateCurrentWeight(Long rackId) {
-        // Bakılacak
+        // Rafı getir
+        Rack rack = rackRepository.findById(rackId)
+                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile raf bulunamadı."));
+
+        // Raf içindeki tüm paketleri getir
+        List<Package> packagesInRack = packageRepository.findByRackId(rackId);
+
+        // Paketlerin toplam ağırlığını hesapla
+        double totalWeight = packagesInRack.stream()
+                .mapToDouble(Package::getPackageWeight)
+                .sum();
+
+        // Rafın mevcut ağırlığını güncelle
+        rack.setCurrentWeight(totalWeight);
+
+        // Rafı kaydet
+        rackRepository.save(rack);
     }
 
     @Override
@@ -66,4 +82,3 @@ public class RackServiceImpl implements RackService {
         return List.of(); // Bakılacak
     }
 }
-*/

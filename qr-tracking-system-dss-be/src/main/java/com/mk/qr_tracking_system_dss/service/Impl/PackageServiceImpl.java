@@ -1,9 +1,12 @@
-/*
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Package;
+import com.mk.qr_tracking_system_dss.entity.Product;
+import com.mk.qr_tracking_system_dss.entity.Rack;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
+import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.PackageService;
+import com.mk.qr_tracking_system_dss.service.RackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,15 +18,30 @@ public class PackageServiceImpl implements PackageService {
     private PackageRepository packageRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private RackService rackService;
+    @Autowired
+    private RackRepository rackRepository;
 
     @Override
-    public void addPackage(Package pkg, Long productId) {
-        pkg.setProduct(productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı.")));
+    public void addPackage(Package pkg, Long productId, Long rackId) {
+        // Ürünün var olup olmadığını kontrol et
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
+
+        // Ürün ve paket bilgilerini ayarla
+        pkg.setProduct(product);
+        pkg.setPackageWeight(product.getProductWeight() * pkg.getQuantityOfProduct());
+
+        // Rafın uygun olup olmadığını kontrol et
+        Rack selectedRack = rackService.getRackById(rackId);
+        double freeWeight = selectedRack.getMaxWeightCapacity() - selectedRack.getCurrentWeight();
+        if (freeWeight < pkg.getPackageWeight()) {
+            throw new IllegalArgumentException("Seçilen raf bu paketi taşıyamaz.");
+        }
+        pkg.setRack(selectedRack);
         packageRepository.save(pkg);
-
-        // QR kod üretimi burada yapılacak
-
+        rackService.updateCurrentWeight(rackId);
     }
 
     @Override
@@ -51,4 +69,3 @@ public class PackageServiceImpl implements PackageService {
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile paket bulunamadı."));
     }
 }
-*/
