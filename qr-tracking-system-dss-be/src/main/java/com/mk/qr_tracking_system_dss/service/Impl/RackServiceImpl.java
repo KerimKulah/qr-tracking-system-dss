@@ -1,7 +1,9 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Package;
+import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.entity.Rack;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
+import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.RackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class RackServiceImpl implements RackService {
     @Autowired
     private PackageRepository packageRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     public void addRack(Rack rack) {
         try {
@@ -33,6 +38,13 @@ public class RackServiceImpl implements RackService {
     public void deleteRackById(Long id) {
         rackRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile raf bulunamadı."));
+
+        // Rafta paket olup olmadığını kontrol et
+        List<Package> packagesInRack = packageRepository.findByRackId(id);
+        if (!packagesInRack.isEmpty()) {
+            throw new IllegalArgumentException("Bu rafın içinde paketler var. Rafı silemezsiniz.");
+        }
+
         rackRepository.deleteById(id);
     }
 
@@ -82,7 +94,11 @@ public class RackServiceImpl implements RackService {
 
     // Paket ağırlığına göre uygun rafları getirir.
     @Override
-    public List<Rack> getAvailableRacks(Package pkg) {
-        return rackRepository.findByFreeWeightGreaterThanEqual(pkg.getPackageWeight());
+    public List<Rack> findSuitableRacks(Long productId, int quantityOfProduct) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        double packageWeight = product.getProductWeight() * quantityOfProduct;
+
+        return rackRepository.findByFreeWeightGreaterThanEqual(packageWeight);
     }
 }

@@ -12,5 +12,5 @@ public interface RackService {
     Rack getRackById(Long id); // ID ile raf getirir
     List<Package> getAllPackagesInRack(Long rackId); // ID ile Bir raftaki tüm paketleri getirir
     void updateCurrentWeight(Long rackId); // Rafın mevcut ağırlığını ve freeWeight günceller.
-    List<Rack> getAvailableRacks(Package pkg); // Paket oluştururken musait rafları getirmeye yarar.
+    List<Rack> findSuitableRacks(Long productId, int quantityOfProduct); // Ürün ve miktarına göre uygun rafları getirir.
 }
