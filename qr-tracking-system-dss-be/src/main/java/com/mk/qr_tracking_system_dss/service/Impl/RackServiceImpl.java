@@ -73,6 +73,9 @@ public class RackServiceImpl implements RackService {
         // Rafın mevcut ağırlığını güncelle
         rack.setCurrentWeight(totalWeight);
 
+        // Rafın freeWeightini güncelle
+        rack.setFreeWeight(rack.getMaxWeightCapacity() - totalWeight);
+
         // Rafı kaydet
         rackRepository.save(rack);
     }

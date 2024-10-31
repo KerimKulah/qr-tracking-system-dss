@@ -4,7 +4,6 @@ import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.entity.Rack;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
-import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.PackageService;
 import com.mk.qr_tracking_system_dss.service.RackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ public class PackageServiceImpl implements PackageService {
     private ProductRepository productRepository;
     @Autowired
     private RackService rackService;
-    @Autowired
-    private RackRepository rackRepository;
 
     @Override
     public void addPackage(Package pkg, Long productId, Long rackId) {
@@ -35,13 +32,15 @@ public class PackageServiceImpl implements PackageService {
 
         // Rafın uygun olup olmadığını kontrol et
         Rack selectedRack = rackService.getRackById(rackId);
-        double freeWeight = selectedRack.getMaxWeightCapacity() - selectedRack.getCurrentWeight();
-        if (freeWeight < pkg.getPackageWeight()) {
+        if (selectedRack.getFreeWeight() < pkg.getPackageWeight()) {
             throw new IllegalArgumentException("Seçilen raf bu paketi taşıyamaz.");
         }
         pkg.setRack(selectedRack);
         packageRepository.save(pkg);
         rackService.updateCurrentWeight(rackId);
+
+        // QR kodu oluştur
+        // MovementType.PACKAGE_ENTRY
     }
 
     @Override
