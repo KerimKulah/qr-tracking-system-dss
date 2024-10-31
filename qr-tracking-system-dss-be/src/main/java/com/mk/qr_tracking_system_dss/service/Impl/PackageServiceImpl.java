@@ -23,7 +23,6 @@ public class PackageServiceImpl implements PackageService {
     @Autowired
     private RackRepository rackRepository;
 
-    //rackId yerine racklocation kullanılacak şekilde ayarlayabilirim.
     @Override
     public void addPackage(Package pkg, Long productId, Long rackId) {
         // IDler kontrol edilir.

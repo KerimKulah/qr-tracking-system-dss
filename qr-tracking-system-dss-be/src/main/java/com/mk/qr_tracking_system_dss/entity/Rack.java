@@ -21,10 +21,10 @@ public class Rack extends BaseEntity {
     @NotNull(message = "Rafın maksimum kapasitesi gerekli")
     private double maxWeightCapacity;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // currentWeight = sum(packages.packageWeight)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // currentWeight = sum(packages.packageWeight) (Dışarıdan gönderilemez)
     private double currentWeight;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // freeWeight = maxWeightCapacity - currentWeight
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // freeWeight = maxWeightCapacity - currentWeight (Dışarıdan gönderilemez)
     private double freeWeight;
 
     @Column(unique = true)
