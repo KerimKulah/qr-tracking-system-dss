@@ -80,8 +80,9 @@ public class RackServiceImpl implements RackService {
         rackRepository.save(rack);
     }
 
+    // Paket ağırlığına göre uygun rafları getirir.
     @Override
-    public List<Rack> getAvailableRacks(double packageWeight) {
-        return List.of(); // Bakılacak
+    public List<Rack> getAvailableRacks(Package pkg) {
+        return rackRepository.findByFreeWeightGreaterThanEqual(pkg.getPackageWeight());
     }
 }

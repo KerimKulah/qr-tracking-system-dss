@@ -30,7 +30,7 @@ public class PackageServiceImpl implements PackageService {
         pkg.setProduct(product);
         pkg.setPackageWeight(product.getProductWeight() * pkg.getQuantityOfProduct());
 
-        // Rafın uygun olup olmadığını kontrol et
+        // Rafın uygun olup olmadığını kontrol et (getAvaibleRacks yazdıktan sonra içerikleriyle karşılaştır burada)
         Rack selectedRack = rackService.getRackById(rackId);
         if (selectedRack.getFreeWeight() < pkg.getPackageWeight()) {
             throw new IllegalArgumentException("Seçilen raf bu paketi taşıyamaz.");
@@ -55,6 +55,7 @@ public class PackageServiceImpl implements PackageService {
     @Override
     public void exitPackageById(Long id) {
         // Paket çıkışı yapılacak
+        // MovementType.PACKAGE_EXIT
     }
 
     @Override
