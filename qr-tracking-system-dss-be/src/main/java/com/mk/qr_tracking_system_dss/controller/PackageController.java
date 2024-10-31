@@ -22,26 +22,32 @@ public class PackageController {
         return ResponseEntity.ok("Paket başarıyla eklendi.");
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<String> deletePackageById(Long id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePackageById(@PathVariable Long id) {
         packageService.deletePackageById(id);
         return ResponseEntity.ok("Paket başarıyla silindi.");
     }
 
-    @PostMapping("/exit")
-    public ResponseEntity<String> exitPackageById(Long id) {
+    @DeleteMapping("/exit/{id}")
+    public ResponseEntity<String> exitPackageById(@PathVariable Long id) {
         packageService.exitPackageById(id);
         return ResponseEntity.ok("Paket başarıyla çıkış yaptı.");
     }
 
-    @PostMapping("/get")
-    public ResponseEntity<Package> getPackageById(Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Package> getPackageById(@PathVariable Long id) {
         return ResponseEntity.ok(packageService.getPackageById(id));
     }
 
-    @PostMapping("/getAll")
+    @GetMapping //Bu direkt /packages isteğinde çalışır ve tüm paketleri çağırır.
     public ResponseEntity<List<Package>> getAllPackages() {
         return ResponseEntity.ok(packageService.getAllPackages());
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updatePackage(@PathVariable Long id, @Valid @RequestBody Package pkg) {
+        packageService.updatePackage(pkg);
+        return ResponseEntity.ok("Paket başarıyla güncellendi.");
     }
 
 }

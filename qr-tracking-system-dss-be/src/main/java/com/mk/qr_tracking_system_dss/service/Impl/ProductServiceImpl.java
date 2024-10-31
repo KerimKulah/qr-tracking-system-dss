@@ -1,5 +1,7 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Product;
+import com.mk.qr_tracking_system_dss.entity.Package;
+import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private PackageRepository packageRepository;
 
     @Override
     public void addProduct(Product product) {
@@ -53,18 +58,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Product product) {
-        if (product.getId() == null || !productRepository.existsById(product.getId())) {
-            throw new IllegalArgumentException("Güncellenecek ürün bulunamadı.");
+    public List<Package> getProductPackagesById(Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new IllegalArgumentException("Bu ID ile ürün bulunamadı.");
         }
-        productRepository.save(product);
+        return packageRepository.findByProductId(productId);
     }
 
     @Override
-    public List<Package> getProductPackagesById(Long productId) {
-            if (!productRepository.existsById(productId)) {
-                throw new IllegalArgumentException("Bu ID ile ürün bulunamadı.");
-            }
-            return List.of(); //return packageRepository.findByProductId(productId);
+    public void updateProduct(Product product, Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new IllegalArgumentException("Bu ID ile ürün bulunamadı.");
         }
+
+        // Ürünün herhangi bir pakette olup olmadığını kontrol et
+        List<Package> packages = getProductPackagesById(productId);
+        if (!packages.isEmpty()) {
+            throw new IllegalArgumentException("Bu ürün paketlerde bulunduğu için güncellenemez.");
+        }
+
+        // IDsi verilen ürünü güncelle
+        product.setId(productId);
+        productRepository.save(product);
     }
+}

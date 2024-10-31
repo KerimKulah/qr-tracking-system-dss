@@ -101,4 +101,28 @@ public class RackServiceImpl implements RackService {
 
         return rackRepository.findByFreeWeightGreaterThanEqual(packageWeight);
     }
+
+    @Override
+    public void updateRack(Rack rack, Long rackId) {
+        // Güncellenmek istenen rafın mevcut olup olmadığını kontrol et
+        Rack existingRack = rackRepository.findById(rackId)
+                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile raf bulunamadı."));
+
+        // Raf içindeki tüm paketleri getir
+        List<Package> packagesInRack = packageRepository.findByRackId(rackId);
+
+        // Paketlerin toplam ağırlığını hesapla
+        double totalWeight = packagesInRack.stream()
+                .mapToDouble(Package::getPackageWeight)
+                .sum();
+
+        // Yeni maksimum kapasitenin mevcut paketlerin toplam ağırlığından düşük olup olmadığını kontrol et
+        if (rack.getMaxWeightCapacity() < totalWeight) {
+            throw new IllegalArgumentException("Yeni maksimum kapasite mevcut paketlerin toplam ağırlığından düşük olamaz.");
+        }
+
+        // Rafın mevcut ağırlığını ve boş ağırlığını güncelle ve kaydet
+        updateCurrentWeight(existingRack.getId());
+        updateCurrentWeight(existingRack.getId());
+    }
 }

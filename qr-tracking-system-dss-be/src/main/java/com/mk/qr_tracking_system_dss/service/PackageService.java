@@ -9,4 +9,6 @@ public interface PackageService {
     void exitPackageById(Long id); // Paketi çıkış yapar
     List<Package> getAllPackages(); // Tüm paketleri getirir
     Package getPackageById(Long id); // ID ile paket getirir
+    void updatePackage(Package pkg); // Paket bilgilerini günceller
+    void changePackageRack(Long packageId, Long newRackId); // Paketin rafını değiştirir
 }

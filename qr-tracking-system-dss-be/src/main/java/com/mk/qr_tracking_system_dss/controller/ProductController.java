@@ -1,5 +1,6 @@
 package com.mk.qr_tracking_system_dss.controller;
 import com.mk.qr_tracking_system_dss.entity.Product;
+import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,9 @@ public class ProductController {
         return productService.searchProducts(name);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<String> updateProduct(@RequestBody Product product) {
-        productService.updateProduct(product);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateProduct(@Valid @RequestBody Product product, @PathVariable Long id) {
+        productService.updateProduct(product, id);
         return ResponseEntity.ok("Ürün başarıyla güncellendi.");
     }
 

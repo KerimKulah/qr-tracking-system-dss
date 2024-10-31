@@ -22,10 +22,16 @@ public class RackController {
         return ResponseEntity.ok("Raf başarıyla sisteme eklendi.");
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteRackById(@PathVariable Long id) {
         rackService.deleteRackById(id);
         return ResponseEntity.ok("Raf başarıyla silindi.");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateRack(@Valid @RequestBody Rack rack, @PathVariable Long id) {
+        rackService.updateRack(rack, id);
+        return ResponseEntity.ok("Raf başarıyla güncellendi.");
     }
 
     @GetMapping("/{id}")
@@ -45,13 +51,6 @@ public class RackController {
         List<Package> packages = rackService.getAllPackagesInRack(rackId);
         return ResponseEntity.ok(packages);
     }
-
-    @PutMapping("/{rackId}/updateWeight")
-    public ResponseEntity<String> updateCurrentWeight(@PathVariable Long rackId) {
-        rackService.updateCurrentWeight(rackId);
-        return ResponseEntity.ok("Raf ağırlığı güncellendi.");
-    }
-
 
     @GetMapping("/findSuitableRacks/{productId}/{quantityOfProduct}")
     public ResponseEntity<List<Rack>> findSuitableRacks(@PathVariable Long productId, @PathVariable int quantityOfProduct) {
