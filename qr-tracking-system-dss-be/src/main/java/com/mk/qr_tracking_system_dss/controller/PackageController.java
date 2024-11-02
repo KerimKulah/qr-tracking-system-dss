@@ -1,7 +1,7 @@
 package com.mk.qr_tracking_system_dss.controller;
 import com.mk.qr_tracking_system_dss.service.PackageService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.mk.qr_tracking_system_dss.entity.Package;
@@ -9,10 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/packages")
+@RequiredArgsConstructor // Lombok ile constructor injection
 public class PackageController {
 
-    @Autowired
-    private PackageService packageService;
+    private final PackageService packageService;
 
     // Örnek yolu : packages/add?productId=1&rackId=1
     @PostMapping("/add")

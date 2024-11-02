@@ -4,19 +4,18 @@ import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor // Lombok ile constructor injection
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final PackageRepository packageRepository;
 
-    @Autowired
-    private PackageRepository packageRepository;
 
     @Override
     public void addProduct(Product product) {

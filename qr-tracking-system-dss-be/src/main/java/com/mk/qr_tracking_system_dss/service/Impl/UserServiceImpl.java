@@ -5,23 +5,20 @@ import com.mk.qr_tracking_system_dss.entity.User;
 import com.mk.qr_tracking_system_dss.enums.RoleEnum;
 import com.mk.qr_tracking_system_dss.repository.RoleRepository;
 import com.mk.qr_tracking_system_dss.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.mk.qr_tracking_system_dss.repository.UserRepository;
 
 @Service
+@RequiredArgsConstructor // Lombok ile constructor injection
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public void createUser(User user) {

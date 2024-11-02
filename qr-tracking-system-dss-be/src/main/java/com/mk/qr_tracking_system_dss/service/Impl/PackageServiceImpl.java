@@ -7,21 +7,19 @@ import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.PackageService;
 import com.mk.qr_tracking_system_dss.service.RackService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor // Lombok ile constructor injection
+
 public class PackageServiceImpl implements PackageService {
 
-    @Autowired
-    private PackageRepository packageRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private RackService rackService;
-    @Autowired
-    private RackRepository rackRepository;
+    private final PackageRepository packageRepository;
+    private final ProductRepository productRepository;
+    private final RackService rackService;
+    private final RackRepository rackRepository;
 
     @Override
     public void addPackage(Package pkg, Long productId, Long rackId) {

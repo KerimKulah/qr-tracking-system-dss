@@ -6,22 +6,18 @@ import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.RackService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor // Lombok ile constructor injection
 public class RackServiceImpl implements RackService {
 
-    @Autowired
-    private RackRepository rackRepository;
-
-    @Autowired
-    private PackageRepository packageRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
+    private final RackRepository rackRepository;
+    private final PackageRepository packageRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public void addRack(Rack rack) {

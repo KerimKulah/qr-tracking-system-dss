@@ -3,17 +3,17 @@ import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.service.ProductService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@RequiredArgsConstructor // Lombok ile constructor injection
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @PostMapping("/add")
     public ResponseEntity<String> addProduct(@Valid @RequestBody Product product) {
