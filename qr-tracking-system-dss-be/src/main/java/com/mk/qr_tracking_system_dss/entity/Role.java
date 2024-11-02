@@ -1,9 +1,6 @@
 package com.mk.qr_tracking_system_dss.entity;
 import com.mk.qr_tracking_system_dss.enums.RoleEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +16,6 @@ public class Role extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleEnum roleName;
 
-    @OneToMany(mappedBy = "role")
+    @ManyToMany(mappedBy = "roles")
     private List<User> users;
 }

@@ -61,4 +61,10 @@ public class ProductController {
         List<Package> packages = productService.getProductPackagesById(productId);
         return ResponseEntity.ok(packages);
     }
+
+    @GetMapping("/{productId}/totalQuantity")
+    public ResponseEntity<String> getTotalQuantityOfProduct(@PathVariable Long productId) {
+        String totalQuantity = productService.getTotalQuantityOfProduct(productId);
+        return ResponseEntity.ok(totalQuantity);
+    }
 }

@@ -42,8 +42,11 @@ public class PackageServiceImpl implements PackageService {
         packageRepository.save(pkg);
         rackService.updateCurrentWeight(rackId);
 
-        // PACKAGE_ENTRY işlemi yapılır.
         // Paketin QR kodu oluşturulur.
+
+
+        // PACKAGE_ENTRY işlemi yapılır.
+
 
     }
 

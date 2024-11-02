@@ -66,6 +66,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public String getTotalQuantityOfProduct(Long productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new IllegalArgumentException("Bu ID ile ürün bulunamadı.");
+        }
+        List<Package> packages = packageRepository.findByProductId(productId);
+        if (packages.isEmpty()) {
+            return productId + " ID'li ürün hiçbir pakette bulunmamaktadır.";
+        }
+        int totalQuantity = packages.stream().mapToInt(Package::getQuantityOfProduct).sum();
+        return productId + " ID'li ürünün toplam " + totalQuantity + " adet bulunmaktadır.";
+    }
+
+    @Override
     public void updateProduct(Product product, Long productId) {
         // Ürünün mevcut olup olmadığını kontrol et
         Product existingProduct = productRepository.findById(productId)

@@ -39,7 +39,7 @@ public class PackageController {
         return ResponseEntity.ok(packageService.getPackageById(id));
     }
 
-    @GetMapping //Bu direkt /packages isteğinde çalışır ve tüm paketleri çağırır.
+    @GetMapping
     public ResponseEntity<List<Package>> getAllPackages() {
         return ResponseEntity.ok(packageService.getAllPackages());
     }
