@@ -1,31 +1,67 @@
 package com.mk.qr_tracking_system_dss.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-public class User extends BaseEntity{
+public class User extends BaseEntity implements UserDetails {
 
-    private String userName;
+    @Column(unique = true)
+    @NotNull(message = "Kullanıcı adı boş olamaz")
+    private String username;
+
+    @NotBlank (message = "Şifre boş olamaz")
+    @NotNull (message = "Şifre boş olamaz")
     private String password;
-    private String fullName;
-    private String email;
 
+    @NotBlank (message = "Ad boş olamaz")
+    private String fullname;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Movement> movements;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.getRoleName().name()));
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

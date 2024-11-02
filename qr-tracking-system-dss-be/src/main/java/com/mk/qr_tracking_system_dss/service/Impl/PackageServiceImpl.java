@@ -44,7 +44,6 @@ public class PackageServiceImpl implements PackageService {
 
         // Paketin QR kodu oluşturulur.
 
-
         // PACKAGE_ENTRY işlemi yapılır.
 
 
