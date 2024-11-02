@@ -1,5 +1,6 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 
+import com.mk.qr_tracking_system_dss.entity.Role;
 import com.mk.qr_tracking_system_dss.entity.User;
 import com.mk.qr_tracking_system_dss.enums.RoleEnum;
 import com.mk.qr_tracking_system_dss.repository.RoleRepository;
@@ -24,6 +25,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        // User Role var mı kontrol ediyoruz yoksa User Rol Oluştur.
+        if (!roleRepository.existsByRoleName(RoleEnum.USER)) {
+            Role userRole = new Role();
+            userRole.setRoleName(RoleEnum.USER);
+            roleRepository.save(userRole);
+        }
+
         // Şifreyi encode ediyoruz
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -48,6 +56,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createAdminUser(User user) {
+        // Admin Role var mı kontrol ediyoruz yoksa Admin Rol Oluştur.
+        if (!roleRepository.existsByRoleName(RoleEnum.ADMIN)) {
+            Role adminRole = new Role();
+            adminRole.setRoleName(RoleEnum.ADMIN);
+            roleRepository.save(adminRole);
+        }
+
         // Şifreyi encode ediyoruz
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 

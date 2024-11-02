@@ -7,12 +7,9 @@ import com.mk.qr_tracking_system_dss.repository.RoleRepository;
 import com.mk.qr_tracking_system_dss.repository.UserRepository;
 import com.mk.qr_tracking_system_dss.service.AuthService;
 import org.springframework.boot.CommandLineRunner;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Set;
 
 @Configuration
 public class AdminConfig {
@@ -26,7 +23,6 @@ public class AdminConfig {
                 adminRole.setRoleName(RoleEnum.ADMIN);
                 roleRepository.save(adminRole);
             }
-
             // Admin kullanıcı var mı diye kontrol et yoksa oluştur ve kaydet
             if (!userRepository.existsByUsername("admin")) {
             User adminUser = new User();
@@ -36,7 +32,6 @@ public class AdminConfig {
             adminUser.setRole(roleRepository.findByRoleName(RoleEnum.ADMIN));
             userRepository.save(adminUser);
             }
-            throw new IllegalArgumentException("Admin yaratılmış.");
         };
     }
 }
