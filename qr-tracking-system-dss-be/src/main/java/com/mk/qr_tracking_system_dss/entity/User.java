@@ -28,7 +28,7 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
 
     @NotBlank (message = "Ad boş olamaz")
-    private String fullname;
+    private String fullName;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")

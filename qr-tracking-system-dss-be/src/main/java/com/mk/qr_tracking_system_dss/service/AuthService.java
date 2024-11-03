@@ -1,7 +1,10 @@
 package com.mk.qr_tracking_system_dss.service;
 
-import com.mk.qr_tracking_system_dss.entity.User;
+import com.mk.qr_tracking_system_dss.dto.UserDto;
+import com.mk.qr_tracking_system_dss.dto.UserRequest;
+import com.mk.qr_tracking_system_dss.dto.UserResponse;
 
 public interface AuthService {
-    String login(User user);
+    UserResponse login(UserRequest userRequest);
+    UserResponse register(UserDto userDto);
 }

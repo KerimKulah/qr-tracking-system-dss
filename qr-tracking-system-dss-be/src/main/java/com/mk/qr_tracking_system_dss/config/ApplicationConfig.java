@@ -1,4 +1,4 @@
-package com.mk.qr_tracking_system_dss.security;
+package com.mk.qr_tracking_system_dss.config;
 
 import com.mk.qr_tracking_system_dss.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
