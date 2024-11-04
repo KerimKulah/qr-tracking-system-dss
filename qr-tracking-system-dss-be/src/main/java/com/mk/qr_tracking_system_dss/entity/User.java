@@ -1,13 +1,15 @@
 package com.mk.qr_tracking_system_dss.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mk.qr_tracking_system_dss.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,6 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE user SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 @Entity
 public class User extends BaseEntity implements UserDetails {
 
@@ -28,6 +32,10 @@ public class User extends BaseEntity implements UserDetails {
 
     @NotBlank(message = "Ad soyad boş olamaz")
     private String fullName;
+
+    @Column(nullable = false)
+    @JsonIgnore
+    private boolean deleted = Boolean.FALSE;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -62,4 +70,6 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

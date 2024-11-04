@@ -1,6 +1,7 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.entity.Package;
+import com.mk.qr_tracking_system_dss.enums.Category;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.service.ProductService;
@@ -10,27 +11,31 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor // Lombok ile constructor injection
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final PackageRepository packageRepository;
-
 
     @Override
     public void addProduct(Product product) {
         try {
             productRepository.save(product);
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Bu ürün sistemde zaten mevcut.");  //Database productName kısmı unique
+            throw new IllegalArgumentException("Bu ürün sistemde zaten mevcut.");
         }
     }
 
     @Override
     public void deleteProductById(Long id) {
-        productRepository.findById(id)
+       Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
-        productRepository.deleteById(id); //orElseThrow çalışırsa bu satır çalışmaz.
+       product.setProductWeight(0);
+       product.setProductName("Deleted");
+       product.setProductDescription("Bu ürün sistemden silinmiştir.");
+       product.setProductCategory(Category.Deleted);
+       productRepository.save(product);
+       productRepository.deleteById(id);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> searchProducts(String name) {
         if (name == null || name.trim().isEmpty()) {
-            return List.of(); // Boş bir liste döndür
+            return List.of();
         }
         List<Product> products = productRepository.findByProductNameContainingIgnoreCase(name);
         if (products.isEmpty()) {
@@ -79,23 +84,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateProduct(Product product, Long productId) {
-        // Ürünün mevcut olup olmadığını kontrol et
         Product existingProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
 
-        // Ürünün herhangi bir pakette olup olmadığını kontrol et
         List<Package> packages = getProductPackagesById(productId);
         if (!packages.isEmpty()) {
             throw new IllegalArgumentException("Bu ürün paketlerde bulunduğu için güncellenemez.");
         }
 
-        // Güncellenmesi gereken alanları mevcut ürüne set et
         existingProduct.setProductName(product.getProductName());
         existingProduct.setProductWeight(product.getProductWeight());
         existingProduct.setProductDescription(product.getProductDescription());
         existingProduct.setProductCategory(product.getProductCategory());
 
-        // Değişiklikleri kaydet
         productRepository.save(existingProduct);
     }
 }

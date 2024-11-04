@@ -8,13 +8,13 @@ import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.MovementService;
 import com.mk.qr_tracking_system_dss.service.PackageService;
 import com.mk.qr_tracking_system_dss.service.RackService;
+import com.mk.qr_tracking_system_dss.util.QRCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor // Lombok ile constructor injection
-
 public class PackageServiceImpl implements PackageService {
 
     private final PackageRepository packageRepository;
@@ -22,6 +22,7 @@ public class PackageServiceImpl implements PackageService {
     private final RackService rackService;
     private final RackRepository rackRepository;
     private final MovementService movementService;
+    private final QRCodeGenerator qrCodeGenerator;
 
     @Override
     public void addPackage(Package pkg, Long productId, Long rackId) {
@@ -46,6 +47,9 @@ public class PackageServiceImpl implements PackageService {
         movementService.recordPackageEntry(pkg);
 
         // Paketin QR kodu oluşturulur.
+        String qrCode = qrCodeGenerator.generateQRCode(pkg.getId());
+        pkg.setQrCode(qrCode);
+        packageRepository.save(pkg);
     }
 
     @Override
@@ -53,10 +57,13 @@ public class PackageServiceImpl implements PackageService {
         Package pkg = packageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile paket bulunamadı."));
 
-        // Package_Exit işlemi yapılır.
+        // Package_Exit kaydı yapılır.
         movementService.recordPackageExit(pkg);
 
-        // Paketi sil (Çıkışını yap)
+        // Soft Delete
+        pkg.setQuantityOfProduct(0); // Veritabanında daha güzel görünsün diye
+        pkg.setPackageWeight(0); // Veritabanında daha güzel görünsün diye
+        packageRepository.save(pkg);
         packageRepository.deleteById(id);
 
         // Rafın ağırlığını güncelle

@@ -1,6 +1,8 @@
 package com.mk.qr_tracking_system_dss.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mk.qr_tracking_system_dss.validation.ExpDateFuture;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -9,11 +11,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE package SET deleted = true WHERE id = ?")
+@Where(clause = "deleted = false")
 @Entity
 public class Package extends  BaseEntity{
 
@@ -28,7 +34,8 @@ public class Package extends  BaseEntity{
     private Date productExpDate;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String qrCode; // Bu String olmayacak muhtemelen kontrol edilecek
+    @Column(length = 2048)
+    private String qrCode;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -37,5 +44,9 @@ public class Package extends  BaseEntity{
     @ManyToOne
     @JoinColumn(name = "rack_id")
     private Rack rack;
+
+    @Column(nullable = false)
+    @JsonIgnore
+    private boolean deleted = Boolean.FALSE;
 }
 
