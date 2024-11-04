@@ -39,7 +39,7 @@ public class RackServiceImpl implements RackService {
             throw new IllegalArgumentException("Bu rafın içinde paketler var. Rafı silemezsiniz.");
         }
         rack.setMaxWeightCapacity(0);
-        rack.setLocation("Deleted");
+        rack.setLocation("Kaldırıldı");
         rackRepository.save(rack);
         rackRepository.deleteById(id);
     }

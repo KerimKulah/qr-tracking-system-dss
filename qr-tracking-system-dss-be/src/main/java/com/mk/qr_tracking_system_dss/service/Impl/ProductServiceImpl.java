@@ -31,9 +31,7 @@ public class ProductServiceImpl implements ProductService {
        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
        product.setProductWeight(0);
-       product.setProductName("Deleted");
-       product.setProductDescription("Bu ürün sistemden silinmiştir.");
-       product.setProductCategory(Category.Deleted);
+       product.setProductDescription("Ürün silinmiştir.");
        productRepository.save(product);
        productRepository.deleteById(id);
     }
