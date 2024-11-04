@@ -1,8 +1,9 @@
-# QR Kodlu Ürün Takip ve Karar Destek Sistemi
+# QR Kodlu Depo Takip ve Karar Destek Sistemi
 
 ## 1. Proje Tanımı
-QR Kodlu Ürün Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
+QR Kodlu Ürün(Depo) Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
 Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgilerine erişim sağlanabilmesi, stokların güncellenmesi ve web üzerinden ürünlerin yönetilmesi üzerine kuruludur.
+
 **Not:** Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
 
 ## 2. Hedef Kullanıcılar
@@ -33,7 +34,7 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 
 ### 4.3 Ürün Raflandırma ve Depo Konumlandırma
 - **Raf Yönetimi**: Ürünlerin raflarda yerleştirilmesi ve doluluk durumları kaydedilir.
-- **Uygun Raf Önerisi**: Depo alanının verimli kullanımını sağlamak amacıyla raf önerileri sunulur.
+- **Uygun Raf Önerisi**: Depo alanının verimli kullanımını sağlamak amacıyla raf önerileri sunulur. 
 
 ### 4.4 Stok ve Ürün Yönetimi
 - **Stok Takibi**: Ürünlerin giriş-çıkışları sistemde otomatik olarak güncellenir.
@@ -44,16 +45,16 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Anlık Güncellemeler**: QR kod okuma işlemiyle veriler güncellenir.
 
 ### 4.6 Ürün Çıkışı ve Dağıtım
-- **Çıkış Talimatı**: Ürünlerin çıkış süreci QR kod okutularak kaydedilir.
+- **Çıkış Talimatı**: Ürünlerin çıkış süreci QR kod okutularak yapılabilir.
 - **Stok Güncellemesi**: Ürün çıkışında sistemde stok durumu otomatik olarak güncellenir.
 
-### 4.7 Karar Destek Sistemi (KDS) İşlevleri
+### 4.7 Karar Destek Sistemi (KDS) İşlevleri (Henüz Eklenmedi)
 - **Düşük Stok Uyarıları**: Düşük stok seviyeleri için otomatik bildirimler gönderilir.
 - **Son Kullanma Tarihi Uyarıları**: Yaklaşan son kullanma tarihleri için bildirimler oluşturulur.
 - **Performans Raporlaması**: Personel performansı ve ürün tüketimi hakkında raporlar hazırlanır.
 
-### 4.8 Yönetici ve Personel Paneli
-- **Personel Yönetimi**: Yönetici paneli üzerinden personel ekleme ve çıkarma işlemleri yapılabilir.
+### 4.8 Yönetici ve Personel Paneli 
+- **Personel Yönetimi**: Yönetici paneli üzerinden personel çıkarma gibi işlemleri yapılabilir.
 - **Performans Raporları**: Personel performansı izlenir ve analiz edilir.
 
 ## 5. Faydaları
@@ -63,10 +64,67 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Performans Takibi**: Personel performansını izlemeyi ve iyileştirmeleri kolaylaştırır.
 
 ## 6. Kullanılan Teknolojiler
-Proje, aşağıdaki teknolojiler kullanılarak geliştirilmiştir:
-- **React**: Kullanıcı arayüzü oluşturmak için.
-- **Spring Boot**: Backend uygulama geliştirme için.
-- **Spring Security**: Güvenlik ve kimlik doğrulama işlemleri için.
-- **MySQL**: Veri yönetimi ve saklama için.
 
-> **Not:** Python, karar destek sistemi geliştirilirken veri analizi ve raporlama süreçlerinde kullanılabilir.
+### Frontend (Başlanmadı)
+- **React**:
+
+### Backend
+- **Java**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı, ve koleksiyonlar gibi temel kavramları destekler.
+- **Spring Boot**: Backend uygulama geliştirme için.
+- **Spring Security & JWT**: Güvenlik ve kimlik doğrulama işlemleri için.
+- **MySQL**: Veri yönetimi ve saklama için.
+- **Lombok**: Java kodunu daha okunabilir hale getirmek için.
+- **JPA (Java Persistence API)**: Veritabanı ile etkileşim için.
+- **ZXing**: QR kodları oluşturmak ve okumak için kütüphane.
+
+## 7. API Endpoint'leri
+### Kullanıcı Yönetimi
+| HTTP Method | Endpoint                      | Açıklama                                         |
+|-------------|-------------------------------|--------------------------------------------------|
+| POST        | /auth/register                | Yeni bir kullanıcı kaydı yapar.                  |
+| POST        | /auth/login                   | Kullanıcı giriş işlemi gerçekleştirir.           |
+| GET         | /users                        | Tüm kullanıcıları listeler.                       |
+| GET         | /users/movements/{id}        | Belirtilen kullanıcı ID'sine ait hareketleri alır. |
+| GET         | /users/current                | Geçerli kullanıcıyı alır.                        |
+
+### Paket Yönetimi
+| HTTP Method | Endpoint                      | Açıklama                                         |
+|-------------|-------------------------------|--------------------------------------------------|
+| POST        | /packages/add                 | Yeni bir paket ekler. (Örnek yolu: /packages/add?productId=1&rackId=1) |
+| DELETE      | /packages/exit/{id}          | Belirtilen ID'ye sahip paketin çıkışını yapar.  |
+| GET         | /packages/{id}                | Belirtilen ID'ye sahip paketi alır.             |
+| GET         | /packages                     | Tüm paketleri listeler.                          |
+| PUT         | /packages/update/{id}         | Belirtilen ID'ye sahip paketi günceller.        |
+| PUT         | /packages/changeRack/{packageId}/{newRackId} | Paket rafını değiştirir. |
+
+### Ürün Yönetimi
+| HTTP Method | Endpoint                      | Açıklama                                         |
+|-------------|-------------------------------|--------------------------------------------------|
+| POST        | /products/add                 | Yeni bir ürün ekler.                            |
+| POST        | /products/addAll              | Birden fazla ürün ekler.                        |
+| DELETE      | /products/delete/{id}         | Belirtilen ID'ye sahip ürünü siler.             |
+| GET         | /products/{id}                | Belirtilen ID'ye sahip ürünü alır.             |
+| GET         | /products                     | Tüm ürünleri listeler.                          |
+| GET         | /products/search              | Ürünleri isme göre arar. (Örnek yolu: /products/search?name=Sample) |
+| PUT         | /products/update/{id}         | Belirtilen ID'ye sahip ürünü günceller.        |
+| GET         | /products/{productId}/packages | Belirtilen ürün ID'sine ait paketleri alır.    |
+| GET         | /products/{productId}/totalQuantity | Belirtilen ürün ID'sinin toplam miktarını döner. |
+
+### Raf Yönetimi
+| HTTP Method | Endpoint                      | Açıklama                                         |
+|-------------|-------------------------------|--------------------------------------------------|
+| POST        | /racks/add                    | Yeni bir raf ekler.                             |
+| DELETE      | /racks/delete/{id}            | Belirtilen ID'ye sahip rafı siler.             |
+| PUT         | /racks/update/{id}            | Belirtilen ID'ye sahip rafı günceller.         |
+| GET         | /racks/{id}                   | Belirtilen ID'ye sahip rafı alır.              |
+| GET         | /racks                        | Tüm rafları listeler.                          |
+| GET         | /racks/{rackId}/packages      | Belirtilen raf ID'sine ait paketleri alır.     |
+| GET         | /racks/findSuitableRacks/{productId}/{quantityOfProduct} | Ürün ve miktara göre uygun rafları bulur. |
+
+### Yönetici İşlemleri
+| HTTP Method | Endpoint                      | Açıklama                                         |
+|-------------|-------------------------------|--------------------------------------------------|
+| POST        | /admin/makeAdmin/{id}        | Kullanıcıyı admin yapar. (Sadece admin rollü biri kullanabilir.) |
+| DELETE      | /admin/deleteUser/{id}       | Belirtilen ID'ye sahip kullanıcıyı siler.       |
+
+
