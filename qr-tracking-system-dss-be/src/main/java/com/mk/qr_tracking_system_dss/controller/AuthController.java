@@ -1,4 +1,4 @@
-package com.mk.qr_tracking_system_dss.security.controller;
+package com.mk.qr_tracking_system_dss.controller;
 
 import com.mk.qr_tracking_system_dss.security.dto.AuthRequest;
 import com.mk.qr_tracking_system_dss.security.dto.AuthResponse;
@@ -18,13 +18,13 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authService.register(request));
-    }
-
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.register(request));
     }
 }

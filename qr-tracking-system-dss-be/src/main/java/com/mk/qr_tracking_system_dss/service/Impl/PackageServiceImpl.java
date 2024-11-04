@@ -5,6 +5,7 @@ import com.mk.qr_tracking_system_dss.entity.Rack;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.repository.RackRepository;
+import com.mk.qr_tracking_system_dss.service.MovementService;
 import com.mk.qr_tracking_system_dss.service.PackageService;
 import com.mk.qr_tracking_system_dss.service.RackService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class PackageServiceImpl implements PackageService {
     private final ProductRepository productRepository;
     private final RackService rackService;
     private final RackRepository rackRepository;
+    private final MovementService movementService;
 
     @Override
     public void addPackage(Package pkg, Long productId, Long rackId) {
@@ -40,22 +42,10 @@ public class PackageServiceImpl implements PackageService {
         packageRepository.save(pkg);
         rackService.updateCurrentWeight(rackId);
 
+        // Package_Entry işlemi yapılır.
+        movementService.recordPackageEntry(pkg);
+
         // Paketin QR kodu oluşturulur.
-
-        // PACKAGE_ENTRY işlemi yapılır.
-
-
-    }
-
-    @Override
-    public void deletePackageById(Long id) {
-        Package pkg = packageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Bu ID ile paket bulunamadı."));
-
-        packageRepository.deleteById(id);
-
-        // Rafın ağırlığını güncelle
-        rackService.updateCurrentWeight(pkg.getRack().getId());
     }
 
     @Override
@@ -63,10 +53,14 @@ public class PackageServiceImpl implements PackageService {
         Package pkg = packageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile paket bulunamadı."));
 
+        // Package_Exit işlemi yapılır.
+        movementService.recordPackageExit(pkg);
+
+        // Paketi sil (Çıkışını yap)
+        packageRepository.deleteById(id);
+
         // Rafın ağırlığını güncelle
         rackService.updateCurrentWeight(pkg.getRack().getId());
-
-        // PACKAGE_EXIT işlemi yapılır.
     }
 
     @Override
@@ -137,4 +131,5 @@ public class PackageServiceImpl implements PackageService {
         // Yeni rafın ağırlığı güncellenir
         rackService.updateCurrentWeight(newRackId);
     }
+
 }

@@ -21,12 +21,6 @@ public class PackageController {
         return ResponseEntity.ok("Paket başarıyla eklendi.");
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePackageById(@PathVariable Long id) {
-        packageService.deletePackageById(id);
-        return ResponseEntity.ok("Paket başarıyla silindi.");
-    }
-
     @DeleteMapping("/exit/{id}")
     public ResponseEntity<String> exitPackageById(@PathVariable Long id) {
         packageService.exitPackageById(id);

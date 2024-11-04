@@ -1,6 +1,5 @@
 package com.mk.qr_tracking_system_dss.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mk.qr_tracking_system_dss.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -32,7 +32,6 @@ public class User extends BaseEntity implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Movement> movements;
 
@@ -41,7 +40,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return Collections.singletonList(new SimpleGrantedAuthority(role.getAuthority()));
     }
 
     @Override

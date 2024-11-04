@@ -7,13 +7,14 @@ import com.mk.qr_tracking_system_dss.repository.UserRepository;
 import com.mk.qr_tracking_system_dss.security.dto.AuthRequest;
 import com.mk.qr_tracking_system_dss.security.dto.AuthResponse;
 import com.mk.qr_tracking_system_dss.security.dto.RegisterRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +24,18 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
+    Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");
 
-    public AuthResponse register(@Valid RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Kullanıcı adı zaten mevcut");
+        }
+        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+            throw new IllegalArgumentException("Şifre boş olamaz");
+        }
+        if (!FULL_NAME_PATTERN.matcher(request.getFullName()).matches()) {
+            throw new IllegalArgumentException("Ad soyad sadece harflerden oluşmalı ve bir boşluk ile ayrılmalıdır");
+        }
         User user =new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));

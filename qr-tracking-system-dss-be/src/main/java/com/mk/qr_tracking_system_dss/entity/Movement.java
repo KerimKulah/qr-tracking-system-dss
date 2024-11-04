@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,7 +13,7 @@ import java.util.Date;
 public class Movement extends BaseEntity{
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date movementDate;
+    private LocalDateTime movementDate;
 
     @Enumerated(EnumType.STRING)
     private MovementType movementType;

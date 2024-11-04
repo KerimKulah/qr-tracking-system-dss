@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor // Lombok ile constructor injection
+@RequiredArgsConstructor
 public class RackServiceImpl implements RackService {
 
     private final RackRepository rackRepository;
