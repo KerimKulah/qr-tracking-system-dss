@@ -65,19 +65,16 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Performans Takibi**: Personel performansını izlemeyi ve iyileştirmeleri kolaylaştırır.
 
 ## 6. Kullanılan Teknolojiler
-
-### Frontend (Başlanmadı)
--**React**: Kullanılacak
--**Bootstrap**: Kullanılacak
-
-### Backend
-- **Java**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı, ve koleksiyonlar gibi temel kavramları destekler.
-- **Spring Boot**: Backend uygulama geliştirme için.
-- **Spring Security & JWT**: Güvenlik ve kimlik doğrulama işlemleri için.
-- **MySQL**: Veri yönetimi ve saklama için.
-- **Lombok**: Java kodunu daha okunabilir hale getirmek için.
-- **JPA (Java Persistence API)**: Veritabanı ile etkileşim için.
-- **ZXing**: QR kodları oluşturmak ve okumak için kütüphane.
+- **Java**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
+- **Spring Boot**: Backend uygulama geliştirme sürecini kolaylaştırır.
+- **Spring Security & JWT**: Güvenlik ve kimlik doğrulama işlemlerini sağlar.
+- **MySQL**: Verilerin yönetimi ve saklanması için kullanılır.
+- **Lombok**: Java kodunu sadeleştirir ve okunabilirliği artırır.
+- **JPA (Java Persistence API)**: Veritabanı ile etkileşim için kullanılır.
+- **ZXing**: QR kodları oluşturma ve okuma kütüphanesidir.
+- **Thymeleaf**: Sunucu tarafında veri gösterimi yapar.
+- **React**
+- **Bootstrap**
 
 ## 7. Backend (API) Endpoint'leri
 
