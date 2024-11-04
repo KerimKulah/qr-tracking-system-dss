@@ -1,4 +1,4 @@
-package com.mk.qr_tracking_system_dss.controller;
+package com.mk.qr_tracking_system_dss.security.controller;
 
 import com.mk.qr_tracking_system_dss.security.dto.AuthRequest;
 import com.mk.qr_tracking_system_dss.security.dto.AuthResponse;
