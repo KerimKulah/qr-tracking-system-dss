@@ -1,17 +1,17 @@
 package com.mk.qr_tracking_system_dss.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mk.qr_tracking_system_dss.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
-
 
 @Getter
 @Setter
@@ -20,29 +20,29 @@ import java.util.List;
 public class User extends BaseEntity implements UserDetails {
 
     @Column(unique = true)
-    @NotNull(message = "Kullanıcı adı boş olamaz")
+    @NotBlank(message = "Kullanıcı adı boş olamaz")
     private String username;
 
-    @NotBlank (message = "Şifre boş olamaz")
-    @NotNull (message = "Şifre boş olamaz")
+    @NotBlank(message = "Şifre boş olamaz")
     private String password;
 
-    @NotBlank (message = "Ad boş olamaz")
+    @NotBlank(message = "Ad soyad boş olamaz")
     private String fullName;
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Movement> movements;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.getRoleName().name()));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -53,7 +53,6 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isAccountNonLocked() {
         return true;
     }
-
 
     @Override
     public boolean isCredentialsNonExpired() {

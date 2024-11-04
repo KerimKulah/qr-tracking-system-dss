@@ -29,12 +29,11 @@ public class Rack extends BaseEntity {
 
     @Column(unique = true)
     @NotBlank(message = "Rafın konumu belirtilmeli")
-    // "A1" ile "Z100" arasındaki tüm konumlar geçerli olacaktır.
+    @NotNull(message = "Rafın konumu belirtilmeli")
     @Pattern(regexp = "^[A-Z]([1-9][0-9]?|100)$", message = "Konum A1 ile Z100 arasında olmalıdır.")
     private String location;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "rack")
+    @JsonIgnore @OneToMany(mappedBy = "rack")
     private List<Package> packages;
 
 }

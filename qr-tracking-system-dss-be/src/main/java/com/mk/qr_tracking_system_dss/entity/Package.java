@@ -21,7 +21,7 @@ public class Package extends  BaseEntity{
     @Min(value = 1, message = "Ürün miktarı 1 veya daha fazla olmalıdır")
     private int quantityOfProduct;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // Burası productWeight * quantityOfProduct olacak
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private double packageWeight;
 
     @ExpDateFuture // Eğer skt varsa, bu tarih bugünden sonraki bir tarih olmalı

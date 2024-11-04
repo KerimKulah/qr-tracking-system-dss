@@ -1,4 +1,4 @@
-package com.mk.qr_tracking_system_dss.config;
+package com.mk.qr_tracking_system_dss.security.config;
 
 import com.mk.qr_tracking_system_dss.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor // Lombok ile constructor injection
-public class ApplicationConfig {
+@RequiredArgsConstructor
+public class SecurityConfigHelper {
 
     private final UserRepository userRepository;
-
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -28,10 +27,10 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     @Bean
