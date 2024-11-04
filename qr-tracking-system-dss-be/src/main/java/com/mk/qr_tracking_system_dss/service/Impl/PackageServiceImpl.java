@@ -63,6 +63,7 @@ public class PackageServiceImpl implements PackageService {
         // Soft Delete
         pkg.setQuantityOfProduct(0); // Veritabanında daha güzel görünsün diye
         pkg.setPackageWeight(0); // Veritabanında daha güzel görünsün diye
+        pkg.setQrCode(null); // Veritabanında daha güzel görünsün diye
         packageRepository.save(pkg);
         packageRepository.deleteById(id);
 

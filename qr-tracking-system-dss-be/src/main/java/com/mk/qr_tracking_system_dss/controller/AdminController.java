@@ -16,7 +16,7 @@ public class AdminController {
         userService.makeAdmin(id);
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/dashboard") // Deneme amaçlı yazıldı
     public String dashboard() {
         return "Deneme Dashboard Başarılı";
     }
