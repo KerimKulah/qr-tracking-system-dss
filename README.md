@@ -11,7 +11,7 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Not:** Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
 - **Not:** Backend endpointleri en aşağıda verildi.
 
-## 2. Kullanılan Teknolojiler
+## 2. Backend İçin Kullanılan Teknolojiler
 - **Java**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
 - **Spring Boot**: Backend uygulama geliştirme sürecini kolaylaştırır.
 - **Spring Security & JWT**: Güvenlik ve kimlik doğrulama işlemlerini sağlar.
@@ -20,8 +20,6 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **JPA (Java Persistence API)**: Veritabanı ile etkileşim için kullanılır.
 - **ZXing**: QR kodları oluşturma ve okuma kütüphanesidir.
 - **Thymeleaf**: Sunucu tarafında veri gösterimi yapar.
-- **React**
-- **Bootstrap**
 
 ## 3. Hedef Kullanıcılar
 - **E-Ticaret Depoları**: Online siparişleri hızlı bir şekilde karşılamak isteyen firmalar.
