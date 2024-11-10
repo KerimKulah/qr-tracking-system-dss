@@ -1,4 +1,8 @@
-# QR Kodlu Depo Takip ve Karar Destek Sistemi
+<h1 align="center">QR Kodlu Depo Takip ve Karar Destek Sistemi (QRTAKSİS)</h1>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a662fe1c-4b93-4ee6-9d97-38f71ace8fa0" width="400" height="240" />
+</p>
 
 ## 1. Proje Tanımı
 QR Kodlu Ürün(Depo) Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
