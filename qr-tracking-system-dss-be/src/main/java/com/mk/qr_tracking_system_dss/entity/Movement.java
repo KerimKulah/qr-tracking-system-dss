@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Movement extends BaseEntity{
 
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime movementDate;
 
     @Enumerated(EnumType.STRING)

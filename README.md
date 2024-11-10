@@ -1,4 +1,8 @@
-# QR Kodlu Depo Takip ve Karar Destek Sistemi
+<h1 align="center">QR Kodlu Depo Takip ve Karar Destek Sistemi (QRTAKSİS)</h1>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a662fe1c-4b93-4ee6-9d97-38f71ace8fa0" width="400" height="240" />
+</p>
 
 ## 1. Proje Tanımı
 QR Kodlu Ürün(Depo) Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
@@ -7,17 +11,15 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Not:** Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
 - **Not:** Backend endpointleri en aşağıda verildi.
 
-## 2. Kullanılan Teknolojiler
+## 2. Backend İçin Kullanılan Teknolojiler
 - **Java**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
-- **Spring Boot**: Backend uygulama geliştirme sürecini kolaylaştırır.
+- **Spring Web**: HTTP istek ve yanıtlarını yönetir, RESTful servisler ve web uygulamaları için gerekli altyapıyı sunar.
 - **Spring Security & JWT**: Güvenlik ve kimlik doğrulama işlemlerini sağlar.
 - **MySQL**: Verilerin yönetimi ve saklanması için kullanılır.
 - **Lombok**: Java kodunu sadeleştirir ve okunabilirliği artırır.
 - **JPA (Java Persistence API)**: Veritabanı ile etkileşim için kullanılır.
 - **ZXing**: QR kodları oluşturma ve okuma kütüphanesidir.
-- **Thymeleaf**: Sunucu tarafında veri gösterimi yapar.
-- **React**
-- **Bootstrap**
+- **Thymeleaf**: Sunucu tarafında sayfa gösterimi yapar.
 
 ## 3. Hedef Kullanıcılar
 - **E-Ticaret Depoları**: Online siparişleri hızlı bir şekilde karşılamak isteyen firmalar.
