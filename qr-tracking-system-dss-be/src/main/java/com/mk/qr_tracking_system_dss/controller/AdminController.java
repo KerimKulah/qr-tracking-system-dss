@@ -3,7 +3,6 @@ package com.mk.qr_tracking_system_dss.controller;
 import com.mk.qr_tracking_system_dss.dto.MovementsDto;
 import com.mk.qr_tracking_system_dss.dto.UserDto;
 import com.mk.qr_tracking_system_dss.dto.UserMovementDto;
-import com.mk.qr_tracking_system_dss.entity.Movement;
 import com.mk.qr_tracking_system_dss.security.dto.AuthResponse;
 import com.mk.qr_tracking_system_dss.security.dto.RegisterRequest;
 import com.mk.qr_tracking_system_dss.security.service.AuthService;

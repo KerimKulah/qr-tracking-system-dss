@@ -2,7 +2,6 @@ package com.mk.qr_tracking_system_dss.service.Impl;
 
 import com.mk.qr_tracking_system_dss.dto.UserDto;
 import com.mk.qr_tracking_system_dss.dto.UserMovementDto;
-import com.mk.qr_tracking_system_dss.entity.Movement;
 import com.mk.qr_tracking_system_dss.entity.User;
 import com.mk.qr_tracking_system_dss.enums.Role;
 import com.mk.qr_tracking_system_dss.repository.UserRepository;

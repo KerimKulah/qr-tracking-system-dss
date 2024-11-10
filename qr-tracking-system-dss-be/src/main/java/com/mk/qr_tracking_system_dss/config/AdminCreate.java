@@ -3,7 +3,6 @@ package com.mk.qr_tracking_system_dss.config;
 import com.mk.qr_tracking_system_dss.entity.User;
 import com.mk.qr_tracking_system_dss.enums.Role;
 import com.mk.qr_tracking_system_dss.repository.UserRepository;
-import com.mk.qr_tracking_system_dss.security.service.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +14,6 @@ public class AdminCreate implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JWTService jwtService;
 
     @Override
     public void run(String... args) {
