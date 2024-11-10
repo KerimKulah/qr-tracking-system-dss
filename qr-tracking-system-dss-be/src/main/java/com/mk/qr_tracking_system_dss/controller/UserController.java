@@ -17,15 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
-    public ResponseEntity <List<UserDto>> getUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
 
-    @GetMapping("/movements/{id}")
-    public ResponseEntity <List<Movement>> getMovements(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserMovements(id));
-    }
 
     @GetMapping("/current")
     public ResponseEntity <User> getCurrentUser() {

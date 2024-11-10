@@ -1,6 +1,7 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 
 import com.mk.qr_tracking_system_dss.dto.UserDto;
+import com.mk.qr_tracking_system_dss.dto.UserMovementDto;
 import com.mk.qr_tracking_system_dss.entity.Movement;
 import com.mk.qr_tracking_system_dss.entity.User;
 import com.mk.qr_tracking_system_dss.enums.Role;
@@ -42,10 +43,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Movement> getUserMovements(Long userId) {
+    public List<UserMovementDto> getUserMovements(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile kullanıcı bulunamadı."));
-        return user.getMovements();
+        return user.getMovements().stream()
+                .map(movement -> new UserMovementDto(
+                        movement.getId(),
+                        movement.getMovementDate(),
+                        movement.getMovementType(),
+                        movement.getAPackage().getId()))
+                .collect(Collectors.toList());
     }
 
     @Override
