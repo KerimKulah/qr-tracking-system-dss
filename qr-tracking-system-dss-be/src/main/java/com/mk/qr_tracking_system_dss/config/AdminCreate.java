@@ -24,7 +24,6 @@ public class AdminCreate implements CommandLineRunner {
             admin.setFullName("Admin User");
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
-/*            var token = jwtService.generateToken(admin);*/
             System.out.println("Admin kullanıcı oluşturuldu: admin , 12345 ");
     } else {
         System.out.println("Admin kullanıcı oluşturuldu: admin , 12345 ");

@@ -26,7 +26,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");
 
-    public AuthResponse register(RegisterRequest request) {
+    public String register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Kullanıcı adı zaten mevcut");
         }
@@ -42,8 +42,7 @@ public class AuthService {
         user.setFullName(request.getFullName());
         user.setRole(Role.EMPLOYEE);
         userRepository.save(user);
-        var token = jwtService.generateToken(user);
-        return AuthResponse.builder().token(token).build();
+        return "Kullanıcı başarıyla kaydedildi";
     }
 
     public AuthResponse login(AuthRequest request) {

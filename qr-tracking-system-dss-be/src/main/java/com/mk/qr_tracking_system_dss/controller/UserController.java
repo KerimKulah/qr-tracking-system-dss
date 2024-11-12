@@ -13,8 +13,6 @@ public class UserController {
 
     private final UserService userService;
 
-
-
     @GetMapping("/current")
     public ResponseEntity <User> getCurrentUser() {
         return ResponseEntity.ok(userService.getCurrentUser());

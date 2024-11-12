@@ -3,7 +3,6 @@ package com.mk.qr_tracking_system_dss.controller;
 import com.mk.qr_tracking_system_dss.dto.MovementsDto;
 import com.mk.qr_tracking_system_dss.dto.UserDto;
 import com.mk.qr_tracking_system_dss.dto.UserMovementDto;
-import com.mk.qr_tracking_system_dss.security.dto.AuthResponse;
 import com.mk.qr_tracking_system_dss.security.dto.RegisterRequest;
 import com.mk.qr_tracking_system_dss.security.service.AuthService;
 import com.mk.qr_tracking_system_dss.service.MovementService;
@@ -26,7 +25,7 @@ public class AdminController {
     // KULLANICI EKLEME SİLME VE YETKİLENDİRME
 
     @PostMapping("/createUser")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
