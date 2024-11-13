@@ -4,20 +4,15 @@ import { Box, CssBaseline, Container } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import useAuthCheck from './hooks/useAuthCheck';
 
 function App() {
   const location = useLocation();
-  const navigate = useNavigate();
   const token = localStorage.getItem('token');
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  useEffect(() => {
-    if (!token && location.pathname !== '/login') {
-      navigate('/login');
-    } else if (token && location.pathname === '/login') {
-      navigate('/home');
-    }
-  }, [token, location.pathname, navigate]);
+  useAuthCheck(token, isAuthenticated, location);
 
   return (
     <Box sx={{ display: 'flex' }}>

@@ -23,11 +23,29 @@ export const logout = createAsyncThunk('/auth/logout', async () => {
     }
 });
 
+export const verifyToken = createAsyncThunk('/auth/verifyToken', async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return false;
+    }
+    try {
+        const response = await axiosInstance.post('/auth/verifyToken', null, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data; // False ya da True dönecek. True dönerse token, user geçerli demektir.
+    } catch (error) {
+        console.error("Token doğrulama sırasında hata oluştu:", error);
+        return false;
+    }
+});
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
         user: null,
-        token: null,
+        token: localStorage.getItem('token') || null,
         loading: false,
         error: null,
         isAuthenticated: false
@@ -52,6 +70,15 @@ const authSlice = createSlice({
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
+        });
+        builder.addCase(verifyToken.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.isAuthenticated = true;
+            } else {
+                state.isAuthenticated = false;
+                state.token = null;
+                state.user = null;
+            }
         });
     }
 });

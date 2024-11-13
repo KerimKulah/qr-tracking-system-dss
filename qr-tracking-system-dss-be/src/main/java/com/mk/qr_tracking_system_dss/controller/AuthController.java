@@ -25,5 +25,4 @@ public class AuthController {
         boolean isValid = authService.verifyToken(token);
         return ResponseEntity.ok(isValid);
     }
-
 }
