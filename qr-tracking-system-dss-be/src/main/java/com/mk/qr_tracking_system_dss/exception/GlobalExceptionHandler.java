@@ -1,7 +1,6 @@
 package com.mk.qr_tracking_system_dss.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.mk.qr_tracking_system_dss.enums.Category;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -60,11 +57,5 @@ public class GlobalExceptionHandler {
         String errorMessage = "Veri bütünlüğü hatası: " + Objects.requireNonNull(ex.getRootCause()).getMessage();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
     }
-
-    private List<String> getValidCategories() {
-        return Category.getValues();
-    }
-
-
 
 }

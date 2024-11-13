@@ -5,10 +5,7 @@ import com.mk.qr_tracking_system_dss.security.dto.AuthResponse;
 import com.mk.qr_tracking_system_dss.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,4 +18,12 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
+
+    @PostMapping("/verifyToken")
+    public ResponseEntity<Boolean> verifyToken(@RequestHeader("Authorization") String token) {
+        token = token.startsWith("Bearer ") ? token.substring(7) : token;
+        boolean isValid = authService.verifyToken(token);
+        return ResponseEntity.ok(isValid);
+    }
+
 }

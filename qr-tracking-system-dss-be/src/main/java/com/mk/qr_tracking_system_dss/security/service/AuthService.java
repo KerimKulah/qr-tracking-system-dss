@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+
     Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");
 
     public String register(RegisterRequest request) {
@@ -56,4 +60,13 @@ public class AuthService {
         }
     }
 
+    public boolean verifyToken(String token) {
+        try {
+        String username = jwtService.extractUserName(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return jwtService.isTokenValid(token, userDetails);
+        } catch (Exception e) {
+            return false; // Hata durumunda false döner
+        }
+    }
 }
