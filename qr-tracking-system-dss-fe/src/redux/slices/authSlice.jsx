@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axiosInstance';
 
-// 10 saat sonra token geçersiz kalacak logout olunmalı, random token girince çalışmamalı
-
 export const login = createAsyncThunk('/auth/login', async (userData) => {
     try {
         const response = await axiosInstance.post('/auth/login', userData);
@@ -24,7 +22,6 @@ export const logout = createAsyncThunk('/auth/logout', async () => {
         throw error;
     }
 });
-
 
 const authSlice = createSlice({
     name: 'auth',
