@@ -1,7 +1,6 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 import com.mk.qr_tracking_system_dss.entity.Product;
 import com.mk.qr_tracking_system_dss.entity.Package;
-import com.mk.qr_tracking_system_dss.enums.Category;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.service.ProductService;
@@ -68,16 +67,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String getTotalQuantityOfProduct(Long productId) {
+    public int getTotalQuantityOfProduct(Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new IllegalArgumentException("Bu ID ile ürün bulunamadı.");
         }
         List<Package> packages = packageRepository.findByProductId(productId);
         if (packages.isEmpty()) {
-            return productId + " ID'li ürün hiçbir pakette bulunmamaktadır.";
+            return 0;
         }
-        int totalQuantity = packages.stream().mapToInt(Package::getQuantityOfProduct).sum();
-        return productId + " ID'li ürünün toplam " + totalQuantity + " adet bulunmaktadır.";
+        return packages.stream().mapToInt(Package::getQuantityOfProduct).sum();
     }
 
     @Override

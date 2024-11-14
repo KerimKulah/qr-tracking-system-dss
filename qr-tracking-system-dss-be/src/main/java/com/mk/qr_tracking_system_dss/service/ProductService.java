@@ -13,5 +13,5 @@ public interface ProductService {
     List<Product> searchProducts(String name); // İsme göre ürünleri arar.
     void updateProduct(Product product, Long id); // Ürün bilgilerini günceller
     List<Package> getProductPackagesById(Long productId); // Bir ürünün olduğu tüm paketleri getirir
-    String getTotalQuantityOfProduct(Long productId); // Bir üründen toplam kaç adet olduğunu getirir;
+    int getTotalQuantityOfProduct(Long productId); // Bir üründen toplam kaç adet olduğunu getirir;
 }

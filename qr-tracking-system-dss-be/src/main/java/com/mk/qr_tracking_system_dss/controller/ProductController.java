@@ -64,7 +64,7 @@ public class ProductController {
 
     @GetMapping("/{productId}/totalQuantity")
     public ResponseEntity<String> getTotalQuantityOfProduct(@PathVariable Long productId) {
-        String totalQuantity = productService.getTotalQuantityOfProduct(productId);
-        return ResponseEntity.ok(totalQuantity);
+        int totalQuantity = productService.getTotalQuantityOfProduct(productId);
+        return ResponseEntity.ok(String.valueOf(totalQuantity));
     }
 }

@@ -28,7 +28,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
 
-    Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-Z]+\\s[a-zA-Z]+$");
+    Pattern FULL_NAME_PATTERN = Pattern.compile("^[a-zA-ZÇĞİÖŞÜçğıöşü]+\\s[a-zA-ZÇĞİÖŞÜçğıöşü]+$");
 
     public String register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
