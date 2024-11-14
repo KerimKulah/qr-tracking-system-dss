@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../redux/slices/adminSlice';
 import { Button, TextField, Typography, Box, CircularProgress, Alert, Paper } from '@mui/material';
+import { useEffect } from 'react';
+import { clearError, clearMessage } from '../redux/slices/adminSlice';
 
 const CreateUser = () => {
     const dispatch = useDispatch();
@@ -11,8 +13,13 @@ const CreateUser = () => {
     const [password, setPassword] = useState('');
     const [validationError, setValidationError] = useState(null);
 
+    useEffect(() => {
+        dispatch(clearMessage());
+        dispatch(clearError());
+    }, [dispatch]);
+
     const validateForm = () => {
-        const fullNamePattern = /^[A-Za-z]+\s[A-Za-z]+$/;
+        const fullNamePattern = /^[A-Za-zÇĞİÖŞÜçğıöşü]+\s[A-Za-zÇĞİÖŞÜçğıöşü]+$/;
         if (!fullNamePattern.test(fullName)) {
             setValidationError("Ad soyad sadece harflerden oluşmalı ve bir boşluk ile ayrılmalıdır");
             return false;

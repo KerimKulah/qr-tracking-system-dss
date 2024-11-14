@@ -6,11 +6,13 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import useAuthCheck from './hooks/useAuthCheck';
 import CreateUser from './pages/CreateUser';
+import Users from './pages/Users';
+import ProductAddPage from './pages/ProductAddPage';
+import ProductListPage from './pages/ProductListPage';
 
 function App() {
   const location = useLocation();
-
-  useAuthCheck(location);
+  useAuthCheck(location); // Custom hook'u kullanarak kullanıcı oturumunu kontrol et
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -22,6 +24,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/addProduct" element={<ProductAddPage />} />
+            <Route path="/products" element={<ProductListPage />} />
           </Routes>
         </Container>
       </Box>

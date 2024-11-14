@@ -129,13 +129,15 @@ function Sidebar() {
                 </Collapse>
 
                 {/* Kullanıcılar Menüsü */}
-                <ListItem button onClick={() => toggleMenu('users')} sx={{ backgroundColor: openMenu.users ? '#004080' : 'transparent' }}>
-                    <ListItemIcon sx={{ minWidth: '35px' }}>
-                        <People sx={{ color: 'white' }} />
-                    </ListItemIcon>
-                    <ListItemText primary="Personel İşlemleri" sx={{ ml: 2 }} />
-                    {openMenu.users ? <ExpandLess sx={{ color: 'black' }} /> : <ExpandMore sx={{ color: 'black' }} />}
-                </ListItem>
+                {role === 'ADMIN' && (
+                    <ListItem button onClick={() => toggleMenu('users')} sx={{ backgroundColor: openMenu.users ? '#004080' : 'transparent' }}>
+                        <ListItemIcon sx={{ minWidth: '35px' }}>
+                            <People sx={{ color: 'white' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Personel İşlemleri" sx={{ ml: 2 }} />
+                        {openMenu.users ? <ExpandLess sx={{ color: 'black' }} /> : <ExpandMore sx={{ color: 'black' }} />}
+                    </ListItem>
+                )}
                 <Collapse in={openMenu.users} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItem button component={Link} to="/users" sx={{ pl: 4, backgroundColor: 'transparent' }}>
