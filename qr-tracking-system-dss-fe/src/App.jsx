@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import useAuthCheck from './hooks/useAuthCheck';
+import CreateUser from './pages/CreateUser';
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/CreateUser" element={<CreateUser />} />
           </Routes>
         </Container>
       </Box>

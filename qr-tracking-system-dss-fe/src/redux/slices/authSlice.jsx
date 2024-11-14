@@ -50,8 +50,7 @@ const authSlice = createSlice({
         error: null,
         isAuthenticated: false
     },
-    reducers: {
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state, action) => {
             state.loading = true;

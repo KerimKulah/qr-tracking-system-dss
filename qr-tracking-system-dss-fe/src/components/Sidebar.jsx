@@ -3,10 +3,29 @@ import { Link } from 'react-router-dom';
 import { List, ListItem, ListItemText, ListItemIcon, Collapse, Typography, Divider, Box, IconButton, Drawer } from '@mui/material';
 import { ExpandLess, ExpandMore, Inventory, Category, Menu, AlignHorizontalLeft, People, Settings } from '@mui/icons-material';
 import LogoutButton from './LogoutButton';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getCurrentUser } from '../redux/slices/userSlice';
 
 function Sidebar() {
     const [openMenu, setOpenMenu] = useState({});
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [fullName, setFullName] = useState('');
+    const [role, setRole] = useState('');
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.user);
+
+    useEffect(() => {
+        if (user) {
+            setFullName(user.fullName);
+            setRole(user.role);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        dispatch(getCurrentUser());
+    }, [dispatch]);
 
     const toggleMenu = (menu) => {
         setOpenMenu((prevState) => ({
@@ -44,7 +63,7 @@ function Sidebar() {
             </Box>
 
             {/* Hoşgeldin Mesajı */}
-            <Typography variant="h6" align="center">Hoşgeldin, Kerim Kulah</Typography>
+            <Typography variant="h6" align="center">Hoşgeldin, {fullName}</Typography>
             <Divider sx={{ width: '100%', my: 2, bgcolor: 'white' }} />
 
             {/* Menü Listesi */}
