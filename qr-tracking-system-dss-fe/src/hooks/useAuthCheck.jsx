@@ -3,35 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyToken, logout } from '../redux/slices/authSlice';  // doğru path'e göre import edin
 
-const useAuthCheck = (token, isAuthenticated, location) => {
+const useAuthCheck = (location) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
         const checkAuthStatus = async () => {
-            if (!token && location.pathname !== '/login') {
-                navigate('/login');
-            }
-            else if (token && location.pathname !== '/login') {
-                await dispatch(verifyToken());
-                if (!isAuthenticated) {
-                    await dispatch(logout());
+            if (location.pathname !== '/login') {
+                const result = await dispatch(verifyToken()).unwrap();
+                if (!result) {
                     navigate('/login');
                 }
-            }
-            else if (token && location.pathname === '/login') {
-                await dispatch(verifyToken());
-                if (isAuthenticated) {
-                    navigate('/home');
-                } else {
-                    await dispatch(logout());
-                    navigate('/login');
+                else if (location.pathname === '/login') {
+                    const result = await dispatch(verifyToken()).unwrap();
+                    if (result) {
+                        navigate('/home');
+                    }
                 }
+                checkAuthStatus();
             }
-        };
-
+        }
         checkAuthStatus();
-    }, [token, location.pathname, navigate, dispatch, isAuthenticated]);
+    }, [location, navigate, dispatch]);
 };
 
 export default useAuthCheck;

@@ -34,7 +34,7 @@ export const verifyToken = createAsyncThunk('/auth/verifyToken', async () => {
                 Authorization: `Bearer ${token}`
             }
         });
-        return response.data; // False ya da True dönecek. True dönerse token, user geçerli demektir.
+        return response.data; // False ya da True dönecek. 
     } catch (error) {
         console.error("Token doğrulama sırasında hata oluştu:", error);
         return false;
@@ -75,9 +75,9 @@ const authSlice = createSlice({
             if (action.payload) {
                 state.isAuthenticated = true;
             } else {
-                state.isAuthenticated = false;
-                state.token = null;
                 state.user = null;
+                state.token = null;
+                state.isAuthenticated = false;
             }
         });
     }

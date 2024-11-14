@@ -11,7 +11,6 @@ function Home() {
                     padding: '2rem',
                     width: '100%',
                     maxWidth: '800px',
-                    borderRadius: '8px',
                     bgcolor: 'background.paper',
                 }}>
                 <Typography variant="h4" component="h1" sx={{ marginBottom: '1rem', fontWeight: 'bold' }}>

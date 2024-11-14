@@ -4,15 +4,12 @@ import { Box, CssBaseline, Container } from '@mui/material';
 import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { useSelector } from 'react-redux';
 import useAuthCheck from './hooks/useAuthCheck';
 
 function App() {
   const location = useLocation();
-  const token = localStorage.getItem('token');
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  useAuthCheck(token, isAuthenticated, location);
+  useAuthCheck(location);
 
   return (
     <Box sx={{ display: 'flex' }}>
