@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { verifyToken, logout } from '../redux/slices/authSlice';  // doğru path'e göre import edin
+import { useDispatch } from 'react-redux';
+import { verifyToken } from '../redux/slices/authSlice';  // doğru path'e göre import edin
 
 const useAuthCheck = (location) => {
     const navigate = useNavigate();
@@ -9,22 +9,15 @@ const useAuthCheck = (location) => {
 
     useEffect(() => {
         const checkAuthStatus = async () => {
-            if (location.pathname !== '/login') {
-                const result = await dispatch(verifyToken()).unwrap();
-                if (!result) {
-                    navigate('/login');
-                }
-                else if (location.pathname === '/login') {
-                    const result = await dispatch(verifyToken()).unwrap();
-                    if (result) {
-                        navigate('/home');
-                    }
-                }
-                checkAuthStatus();
+            const result = await dispatch(verifyToken()).unwrap();
+            if (!result && location.pathname !== '/login') {
+                navigate('/login');
+            } else if (result && location.pathname === '/login') {
+                navigate('/home');
             }
-        }
+        };
         checkAuthStatus();
-    }, [location, navigate, dispatch]);
+    }, [location.pathname, dispatch, navigate]);
 };
 
 export default useAuthCheck;
