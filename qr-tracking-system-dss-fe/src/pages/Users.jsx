@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers, deleteUser, makeAdmin, getMovements } from '../redux/slices/adminSlice';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Box, Typography } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Box, Typography, TextField } from '@mui/material';
 import { clearError, clearMessage } from '../redux/slices/adminSlice';
 
 const Users = () => {
@@ -9,36 +9,42 @@ const Users = () => {
     const { users, userMovements, loading, error, message } = useSelector(state => state.admin);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(''); // Arama terimi için state
+    const [filteredUsers, setFilteredUsers] = useState([]); // Filtrelenmiş kullanıcılar için state
 
-    // Fetch all users on component mount
     useEffect(() => {
         dispatch(clearMessage());
         dispatch(clearError());
         dispatch(getAllUsers());
     }, [dispatch]);
 
-    // Open modal to show user movements
+    useEffect(() => {
+        setFilteredUsers(
+            users.filter(user =>
+                user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                user.role.toLowerCase().includes(searchTerm.toLowerCase())
+            ));
+    }, [users, searchTerm]);
+
     const handleOpenMovements = (userId) => {
         setSelectedUserId(userId);
         dispatch(getMovements(userId));
         setOpenModal(true);
     };
 
-    // Close modal
     const handleCloseModal = () => {
         setOpenModal(false);
     };
 
-    // Handle admin role assignment
     const handleMakeAdmin = (userId) => {
         dispatch(makeAdmin(userId));
         dispatch(getAllUsers());
     };
 
-    // Handle user deletion
     const handleDeleteUser = async (userId) => {
-        await dispatch(deleteUser(userId));  // Kullanıcıyı sil
-        dispatch(getAllUsers());             // Güncellenmiş kullanıcı listesini sunucudan al
+        await dispatch(deleteUser(userId));
+        dispatch(getAllUsers());
     };
 
     return (
@@ -48,10 +54,21 @@ const Users = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {message && <p style={{ color: 'green' }}>{message}</p>}
 
+            <TextField
+                label="Personel Ara"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="İsim, kullanıcı adı veya rol arayın..."
+            />
+
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
+                            <TableCell>ID</TableCell>
                             <TableCell>İsim Soyisim</TableCell>
                             <TableCell>Kullanıcı Adı</TableCell>
                             <TableCell>Rol</TableCell>
@@ -59,8 +76,9 @@ const Users = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.map((user) => (
+                        {filteredUsers.map((user) => (
                             <TableRow key={user.id}>
+                                <TableCell>{user.id}</TableCell>
                                 <TableCell>{user.fullName}</TableCell>
                                 <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.role}</TableCell>
@@ -75,7 +93,7 @@ const Users = () => {
                 </Table>
             </TableContainer>
 
-            {/* Movements Modal */}
+            {/* Hareketler Modal */}
             <Modal
                 open={openModal}
                 onClose={handleCloseModal}

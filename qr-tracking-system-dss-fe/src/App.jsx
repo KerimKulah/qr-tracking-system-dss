@@ -7,8 +7,10 @@ import Login from './pages/Login';
 import useAuthCheck from './hooks/useAuthCheck';
 import CreateUser from './pages/CreateUser';
 import Users from './pages/Users';
-import ProductAddPage from './pages/ProductAddPage';
-import ProductListPage from './pages/ProductListPage';
+import AddProduct from './pages/AddProduct';
+import Products from './pages/Products';
+import Racks from './pages/Racks';
+import AddRack from './pages/AddRack';
 
 function App() {
   const location = useLocation();
@@ -25,8 +27,10 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/CreateUser" element={<CreateUser />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/addProduct" element={<ProductAddPage />} />
-            <Route path="/products" element={<ProductListPage />} />
+            <Route path="/addProduct" element={<AddProduct />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/racks" element={<Racks />} />
+            <Route path="/addRack" element={<AddRack />} />
           </Routes>
         </Container>
       </Box>

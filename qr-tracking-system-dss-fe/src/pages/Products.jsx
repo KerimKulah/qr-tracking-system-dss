@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Modal, Box, FormControl, InputLabel, Select, MenuItem, Typography, Alert } from '@mui/material';
 import { getAllProducts, deleteProduct, updateProduct, getTotalQuantity } from '../redux/slices/productSlice';
 
-const ProductsListPage = () => {
+const Products = () => {
     const dispatch = useDispatch();
     const { products, loading, error, message } = useSelector(state => state.product);
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +13,7 @@ const ProductsListPage = () => {
     const [productDescription, setProductDescription] = useState('');
     const [productWeight, setProductWeight] = useState('');
     const [productCategory, setProductCategory] = useState('');
-    const [quantities, setQuantities] = useState({}); // Object to store the total quantity of each product
+    const [quantities, setQuantities] = useState({});
 
     const categories = ['Elektronik', 'Gida', 'Giyim', 'Spor', 'Egitim', 'Kozmetik', 'Oyuncak', 'Diger'];
 
@@ -22,13 +22,11 @@ const ProductsListPage = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        // Fetch total quantity for each product after the products are loaded
         products.forEach((product) => {
             dispatch(getTotalQuantity(product.id)).then((response) => {
-                // Update the quantities state with the fetched data
                 setQuantities((prevQuantities) => ({
                     ...prevQuantities,
-                    [product.id]: response.payload, // Assuming the response contains the total quantity
+                    [product.id]: response.payload,
                 }));
             });
         });
@@ -49,7 +47,7 @@ const ProductsListPage = () => {
 
     const handleDeleteProduct = (productId) => {
         dispatch(deleteProduct(productId)).then(() => {
-            dispatch(getAllProducts()); // Ürün listesini tekrar yükle
+            dispatch(getAllProducts());
         });
     };
 
@@ -61,7 +59,9 @@ const ProductsListPage = () => {
             productWeight,
             productCategory
         };
-        dispatch(updateProduct(updatedProduct));
+        dispatch(updateProduct(updatedProduct)).then(() => {
+            dispatch(getAllProducts());
+        });
         setOpenModal(false);
     };
 
@@ -73,7 +73,6 @@ const ProductsListPage = () => {
     return (
         <div>
             <h2>Ürün Listesi</h2>
-
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {message && <p style={{ color: 'green' }}>{message}</p>}
@@ -82,9 +81,11 @@ const ProductsListPage = () => {
                 label="Ürün Ara"
                 variant="outlined"
                 fullWidth
+                margin="normal"
                 value={searchTerm}
                 onChange={handleSearchChange}
                 style={{ marginBottom: '20px' }}
+                placeholder="Ürün adı veya bilgilerini arayın..."
             />
 
             <TableContainer component={Paper}>
@@ -121,7 +122,7 @@ const ProductsListPage = () => {
                 </Table>
             </TableContainer>
 
-            {/* Modal for Update */}
+            {/*Güncelleme Modal */}
             <Modal
                 open={openModal}
                 onClose={() => setOpenModal(false)}
@@ -205,4 +206,4 @@ const ProductsListPage = () => {
     );
 };
 
-export default ProductsListPage;
+export default Products;

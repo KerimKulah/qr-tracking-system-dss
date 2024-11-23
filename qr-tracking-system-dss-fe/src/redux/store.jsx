@@ -3,6 +3,7 @@ import authReducer from './slices/authSlice';
 import userReducer from './slices/userSlice';
 import adminReducer from './slices/adminSlice';
 import productReducer from './slices/productSlice';
+import rackReducer from './slices/rackSlice';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         user: userReducer,
         admin: adminReducer,
         product: productReducer,
+        rack: rackReducer,
     },
 });
 

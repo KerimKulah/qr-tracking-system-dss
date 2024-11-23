@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, clearMessage, clearError } from '../redux/slices/productSlice';
 import { Button, TextField, MenuItem, Select, InputLabel, FormControl, Typography, Box, Paper, Alert } from '@mui/material';
 
-const AddProductPage = () => {
+const AddProduct = () => {
     const dispatch = useDispatch();
     const { message, error, loading, validationError } = useSelector((state) => state.product);
 
@@ -132,4 +132,4 @@ const AddProductPage = () => {
     );
 };
 
-export default AddProductPage;
+export default AddProduct;
