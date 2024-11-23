@@ -48,7 +48,9 @@ const ProductsListPage = () => {
     };
 
     const handleDeleteProduct = (productId) => {
-        dispatch(deleteProduct(productId));
+        dispatch(deleteProduct(productId)).then(() => {
+            dispatch(getAllProducts()); // Ürün listesini tekrar yükle
+        });
     };
 
     const handleSaveUpdate = () => {
