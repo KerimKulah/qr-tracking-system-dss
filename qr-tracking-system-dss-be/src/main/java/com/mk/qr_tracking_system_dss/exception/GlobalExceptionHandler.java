@@ -1,6 +1,7 @@
 package com.mk.qr_tracking_system_dss.exception;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body("Hata: " + ex.getMessage());
+       String error = ex.getMessage();
+        return ResponseEntity.badRequest().body("Hata: " + error);
     }
 
     // AuthenticationException için özel hata işleme
@@ -56,6 +58,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         String errorMessage = "Veri bütünlüğü hatası: " + Objects.requireNonNull(ex.getRootCause()).getMessage();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+    }
+
+    // ConstraintViolationException için özel hata işleme
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException ex) {
+        String errors = ex.getConstraintViolations()
+                .stream()
+                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                .collect(Collectors.joining(", "));
+
+        return ResponseEntity.badRequest().body("Validasyon hataları: " + errors);
     }
 
 }

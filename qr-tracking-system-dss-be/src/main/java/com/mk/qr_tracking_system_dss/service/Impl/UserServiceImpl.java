@@ -29,6 +29,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
+        User currentUser = getCurrentUser();
+        if (currentUser.getId().equals(userId)) {
+            throw new IllegalArgumentException("Kendinizi silemezsiniz.");
+        }
         userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile kullanıcı bulunamadı."));
         userRepository.deleteById(userId);

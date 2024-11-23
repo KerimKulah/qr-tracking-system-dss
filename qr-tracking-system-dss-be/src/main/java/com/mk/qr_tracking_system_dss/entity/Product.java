@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
     public class Product extends BaseEntity {
 
-        @Column(unique = true) @NotBlank(message = "Ürün ismi gerekli")
+        @NotBlank(message = "Ürün ismi gerekli")
         @NotNull(message = "Ürün ismi gerekli")
         private String productName;
 

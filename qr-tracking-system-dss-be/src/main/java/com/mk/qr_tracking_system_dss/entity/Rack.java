@@ -34,7 +34,6 @@ public class Rack extends BaseEntity {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY) // freeWeight = maxWeightCapacity - currentWeight (Dışarıdan gönderilemez)
     private double freeWeight; // Başlangıçta maxWeightCapacity kadar olacak
 
-    @Column(unique = true)
     @NotBlank(message = "Rafın konumu belirtilmeli")
     @Pattern(regexp = "^[A-Z]([1-9][0-9]?|100)$", message = "Konum A1 ile Z100 arasında olmalıdır.")
     private String location;

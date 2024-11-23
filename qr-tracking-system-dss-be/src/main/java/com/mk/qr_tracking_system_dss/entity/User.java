@@ -23,7 +23,6 @@ import java.util.List;
 @Entity
 public class User extends BaseEntity implements UserDetails {
 
-    @Column(unique = true)
     @NotBlank(message = "Kullanıcı adı boş olamaz")
     private String username;
 

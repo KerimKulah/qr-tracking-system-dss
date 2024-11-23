@@ -4,6 +4,7 @@ import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ public class ProductServiceImpl implements ProductService {
     private final PackageRepository packageRepository;
 
     @Override
-    public void addProduct(Product product) {
-        try {
-            productRepository.save(product);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Bu ürün sistemde zaten mevcut.");
+    public void addProduct(@Valid Product product) {
+        if (productRepository.existsByProductName(product.getProductName())) {
+            throw new DataIntegrityViolationException("Bu isimde bir ürün zaten mevcut.");
         }
+        if (product.getProductWeight() <= 0) {
+            throw new IllegalArgumentException("Ürün ağırlığı 0 veya daha az olamaz.");
+        }
+        productRepository.save(product);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.mk.qr_tracking_system_dss.repository.PackageRepository;
 import com.mk.qr_tracking_system_dss.repository.ProductRepository;
 import com.mk.qr_tracking_system_dss.repository.RackRepository;
 import com.mk.qr_tracking_system_dss.service.RackService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,13 @@ public class RackServiceImpl implements RackService {
     private final ProductRepository productRepository;
 
     @Override
-    public void addRack(Rack rack) {
-        try {
-            rack.setCurrentWeight(0);
-            rack.setFreeWeight(rack.getMaxWeightCapacity()); // Başlangıçta free weight maxweightcapacity kadar olmalı
-            rackRepository.save(rack);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("Bu raf sistemde zaten mevcut."); // Locationa (A1 vs.) bakıyor
+    public void addRack(@Valid Rack rack) {
+        if (rackRepository.existsByLocation(rack.getLocation())) {
+            throw new IllegalArgumentException("Bu konumda bir raf zaten mevcut.");
         }
+        rack.setCurrentWeight(0);
+        rack.setFreeWeight(rack.getMaxWeightCapacity()); // Başlangıçta free weight maxweightcapacity kadar olmalı
+        rackRepository.save(rack);
     }
 
     @Override

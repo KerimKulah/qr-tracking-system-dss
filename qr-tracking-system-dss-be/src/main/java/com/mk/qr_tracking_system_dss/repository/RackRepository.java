@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface RackRepository extends JpaRepository<Rack, Long> {
     List<Rack> findByFreeWeightGreaterThanEqual(double packageWeight);
     Optional<Rack> findRackByLocation(String rackLocation);
+    boolean existsByLocation(String location);
 }
