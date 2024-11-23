@@ -25,7 +25,7 @@ public class PackageServiceImpl implements PackageService {
     private final QRCodeGenerator qrCodeGenerator;
 
     @Override
-    public void addPackage(Package pkg, Long productId, Long rackId) {
+    public Package addPackage(Package pkg, Long productId, Long rackId) {
         // IDler kontrol edilir.
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
@@ -50,6 +50,8 @@ public class PackageServiceImpl implements PackageService {
         String qrCode = qrCodeGenerator.generateQRCode(pkg.getId());
         pkg.setQrCode(qrCode);
         packageRepository.save(pkg);
+
+        return pkg;
     }
 
     @Override

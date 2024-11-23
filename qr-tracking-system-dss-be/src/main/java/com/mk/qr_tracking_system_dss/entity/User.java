@@ -39,6 +39,7 @@ public class User extends BaseEntity implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Movement> movements;
 

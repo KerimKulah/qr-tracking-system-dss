@@ -16,9 +16,9 @@ public class PackageController {
 
     // Örnek yolu : packages/add?productId=1&rackId=1
     @PostMapping("/add")
-    public ResponseEntity<String> addPackage(@Valid @RequestBody Package pkg, @RequestParam Long productId, @RequestParam Long rackId) {
-        packageService.addPackage(pkg, productId, rackId);
-        return ResponseEntity.ok("Paket başarıyla eklendi.");
+    public ResponseEntity<Package> addPackage(@Valid @RequestBody Package pkg, @RequestParam Long productId, @RequestParam Long rackId) {
+        Package savedPackage =  packageService.addPackage(pkg, productId, rackId);
+        return ResponseEntity.ok(savedPackage);
     }
 
     @DeleteMapping("/exit/{id}")
