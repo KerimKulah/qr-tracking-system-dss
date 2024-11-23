@@ -130,7 +130,7 @@ const Racks = () => {
                                     </Button>
                                     <Button variant="outlined" onClick={() => handleViewPackages(rack.id)}
                                     >
-                                        Paketleri Gör
+                                        Paketler
                                     </Button>
                                 </TableCell>
                             </TableRow>

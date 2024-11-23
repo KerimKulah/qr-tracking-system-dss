@@ -98,13 +98,13 @@ function Sidebar() {
                 <Collapse in={openMenu.packages} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItem button component={Link} to="/packageEntry" sx={{ pl: 4, backgroundColor: 'transparent' }}>
-                            <ListItemText primary="Paket Ekleme" sx={{ color: 'white' }} />
+                            <ListItemText primary="Paket Girişi" sx={{ color: 'white' }} />
                         </ListItem>
                         <ListItem button component={Link} to="/packages" sx={{ pl: 4, backgroundColor: 'transparent' }}>
                             <ListItemText primary="Paket Listesi" sx={{ color: 'white' }} />
                         </ListItem>
                         <ListItem button component={Link} to="/packageExit" sx={{ pl: 4, backgroundColor: 'transparent' }}>
-                            <ListItemText primary="QR Okuyucu" sx={{ color: 'white' }} />
+                            <ListItemText primary="Paket Çıkışı (QR) " sx={{ color: 'white' }} />
                         </ListItem>
                     </List>
                 </Collapse>

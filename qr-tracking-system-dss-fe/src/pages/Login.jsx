@@ -1,9 +1,10 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { login } from '../redux/slices/authSlice'
-import { useState } from 'react'
-import { Box, Typography, TextField, Button, Alert } from '@mui/material'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slices/authSlice';
+import { useState } from 'react';
+import { Box, Typography, TextField, Button, Alert, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import LockIcon from '@mui/icons-material/Lock'; // Kilit simgesi
 
 function Login() {
     const dispatch = useDispatch();
@@ -34,7 +35,6 @@ function Login() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '90vh',
             }}
         >
             <Box
@@ -42,17 +42,26 @@ function Login() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    padding: '2rem',
+                    padding: '3rem',
                     width: '100%',
-                    maxWidth: '800px',
+                    maxWidth: '400px',
                     margin: '0 auto',
                     boxShadow: 3,
-                }}>
-                <Typography variant="h5" sx={{ marginBottom: '1rem' }}>
+                    backgroundColor: 'white',
+                }}
+            >
+                <IconButton sx={{ backgroundColor: '#3f51b5', padding: '1rem', borderRadius: '50%' }}>
+                    <LockIcon sx={{ color: 'white', fontSize: '2rem' }} />
+                </IconButton>
+                <Typography variant="h5" sx={{ marginBottom: '1.5rem', fontWeight: 'bold', color: '#3f51b5' }}>
                     Giriş Yap
                 </Typography>
 
-                {error && (<Alert severity="error" sx={{ mb: 2, width: '100%' }}> {error}</Alert>)}
+                {error && (
+                    <Alert severity="error" sx={{ mb: 2, width: '100%' }}>
+                        {error}
+                    </Alert>
+                )}
 
                 <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                     <TextField
@@ -61,7 +70,7 @@ function Login() {
                         fullWidth
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        sx={{ marginBottom: '1rem' }}
+                        sx={{ marginBottom: '1.5rem' }}
                     />
                     <TextField
                         label="Şifre"
@@ -70,7 +79,7 @@ function Login() {
                         fullWidth
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        sx={{ marginBottom: '1rem' }}
+                        sx={{ marginBottom: '1.5rem' }}
                     />
                     <Button
                         type="submit"
@@ -83,7 +92,8 @@ function Login() {
                                 backgroundColor: '#303f9f',
                             },
                             fontWeight: 'bold',
-                        }}>
+                        }}
+                    >
                         Giriş Yap
                     </Button>
                 </form>

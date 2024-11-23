@@ -4,6 +4,7 @@ import userReducer from './slices/userSlice';
 import adminReducer from './slices/adminSlice';
 import productReducer from './slices/productSlice';
 import rackReducer from './slices/rackSlice';
+import packageReducer from './slices/packageSlice';
 
 const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
         user: userReducer,
         admin: adminReducer,
         product: productReducer,
+        package: packageReducer,
         rack: rackReducer,
     },
 });

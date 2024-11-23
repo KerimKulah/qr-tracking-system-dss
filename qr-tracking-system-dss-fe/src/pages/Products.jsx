@@ -107,7 +107,7 @@ const Products = () => {
                                 <TableCell>{product.id}</TableCell>
                                 <TableCell>{product.productName}</TableCell>
                                 <TableCell>{product.productDescription}</TableCell>
-                                <TableCell>{product.productWeight}</TableCell>
+                                <TableCell>{product.productWeight} kg</TableCell>
                                 <TableCell>{product.productCategory}</TableCell>
                                 <TableCell>
                                     {quantities[product.id] !== undefined ? quantities[product.id] : 'Yükleniyor...'} {/* Display total quantity */}

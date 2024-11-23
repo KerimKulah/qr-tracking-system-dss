@@ -1,13 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axiosInstance';
 
-// admin/cretaUser
-// admin/deleteUser
-// admin/makeAdmin/{id}
-// admin/getMovements/{id]
-// admin/getAllUsers
-// admin/getAllMovements
-
 export const createUser = createAsyncThunk('/admin/createUser', async (userData, { rejectWithValue }) => {
     try {
         const response = await axiosInstance.post('/admin/createUser', userData);

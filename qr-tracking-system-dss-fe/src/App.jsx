@@ -11,6 +11,8 @@ import AddProduct from './pages/AddProduct';
 import Products from './pages/Products';
 import Racks from './pages/Racks';
 import AddRack from './pages/AddRack';
+import AddPackage from './pages/AddPackage';
+import Packages from './pages/Packages';
 
 function App() {
   const location = useLocation();
@@ -31,6 +33,8 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/racks" element={<Racks />} />
             <Route path="/addRack" element={<AddRack />} />
+            <Route path="/packageEntry" element={<AddPackage />} />
+            <Route path="/packages" element={<Packages />} />
           </Routes>
         </Container>
       </Box>

@@ -31,17 +31,6 @@ const AddProduct = () => {
         dispatch(clearError());
     };
 
-    const handleClear = () => {
-        setProductData({
-            productName: '',
-            productDescription: '',
-            productWeight: '',
-            productCategory: ''
-        });
-        dispatch(clearMessage());
-        dispatch(clearError());
-    };
-
     return (
         <Box sx={{ maxWidth: 800, margin: 'auto', padding: 3 }}>
             <Paper elevation={3} sx={{ padding: 3 }}>
@@ -104,25 +93,15 @@ const AddProduct = () => {
                                 color="primary"
                                 disabled={loading}
                                 sx={{
-                                    width: { xs: '100%', sm: 'auto' },
-                                    fontSize: { xs: '0.875rem', sm: '1rem' },
-                                    padding: { xs: '8px', sm: '10px' }
+                                    fontWeight: 'bold',
+                                    backgroundColor: '#3f51b5',
+                                    '&:hover': {
+                                        backgroundColor: '#303f9f',
+                                    },
+                                    mt: 2,
                                 }}
                             >
-                                {loading ? 'Yükleniyor...' : 'Ürünü Ekle'}
-                            </Button>
-                            <Button
-                                type="button"
-                                onClick={handleClear}
-                                variant="outlined"
-                                color="secondary"
-                                sx={{
-                                    width: { xs: '100%', sm: 'auto' },
-                                    fontSize: { xs: '0.875rem', sm: '1rem' },
-                                    padding: { xs: '8px', sm: '10px' }
-                                }}
-                            >
-                                Temizle
+                                {loading ? 'Yükleniyor...' : ' Ekle'}
                             </Button>
                         </Box>
                     </Box>
