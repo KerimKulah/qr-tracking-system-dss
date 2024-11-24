@@ -100,7 +100,21 @@ const Users = () => {
                 aria-labelledby="movements-modal-title"
                 aria-describedby="movements-modal-description"
             >
-                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: { xs: '90%', sm: 600 }, // Mobilde genişlik %90, daha büyük ekranlarda 600px
+                        maxHeight: '90vh', // Yükseklik kısıtlaması, taşmayı önler
+                        overflowY: 'auto', // İçeriğin taşması durumunda kaydırma sağlar
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: { xs: 2, sm: 4 }, // Mobilde padding daha az, büyük ekranlarda daha fazla
+                        borderRadius: 2, // Daha yumuşak kenarlar için
+                    }}
+                >
                     <Typography id="movements-modal-title" variant="h6" component="h2">
                         Kullanıcı Hareketleri
                     </Typography>
@@ -126,7 +140,9 @@ const Users = () => {
                             </TableBody>
                         </Table>
                     ) : (
-                        <Typography id="movements-modal-description">Bu kullanıcı için hareket bulunmamaktadır.</Typography>
+                        <Typography id="movements-modal-description">
+                            Bu kullanıcı için hareket bulunmamaktadır.
+                        </Typography>
                     )}
                 </Box>
             </Modal>

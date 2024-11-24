@@ -143,9 +143,6 @@ function Sidebar() {
                         <ListItem button component={Link} to="/users" sx={{ pl: 4, backgroundColor: 'transparent' }}>
                             <ListItemText primary="Personel Listesi" sx={{ color: 'white' }} />
                         </ListItem>
-                        <ListItem button component={Link} to="/movements/" sx={{ pl: 4, backgroundColor: 'transparent' }}>
-                            <ListItemText primary="Personel Hareketleri" sx={{ color: 'white' }} />
-                        </ListItem>
                         <ListItem button component={Link} to="/createUser/" sx={{ pl: 4, backgroundColor: 'transparent' }}>
                             <ListItemText primary="Personel Oluşturma" sx={{ color: 'white' }} />
                         </ListItem>
