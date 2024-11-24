@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -19,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public void changePassword(@RequestBody String password) {
+    public void changePassword(@RequestBody Map<String, String> payload) {
+        String password = payload.get("newPassword");
         userService.changePassword(password);
     }
-
 }
