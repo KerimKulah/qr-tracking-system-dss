@@ -92,7 +92,7 @@ const Packages = () => {
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={6} align="center">
-                                    No packages available.
+                                    Paket bulunamadı.
                                 </TableCell>
                             </TableRow>
                         )}

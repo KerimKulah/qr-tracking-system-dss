@@ -142,7 +142,7 @@ const AddPackage = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleCreatePackage}
-                    disabled={!selectedProduct || !quantity || !selectedRack || status === 'loading' || expDateError}
+                    disabled={!selectedProduct || quantity <= 0 || !quantity || !selectedRack || status === 'loading' || expDateError}
                     sx={{
                         fontWeight: 'bold',
                         backgroundColor: '#3f51b5',

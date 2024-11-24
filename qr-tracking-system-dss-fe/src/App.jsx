@@ -14,7 +14,7 @@ import AddRack from './pages/AddRack';
 import AddPackage from './pages/AddPackage';
 import Packages from './pages/Packages';
 import ChangePassword from './pages/ChangePassword';
-
+import PackageExit from './pages/PackageExit';
 
 function App() {
   const location = useLocation();
@@ -38,6 +38,7 @@ function App() {
             <Route path="/packageEntry" element={<AddPackage />} />
             <Route path="/packages" element={<Packages />} />
             <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/packageExit" element={<PackageExit />} />
           </Routes>
         </Container>
       </Box>
