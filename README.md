@@ -148,8 +148,11 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 | GET         | `/users/current`                  | Mevcut kullanıcıyı getirir     |
 | POST        | `/users/changePassword`           | Kullanıcı şifresini değiştirir |
 
-## 7. Front-end Ekran Görüntüleri (Yapım Aşamasında)
+## 8. Front-end Ekran Görüntüleri (Yapım Aşamasında)
+<img src="https://github.com/user-attachments/assets/caf36eda-b297-4822-8526-91b72475ef99" alt="Resim 1" width="750" />
+<img src="https://github.com/user-attachments/assets/520bb28e-7d67-4a56-982b-c5912a390746" alt="Resim 2" width="750" />
 
-![{666BDBF5-AFA1-40B3-B82C-DD8AC0E882AA}](https://github.com/user-attachments/assets/0e17e331-4544-4a31-9eca-12d3b8faa2f9)
+
+
 
 
