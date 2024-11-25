@@ -3,47 +3,60 @@ import { Html5Qrcode } from 'html5-qrcode';
 import { useDispatch } from 'react-redux';
 import { exitPackage } from '../redux/slices/packageSlice';
 
-
 const PackageExit = () => {
     const [packageId, setPackageId] = useState(null); // QR'dan gelen packageId
     const [confirmExit, setConfirmExit] = useState(false); // Onay durumu
     const qrCodeScannerRef = useRef(null); // QR kod tarayıcı referansı
+    const [isScannerActive, setIsScannerActive] = useState(false); // Tarayıcı durumu
     const dispatch = useDispatch();
 
     useEffect(() => {
         const html5QrCode = new Html5Qrcode("qr-reader"); // QR okuyucu tanımlama
         qrCodeScannerRef.current = html5QrCode;
 
-        // Kamerayı başlat
-        html5QrCode
-            .start(
-                { facingMode: "environment" }, // Arka kamera
-                { fps: 10, qrbox: 250 }, // Tarama ayarları
-                (decodedText) => {
-                    console.log(`Decoded QR Code: ${decodedText}`);
-                    // packageId'yi ayrıştır
-                    const id = decodedText.split('/PackageDetail/')[1];
-                    if (id) {
-                        setPackageId(id); // packageId'yi ayarla
-                        setConfirmExit(true); // Onay modalını aç
-                        html5QrCode.stop(); // Kamera taramasını durdur
+        const startScanner = async () => {
+            try {
+                await html5QrCode.start(
+                    { facingMode: "environment" }, // Arka kamera
+                    { fps: 10, qrbox: 250 }, // Tarama ayarları
+                    (decodedText) => {
+                        console.log(`Decoded QR Code: ${decodedText}`);
+                        const id = decodedText.split('/PackageDetail/')[1]; // packageId'yi ayrıştır
+                        if (id) {
+                            setPackageId(id); // packageId'yi ayarla
+                            setConfirmExit(true); // Onay modalını aç
+                            stopScanner(); // Tarayıcıyı durdur
+                        }
+                    },
+                    (errorMessage) => {
+                        console.warn(`QR Kod hatası: ${errorMessage}`);
                     }
-                },
-                (errorMessage) => {
-                    console.error(`QR Kod hatası: ${errorMessage}`);
-                }
-            )
-            .catch((err) => {
+                );
+                setIsScannerActive(true); // Tarayıcı aktif durumda
+            } catch (err) {
                 console.error(`QR Kod tarayıcı başlatılamadı: ${err}`);
-            });
-
-        // Bileşen unmount edilirse kamera durdurulsun
-        return () => {
-            if (qrCodeScannerRef.current) {
-                qrCodeScannerRef.current.stop();
             }
         };
+
+        startScanner();
+
+        // Temizlik işlemleri: Tarayıcıyı durdur
+        return () => {
+            stopScanner();
+        };
     }, []);
+
+    const stopScanner = async () => {
+        if (qrCodeScannerRef.current && isScannerActive) {
+            try {
+                await qrCodeScannerRef.current.stop();
+                setIsScannerActive(false); // Tarayıcı artık aktif değil
+                console.log("Tarayıcı başarıyla durduruldu.");
+            } catch (err) {
+                console.warn("Tarayıcı durdurulurken bir hata oluştu:", err);
+            }
+        }
+    };
 
     const confirmPackageExit = () => {
         if (packageId) {
