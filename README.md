@@ -1,15 +1,14 @@
-<h1 align="center">QR Kodlu Depo Takip ve Karar Destek Sistemi (QRTAKSİS)</h1>
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a662fe1c-4b93-4ee6-9d97-38f71ace8fa0" width="400" height="240" />
 </p>
+
+<h1 align="center">QR Kodlu Depo Takip ve Karar Destek Sistemi (Qrtaksis)</h1>
 
 ## 1. Proje Tanımı
 QR Kodlu Ürün(Depo) Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
 Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgilerine erişim sağlanabilmesi, stokların güncellenmesi ve web üzerinden ürünlerin yönetilmesi üzerine kuruludur.
 
 - **Not:** Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
-- **Not:** Backend endpointleri en aşağıda verildi.
 
 ## 2. Kullanılan Teknolojiler
 - **Java 21 (JDK 21)**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
@@ -37,12 +36,12 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Yöneticiler**: Depo yönetimini ve personel performansını izleyen üst düzey yöneticiler.
 
 ## 4. Kullanım Senaryoları
-- **Ürün Girişi**: Yeni ürünler sisteme eklenir ve QR kod oluşturulur. QR kod, ürün bilgilerini erişmeyi sağlar.
-- **Ürün Çıkışı**: QR kod okutularak veya web paneli üzerinden ürün çıkışları gerçekleştirilir.
-- **Stok Takibi**: QR kodlar kullanılarak anlık stok durumu güncellenir.
+- **Paket Girişi**: Yeni ürünler ve paketler sisteme eklenir ve QR kod oluşturulur. QR kod, paket bilgilerine erişmeyi sağlar.
+- **Paket Çıkışı**: QR kod okutularak veya web paneli üzerinden paket çıkışları gerçekleştirilir.
+- **Stok Takibi**: QR kodlar kullanılarak paketin bilgileri görüntülenebilir.
 - **Son Kullanma Tarihi Takibi**: Son kullanma tarihi yaklaşan ürünler için otomatik uyarılar gönderilir.
-- **Raf Yönetimi**: Ürünlerin konumları ve raf yerleşimleri takip edilir.
-- **Raporlama ve Analiz**: Personel performansı ve ürün hareketleri izlenir.
+- **Raf Yönetimi**: Ürünlerin konumları ve raf yerleşimleri takip edilir. Uygun raflar paketin girişi yapılırken sistem tarafından sağlanır.
+- **Raporlama**: Personel hareketleri izlenir.
 
 ## 5. İş Süreci
 
@@ -51,20 +50,19 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Ürün Kabulü ve Kontrol**: Gelen ürünler depo personeli tarafından kontrol edilir ve sisteme eklenir.
 
 ### 5.2 QR Kod Oluşturma ve Ürün Etiketleme
-- **QR Kod Oluşturma**: Sisteme eklenen her ürün için otomatik QR kod oluşturulur.
-- **Etiketleme**: Ürünlere fiziksel olarak QR kod etiketleri yapıştırılır.
+- **QR Kod Oluşturma**: Sisteme eklenen her paket için otomatik QR kod oluşturulur.
+- **Etiketleme**: Paketlere fiziksel olarak QR kod etiketleri yapıştırılır.
 
 ### 5.3 Ürün Raflandırma ve Depo Konumlandırma
-- **Raf Yönetimi**: Ürünlerin raflarda yerleştirilmesi ve doluluk durumları kaydedilir.
+- **Raf Yönetimi**: Paketlerin raflarda yerleştirilmesi ve doluluk durumları kaydedilir.
 - **Uygun Raf Önerisi**: Depo alanının verimli kullanımını sağlamak amacıyla raf önerileri sunulur. 
 
 ### 5.4 Stok ve Ürün Yönetimi
-- **Stok Takibi**: Ürünlerin giriş-çıkışları sistemde otomatik olarak güncellenir.
-- **Son Kullanma Tarihi Takibi**: Son kullanma tarihi yaklaşan ürünler için uyarılar oluşturulur.
+- **Stok Takibi**: Paketlerin giriş-çıkışları sistemde otomatik olarak güncellenir.
+- **Son Kullanma Tarihi Takibi**: Son kullanma tarihi yaklaşan paketler için uyarılar oluşturulur.
 
 ### 5.5 Mobil Cihazlarla QR Kod Okuma
 - **Mobil Cihaz Kullanımı**: Depo personeli mobil cihazlar ile QR kodları okutarak ürün bilgilerine erişir.
-- **Anlık Güncellemeler**: QR kod okuma işlemiyle veriler güncellenir.
 
 ### 5.6 Ürün Çıkışı ve Dağıtım
 - **Çıkış Talimatı**: Ürünlerin çıkış süreci QR kod okutularak yapılabilir.
@@ -75,10 +73,10 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Son Kullanma Tarihi Uyarıları**: Yaklaşan son kullanma tarihleri için bildirimler oluşturulur.
 - **Performans Raporlaması**: Personel performansı ve ürün tüketimi hakkında raporlar hazırlanır.
 
-### 5.8 Yönetici ve Personel Paneli 
-- **Personel Yönetimi**: Yönetici paneli üzerinden personel çıkarma gibi işlemleri yapılabilir.
-- **Performans Raporları**: Personel performansı izlenir ve analiz edilir.
-
+### 5.8 Yönetici Paneli 
+- **Personel Yönetimi**: Yönetici paneli üzerinden personel ekleme, silme gibi işlemleri yapılabilir.
+- **Performans Raporları**: Personel performansı izlenir.
+  
 ## 6. Faydaları
 - **Gerçek Zamanlı Bilgi**: QR kodlar ile anlık bilgi erişimi sağlar.
 - **İyileştirilmiş Stok Yönetimi**: Ürünlerin son kullanma tarihleri etkin bir şekilde takip edilir.
