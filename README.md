@@ -12,7 +12,8 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **Not:** Backend endpointleri en aşağıda verildi.
 
 ## 2. Kullanılan Teknolojiler
-- **Java**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
+- **Java 21 (JDK 21)**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
+- **Maven Wrapper**: Maven'ın belirli bir sürümünü projeye entegre etmek ve projeyi çalıştırmak için kullanılan bir araçtır. Projeyi herhangi bir Maven kurulumu olmadan, doğru sürümle çalıştırmanıza olanak tanır.
 - **Spring Web**: HTTP istek ve yanıtlarını yönetir, RESTful servisler ve web uygulamaları için gerekli altyapıyı sunar.
 - **Spring Security & JWT**: Güvenlik ve kimlik doğrulama işlemlerini sağlar.
 - **MySQL**: Verilerin yönetimi ve saklanması için kullanılır.
@@ -20,7 +21,12 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **JPA (Java Persistence API)**: Veritabanı ile etkileşim için kullanılır.
 - **ZXing**: QR kodları oluşturma ve okuma kütüphanesidir.
 - **Thymeleaf**: Sunucu tarafında sayfa gösterimi yapar.
-- **React, Router-Dom, Redux Toolkit, Metarial UI**: 
+- **Vite**: Hızlı bir geliştirme sunucusu ve build aracı, özellikle modern JavaScript projelerinde kullanılır.
+- **NodeJS (20.18)** JavaScript çalıştırma ortamı, özellikle frontend ve backend geliştirmede kullanılır.
+- **NPM (10.8)** Node.js için paket yöneticisi, bağımlılıkları yönetir ve projeyi çalıştırmak için gerekli araçları sağlar.
+- **React**: Dinamik ve bileşen tabanlı kullanıcı arayüzleri oluşturmak için kullanılan bir JavaScript kütüphanesi.
+- **Metarial UI**: Google’ın Material Design prensiplerine dayalı, şık ve uyumlu UI bileşenleri sunar.
+- **Diğer**:Redux Toolkit, html5-qrcode, Router-Dom ...
 
 ## 3. Hedef Kullanıcılar
 - **E-Ticaret Depoları**: Online siparişleri hızlı bir şekilde karşılamak isteyen firmalar.
@@ -81,77 +87,52 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 
 ## 7. Backend (API) Endpoint'leri
 
-## AdminController
-
-| HTTP Method | Endpoint                          | Açıklama                       |
-|-------------|-----------------------------------|--------------------------------|
-| POST        | `/admin/makeAdmin/{id}`           | Kullanıcıyı admin yapar        |
-| GET         | `/admin/dashboard`                | Deneme amaçlı dashboard sayfası|
-| DELETE      | `/admin/deleteUser/{id}`          | Kullanıcıyı siler              |
-
-## AuthController
-
-| HTTP Method | Endpoint                          | Açıklama                       |
-|-------------|-----------------------------------|--------------------------------|
-| POST        | `/auth/login`                     | Kullanıcı giriş yapar          |
-| POST        | `/auth/register`                  | Kullanıcı kaydolur             |
-
-## PackageController
-
-| HTTP Method | Endpoint                                      | Açıklama                       |
-|-------------|-----------------------------------------------|--------------------------------|
-| POST        | `/packages/add`                               | Yeni paket ekler               |
-| DELETE      | `/packages/exit/{id}`                         | Paketi çıkış yapar             |
-| GET         | `/packages/{id}`                              | Paket detayını getirir         |
-| GET         | `/packages`                                   | Tüm paketleri getirir          |
-| PUT         | `/packages/update/{id}`                       | Paketi günceller               |
-| PUT         | `/packages/changeRack/{packageId}/{newRackId}`| Paketin rafını değiştirir      |
-
-## PackageDetailController
-
-| HTTP Method | Endpoint                          | Açıklama                       |
-|-------------|-----------------------------------|--------------------------------|
-| GET         | `/PackageDetail/{PackageId}`      | Paket detay sayfasını gösterir |
-
-## ProductController
-
-| HTTP Method | Endpoint                                      | Açıklama                       |
-|-------------|-----------------------------------------------|--------------------------------|
-| POST        | `/products/add`                               | Yeni ürün ekler                |
-| POST        | `/products/addAll`                            | Toplu ürün ekler               |
-| DELETE      | `/products/delete/{id}`                       | Ürünü siler                    |
-| GET         | `/products/{id}`                              | Ürün detayını getirir          |
-| GET         | `/products`                                   | Tüm ürünleri getirir           |
-| GET         | `/products/search`                            | Ürün arar                      |
-| PUT         | `/products/update/{id}`                       | Ürünü günceller                |
-| GET         | `/products/{productId}/packages`              | Ürünün paketlerini getirir     |
-| GET         | `/products/{productId}/totalQuantity`         | Ürünün toplam miktarını getirir|
-
-## RackController
-
-| HTTP Method | Endpoint                                      | Açıklama                       |
-|-------------|-----------------------------------------------|--------------------------------|
-| POST        | `/racks/add`                                  | Yeni raf ekler                 |
-| DELETE      | `/racks/delete/{id}`                          | Rafı siler                     |
-| PUT         | `/racks/update/{id}`                          | Rafı günceller                 |
-| GET         | `/racks/{id}`                                 | Raf detayını getirir           |
-| GET         | `/racks`                                      | Tüm rafları getirir            |
-| GET         | `/racks/{rackId}/packages`                    | Raftaki tüm paketleri getirir  |
-| GET         | `/racks/findSuitableRacks/{productId}/{quantityOfProduct}` | Uygun rafları bulur           |
-
-## UserController
-
-| HTTP Method | Endpoint                          | Açıklama                       |
-|-------------|-----------------------------------|--------------------------------|
-| GET         | `/users`                          | Tüm kullanıcıları getirir      |
-| GET         | `/users/movements/{id}`           | Kullanıcının hareketlerini getirir |
-| GET         | `/users/current`                  | Mevcut kullanıcıyı getirir     |
-| POST        | `/users/changePassword`           | Kullanıcı şifresini değiştirir |
+| **Controller**           | **HTTP Method** | **URL**                                            | **Açıklama**                                                                                      |
+|--------------------------|-----------------|----------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| **AdminController**       | POST            | `/admin/createUser`                                | Yeni kullanıcı kaydı yapar.                                                                       |
+|                          | DELETE          | `/admin/deleteUser/{id}`                           | Kullanıcıyı siler.                                                                                 |
+|                          | POST            | `/admin/makeAdmin/{id}`                            | Kullanıcıyı admin yapar.                                                                           |
+|                          | GET             | `/admin/getMovements/{id}`                         | Kullanıcının hareketlerini getirir.                                                                |
+|                          | GET             | `/admin/getAllUsers`                               | Tüm kullanıcıları getirir.                                                                         |
+|                          | GET             | `/admin/getAllMovements`                           | Tüm hareketleri getirir.                                                                           |
+| **PackageController**     | POST            | `/packages/add`                                    | Yeni bir paket ekler.                                                                               |
+|                          | DELETE          | `/packages/exit/{id}`                              | Paketi sistemden çıkarır.                                                                          |
+|                          | GET             | `/packages/{id}`                                   | Belirli bir paketi getirir.                                                                        |
+|                          | GET             | `/packages`                                        | Tüm paketleri getirir.                                                                             |
+|                          | PUT             | `/packages/update/{id}`                            | Mevcut paketi günceller.                                                                           |
+|                          | PUT             | `/packages/changeRack/{packageId}/{newRackId}`      | Paketin rafını değiştirir.                                                                         |
+| **PackageDetailController**| GET            | `/PackageDetail/{PackageId}`                       | Paketin detay bilgilerini getirir ve `PackageDetail` adlı view'e yönlendirir.                     |
+| **ProductController**     | POST            | `/products/add`                                    | Yeni ürün ekler.                                                                                  |
+|                          | POST            | `/products/addAll`                                 | Birden fazla ürün ekler.                                                                           |
+|                          | DELETE          | `/products/delete/{id}`                            | Ürünü siler.                                                                                      |
+|                          | GET             | `/products/{id}`                                   | Belirli bir ürünü getirir.                                                                          |
+|                          | GET             | `/products`                                        | Tüm ürünleri getirir.                                                                              |
+|                          | GET             | `/products/search`                                 | Ürün adı ile arama yapar.                                                                          |
+|                          | PUT             | `/products/update/{id}`                            | Ürünü günceller.                                                                                  |
+|                          | GET             | `/products/{productId}/packages`                    | Ürüne ait paketleri getirir.                                                                      |
+|                          | GET             | `/products/{productId}/totalQuantity`               | Ürünün toplam miktarını getirir.                                                                  |
+| **RackController**        | POST            | `/racks/add`                                       | Yeni raf ekler.                                                                                   |
+|                          | DELETE          | `/racks/delete/{id}`                               | Rafı siler.                                                                                        |
+|                          | PUT             | `/racks/update/{id}`                               | Rafı günceller.                                                                                   |
+|                          | GET             | `/racks/{id}`                                      | Belirli bir rafı getirir.                                                                          |
+|                          | GET             | `/racks`                                           | Tüm rafları getirir.                                                                               |
+|                          | GET             | `/racks/{rackId}/packages`                         | Belirli bir rafın tüm paketlerini getirir.                                                         |
+|                          | GET             | `/racks/findSuitableRacks/{productId}/{quantityOfProduct}` | Ürün için uygun rafları bulur.                                                                   |
+| **UserController**        | GET             | `/users/current`                                   | Şu anki kullanıcıyı getirir.                                                                      |
+|                          | POST            | `/users/changePassword`                            | Kullanıcının şifresini değiştirir.                                                                  |
+| **AuthController**        | POST            | `/auth/login`                                      | Kullanıcıyı sisteme giriş yapar.                                                                   |
+|                          | POST            | `/auth/verifyToken`                                | Token'ı doğrular ve geçerli olup olmadığını kontrol eder.                                          |
 
 ## 8. Front-end Ekran Görüntüleri (Yapım Aşamasında)
+
+<p>Giriş Ekranı : </p>
 <img src="https://github.com/user-attachments/assets/caf36eda-b297-4822-8526-91b72475ef99" alt="Resim 1" width="750" />
+
+<p>Panel Ana Ekranı : </p>
 <img src="https://github.com/user-attachments/assets/520bb28e-7d67-4a56-982b-c5912a390746" alt="Resim 2" width="750" />
 
+<p>Personel Ekranı ve Personel Hareketleri Modalı : </p>
+<img src="https://github.com/user-attachments/assets/2dc65b32-5749-4fe2-aaff-8be686238360" alt="Resim 2" width="750" />
 
 
 
