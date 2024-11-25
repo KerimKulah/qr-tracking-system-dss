@@ -127,7 +127,7 @@ function Login() {
                                     marginBottom: '1.5rem',
                                 }}
                             >
-                                Giriş Yap
+                                Kullanıcı Girişi
                             </Typography>
 
                             {error && (
