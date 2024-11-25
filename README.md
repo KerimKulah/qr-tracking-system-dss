@@ -150,7 +150,7 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 
 ## 8. Front-end Ekran Görüntüleri (Yapım Aşamasında)
 <img src="https://github.com/user-attachments/assets/caf36eda-b297-4822-8526-91b72475ef99" alt="Resim 1" width="750" />
-<img src="https://github.com/user-attachments/assets/0e17e331-4544-4a31-9eca-12d3b8faa2f9" alt="Resim 2" width="750" />
+<img src="https://github.com/user-attachments/assets/520bb28e-7d67-4a56-982b-c5912a390746" alt="Resim 2" width="750" />
 
 
 
