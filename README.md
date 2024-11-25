@@ -132,6 +132,13 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 <p>Personel Ekranı ve Personel Hareketleri Modalı : </p>
 <img src="https://github.com/user-attachments/assets/2dc65b32-5749-4fe2-aaff-8be686238360" alt="Resim 2" width="750" />
 
+<p>Kameradan QR Okutulunca Açılan Paket Detayları Ekranı : </p>
+<img src="https://github.com/user-attachments/assets/989ba800-12e2-4d1b-ac27-e8435763dc03" alt="Resim 2" width="750" />
+
+
+
+
+
 
 
 
