@@ -49,8 +49,9 @@ const Packages = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Paket ID</TableCell>
+                            <TableCell>ID</TableCell>
                             <TableCell>Ürün Adı</TableCell>
+                            <TableCell>Raf</TableCell>
                             <TableCell>Adet</TableCell>
                             <TableCell>Son Kullanma Tarihi</TableCell>
                             <TableCell>Paket Ağırlığı</TableCell>
@@ -63,12 +64,13 @@ const Packages = () => {
                                 <TableRow key={pkg.id}>
                                     <TableCell>{pkg.id}</TableCell>
                                     <TableCell>{pkg.product.productName}</TableCell>
+                                    <TableCell>{pkg.rack.location}</TableCell>
                                     <TableCell>{pkg.quantityOfProduct}</TableCell>
                                     <TableCell>{pkg.productExpDate ? new Date(pkg.productExpDate).toLocaleDateString() : '-'}</TableCell>
                                     <TableCell>{pkg.packageWeight} kg</TableCell>
                                     <TableCell>
                                         <Button
-                                            variant="contained"
+                                            variant="outlined"
                                             color="primary"
                                             onClick={() => handleExitPackage(pkg.id)}
                                             style={{ marginRight: '10px' }}
@@ -80,7 +82,7 @@ const Packages = () => {
                                         </Button>
                                         <Button
                                             variant="outlined"
-                                            color="secondary"
+                                            color="info"
                                             onClick={() => handleShowQrCode(pkg.qrCode)} // QR kodunu gösterme
                                             style={{ marginLeft: '10px' }}
                                         >

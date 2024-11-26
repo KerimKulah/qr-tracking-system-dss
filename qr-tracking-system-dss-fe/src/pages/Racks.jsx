@@ -106,10 +106,10 @@ const Racks = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>ID</TableCell>
+                            <TableCell>Konum</TableCell>
                             <TableCell>Maksimum Kapasite</TableCell>
                             <TableCell>Mevcut Ağırlık</TableCell>
                             <TableCell>Boş Ağırlık</TableCell>
-                            <TableCell>Konum</TableCell>
                             <TableCell>Aksiyonlar</TableCell>
                         </TableRow>
                     </TableHead>
@@ -117,10 +117,10 @@ const Racks = () => {
                         {filteredRacks.map((rack) => (
                             <TableRow key={rack.id}>
                                 <TableCell>{rack.id}</TableCell>
-                                <TableCell>{rack.maxWeightCapacity}</TableCell>
-                                <TableCell>{rack.currentWeight}</TableCell>
-                                <TableCell>{rack.freeWeight}</TableCell>
                                 <TableCell>{rack.location}</TableCell>
+                                <TableCell>{rack.maxWeightCapacity} kg</TableCell>
+                                <TableCell>{rack.currentWeight} kg</TableCell>
+                                <TableCell>{rack.freeWeight} kg</TableCell>
                                 <TableCell>
                                     <Button variant="outlined" color="primary" onClick={() => handleUpdateClick(rack)} style={{ marginRight: '8px' }}>
                                         Güncelle
@@ -165,24 +165,6 @@ const Racks = () => {
                         onChange={handleChange}
                         error={Boolean(errors.maxWeightCapacity)}
                         helperText={errors.maxWeightCapacity}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Mevcut Ağırlık"
-                        name="currentWeight"
-                        type="number"
-                        value={selectedRack?.currentWeight || ''}
-                        onChange={handleChange}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Boş Ağırlık"
-                        name="freeWeight"
-                        type="number"
-                        value={selectedRack?.freeWeight || ''}
-                        onChange={handleChange}
                         fullWidth
                         margin="normal"
                     />
