@@ -32,20 +32,15 @@ const AddProduct = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 800, margin: 'auto', padding: 3 }}>
+        <>
+            <h2>ÜRÜN EKLEME</h2>
+            <Box sx={{ marginBottom: '1rem' }}>
+                {message && <Alert severity="success">{message}</Alert>}
+                {error && <Alert severity="error">{error}</Alert>}
+            </Box>
             <Paper elevation={3} sx={{ padding: 3 }}>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Ürün Ekle
-                </Typography>
-
-                {/* Hata mesajları ve başarı mesajı */}
-                <Box sx={{ marginBottom: 2 }}>
-                    {message && <Alert severity="success">{message}</Alert>}
-                    {error && <Alert severity="error">{error}</Alert>}
-                </Box>
-
                 <form onSubmit={handleSubmit}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 1.5 }}>
                         <TextField
                             label="Ürün Adı"
                             name="productName"
@@ -102,7 +97,7 @@ const AddProduct = () => {
                     </Box>
                 </form>
             </Paper>
-        </Box>
+        </>
     );
 };
 

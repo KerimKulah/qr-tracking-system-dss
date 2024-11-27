@@ -72,136 +72,156 @@ const Products = () => {
 
     return (
         <div>
-            <h2>Ürün Listesi</h2>
+            <h2>ÜRÜN LİSTESİ</h2>
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {message && <p style={{ color: 'green' }}>{message}</p>}
 
-            <TextField
-                label="Ürün Ara"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                style={{ marginBottom: '20px' }}
-                placeholder="Ürün adı veya bilgilerini arayın..."
-            />
+            <Paper
+                elevation={3}
+                sx={{
+                    padding: '1rem',
+                    width: '100%',
+                }}>
+                <TextField
+                    label="Ürün Ara"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    style={{ marginBottom: '20px' }}
+                    placeholder="Ürün adı veya bilgilerini arayın..."
+                />
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Adı</TableCell>
-                            <TableCell>Açıklaması</TableCell>
-                            <TableCell>Ağırlığı</TableCell>
-                            <TableCell>Kategorisi</TableCell>
-                            <TableCell>Toplam Miktar</TableCell> {/* New column for total quantity */}
-                            <TableCell>İşlemler</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredProducts.map((product) => (
-                            <TableRow key={product.id}>
-                                <TableCell>{product.id}</TableCell>
-                                <TableCell>{product.productName}</TableCell>
-                                <TableCell>{product.productDescription}</TableCell>
-                                <TableCell>{product.productWeight} kg</TableCell>
-                                <TableCell>{product.productCategory}</TableCell>
-                                <TableCell>
-                                    {quantities[product.id] !== undefined ? quantities[product.id] : 'Yükleniyor...'} {/* Display total quantity */}
-                                </TableCell>
-                                <TableCell>
-                                    <Button onClick={() => handleUpdateProduct(product)} variant="outlined" color="primary">Güncelle</Button>
-                                    <Button onClick={() => handleDeleteProduct(product.id)} variant="outlined" color="secondary" style={{ marginLeft: 8 }}>Sil</Button>
-                                </TableCell>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Adı</TableCell>
+                                <TableCell>Açıklaması</TableCell>
+                                <TableCell>Ağırlığı</TableCell>
+                                <TableCell>Kategorisi</TableCell>
+                                <TableCell>Toplam Miktar</TableCell> {/* New column for total quantity */}
+                                <TableCell>İşlemler</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {filteredProducts.map((product) => (
+                                <TableRow key={product.id}>
+                                    <TableCell>{product.id}</TableCell>
+                                    <TableCell>{product.productName}</TableCell>
+                                    <TableCell>{product.productDescription}</TableCell>
+                                    <TableCell>{product.productWeight} kg</TableCell>
+                                    <TableCell>{product.productCategory}</TableCell>
+                                    <TableCell>
+                                        {quantities[product.id] !== undefined ? quantities[product.id] : 'Yükleniyor...'} {/* Display total quantity */}
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button
+                                            onClick={() => handleUpdateProduct(product)}
+                                            variant="contained"
+                                            sx={{ backgroundColor: "#003366", color: "white" }}
+                                        >
+                                            Güncelle
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleDeleteProduct(product.id)}
+                                            variant="contained"
+                                            color="red"
+                                            sx={{ backgroundColor: "darkred", color: "white", marginLeft: '2px' }}
+                                        >
+                                            SİL
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-            {/*Güncelleme Modal */}
-            <Modal
-                open={openModal}
-                onClose={() => setOpenModal(false)}
-                aria-labelledby="update-product-modal"
-                aria-describedby="update-product-modal-description"
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        backgroundColor: 'white',
-                        padding: 4,
-                        borderRadius: 2,
-                    }}
+                {/*Güncelleme Modal */}
+                <Modal
+                    open={openModal}
+                    onClose={() => setOpenModal(false)}
+                    aria-labelledby="update-product-modal"
+                    aria-describedby="update-product-modal-description"
                 >
-                    <Typography variant="h5" gutterBottom>
-                        Ürün Güncelle
-                    </Typography>
-                    {/* Success and error messages */}
-                    <Box sx={{ marginBottom: 2 }}>
-                        {message && <Alert severity="success">{message}</Alert>}
-                        {error && <Alert severity="error">{error}</Alert>}
-                    </Box>
-                    <form>
-                        <TextField
-                            label="Ürün Adı"
-                            variant="outlined"
-                            fullWidth
-                            value={productName}
-                            onChange={(e) => setProductName(e.target.value)}
-                            style={{ marginBottom: '10px' }}
-                            required
-                        />
-                        <TextField
-                            label="Ürün Açıklaması"
-                            variant="outlined"
-                            fullWidth
-                            value={productDescription}
-                            onChange={(e) => setProductDescription(e.target.value)}
-                            style={{ marginBottom: '10px' }}
-                            required
-                        />
-                        <TextField
-                            label="Ürün Ağırlığı"
-                            variant="outlined"
-                            fullWidth
-                            type="number"
-                            value={productWeight}
-                            onChange={(e) => setProductWeight(e.target.value)}
-                            style={{ marginBottom: '10px' }}
-                            required
-                        />
-                        <FormControl fullWidth style={{ marginBottom: '10px' }} required>
-                            <InputLabel>Kategori</InputLabel>
-                            <Select
-                                value={productCategory}
-                                onChange={(e) => setProductCategory(e.target.value)}
-                            >
-                                {categories.map((category, index) => (
-                                    <MenuItem key={index} value={category}>
-                                        {category}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <Box sx={{ display: 'flex', gap: 2 }}>
-                            <Button onClick={handleSaveUpdate} variant="contained" color="primary" fullWidth>
-                                Kaydet
-                            </Button>
-                            <Button onClick={() => setOpenModal(false)} variant="outlined" color="secondary" fullWidth>
-                                Kapat
-                            </Button>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            backgroundColor: 'white',
+                            padding: 4,
+                            borderRadius: 2,
+                        }}
+                    >
+                        <Typography variant="h5" gutterBottom>
+                            Ürün Güncelle
+                        </Typography>
+                        {/* Success and error messages */}
+                        <Box sx={{ marginBottom: 2 }}>
+                            {message && <Alert severity="success">{message}</Alert>}
+                            {error && <Alert severity="error">{error}</Alert>}
                         </Box>
-                    </form>
-                </Box>
-            </Modal>
+                        <form>
+                            <TextField
+                                label="Ürün Adı"
+                                variant="outlined"
+                                fullWidth
+                                value={productName}
+                                onChange={(e) => setProductName(e.target.value)}
+                                style={{ marginBottom: '10px' }}
+                                required
+                            />
+                            <TextField
+                                label="Ürün Açıklaması"
+                                variant="outlined"
+                                fullWidth
+                                value={productDescription}
+                                onChange={(e) => setProductDescription(e.target.value)}
+                                style={{ marginBottom: '10px' }}
+                                required
+                            />
+                            <TextField
+                                label="Ürün Ağırlığı"
+                                variant="outlined"
+                                fullWidth
+                                type="number"
+                                value={productWeight}
+                                onChange={(e) => setProductWeight(e.target.value)}
+                                style={{ marginBottom: '10px' }}
+                                required
+                            />
+                            <FormControl fullWidth style={{ marginBottom: '10px' }} required>
+                                <InputLabel>Kategori</InputLabel>
+                                <Select
+                                    value={productCategory}
+                                    onChange={(e) => setProductCategory(e.target.value)}
+                                >
+                                    {categories.map((category, index) => (
+                                        <MenuItem key={index} value={category}>
+                                            {category}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <Box sx={{ display: 'flex', gap: 2 }}>
+                                <Button onClick={handleSaveUpdate} variant="contained" color="primary" fullWidth>
+                                    Kaydet
+                                </Button>
+                                <Button onClick={() => setOpenModal(false)} variant="outlined" color="secondary" fullWidth>
+                                    Kapat
+                                </Button>
+                            </Box>
+                        </form>
+                    </Box>
+                </Modal>
+            </Paper>
         </div>
     );
 };

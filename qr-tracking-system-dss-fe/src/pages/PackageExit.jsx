@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { useDispatch } from "react-redux";
 import { exitPackage } from "../redux/slices/packageSlice";
+import { Paper } from "@mui/material";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 
 const PackageExit = () => {
     const [packageId, setPackageId] = useState(null); // QR'dan gelen packageId
@@ -70,50 +74,62 @@ const PackageExit = () => {
     };
 
     return (
-        <div style={{ textAlign: "center", padding: "20px" }}>
+        <div>
             <h1>Paket Çıkışı</h1>
-            {/* Kamera Tarayıcıyı Başlat Butonu */}
-            {!isScannerActive && (
-                <button
-                    onClick={startScanner}
-                    style={{ padding: "10px 20px", backgroundColor: "blue", color: "white", marginBottom: "20px" }}
-                >
-                    QR Kod Tarayıcıyı Başlat
-                </button>
-            )}
+            <Paper
+                elevation={3}
+                sx={{
+                    padding: '1rem',
+                    width: '100%',
+                }}>
 
-            {/* QR Okuyucu için Div */}
-            <div id="qr-reader" style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}></div>
-
-            {/* Kamera İzni Reddedildi Mesajı */}
-            {cameraPermissionDenied && (
-                <div style={{ marginTop: "20px", padding: "10px", border: "1px solid red", color: "red" }}>
-                    <p>Kamera izni verilmedi. Kamera erişimi olmadan QR kod tarayıcı çalışmaz.</p>
-                    <p>Lütfen tarayıcı ayarlarından kamera izni verin ve sayfayı yeniden yükleyin.</p>
-                </div>
-            )}
-
-            {/* Onay Penceresi */}
-            {confirmExit && (
-                <div style={{ marginTop: "20px", padding: "10px", border: "1px solid black" }}>
-                    <p>
-                        Paket ID: <strong>{packageId}</strong>
-                    </p>
-                    <p>Paket çıkışını yapmak istiyor musunuz?</p>
-                    <button
-                        onClick={confirmPackageExit}
-                        style={{ marginRight: "10px", padding: "10px 20px", backgroundColor: "green", color: "white" }}
+                <Typography variant="body1" sx={{ marginBottom: 2 }}>
+                    QR Okuyucuyu butona basarak başlatabilirsiniz. Tarayıcıyı kullanarak paket çıkışı yapabilirsiniz.
+                </Typography>
+                {/* Kamera Tarayıcıyı Başlat Butonu */}
+                {!isScannerActive && (
+                    <Button
+                        onClick={startScanner}
+                        fullWidth
+                        style={{ padding: "10px 20px", backgroundColor: "#003366", color: "white", marginBottom: "20px" }}
                     >
-                        Evet
-                    </button>
-                    <button
-                        onClick={() => setConfirmExit(false)}
-                        style={{ padding: "10px 20px", backgroundColor: "red", color: "white" }}
-                    >
-                        Hayır
-                    </button>
-                </div>
-            )}
+                        QR Kod Tarayıcıyı Başlat
+                    </Button>
+                )}
+
+                {/* QR Okuyucu için Div */}
+                <div id="qr-reader" style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}></div>
+
+                {/* Kamera İzni Reddedildi Mesajı */}
+                {cameraPermissionDenied && (
+                    <div style={{ marginTop: "20px", padding: "10px", border: "1px solid red", color: "red" }}>
+                        <p>Kamera izni verilmedi. Kamera erişimi olmadan QR kod tarayıcı çalışmaz.</p>
+                        <p>Lütfen tarayıcı ayarlarından kamera izni verin ve sayfayı yeniden yükleyin.</p>
+                    </div>
+                )}
+
+                {/* Onay Penceresi */}
+                {confirmExit && (
+                    <div style={{ marginTop: "20px", padding: "10px", border: "1px solid black" }}>
+                        <p>
+                            Paket ID: <strong>{packageId}</strong>
+                        </p>
+                        <p>Paket çıkışını onaylıyor musunuz?</p>
+                        <button
+                            onClick={confirmPackageExit}
+                            style={{ marginRight: "10px", padding: "10px 20px", backgroundColor: "green", color: "white" }}
+                        >
+                            Evet
+                        </button>
+                        <button
+                            onClick={() => setConfirmExit(false)}
+                            style={{ padding: "10px 20px", backgroundColor: "red", color: "white" }}
+                        >
+                            Hayır
+                        </button>
+                    </div>
+                )}
+            </Paper>
         </div>
     );
 };

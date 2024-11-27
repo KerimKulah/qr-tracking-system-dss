@@ -47,13 +47,11 @@ const AddPackage = () => {
     };
 
     return (
-        <Box sx={{ maxWidth: 800, margin: 'auto', padding: 3 }}>
+        <>
+            <h2>PAKET GİRİŞİ</h2>
             <Paper elevation={3} sx={{ padding: 3 }}>
-                <Typography variant="h5" component="h2" gutterBottom>
-                    Paket Girişi
-                </Typography>
                 <Typography variant="body1" sx={{ marginBottom: 2 }}>
-                    Ürün seçiniz ve adetini giriniz, kapasiteye göre uygun raflar listelenecek.
+                    Paketteki ürünü ve adetini giriniz, kapasiteye göre uygun raflar listelenecek.
                 </Typography>
 
                 {/* Ürün Seçimi */}
@@ -141,6 +139,7 @@ const AddPackage = () => {
                 <Button
                     variant="contained"
                     color="primary"
+                    fullWidth
                     onClick={handleCreatePackage}
                     disabled={!selectedProduct || quantity <= 0 || !quantity || !selectedRack || status === 'loading' || expDateError}
                     sx={{
@@ -168,7 +167,7 @@ const AddPackage = () => {
                 {status === 'failed' && <div style={{ color: 'red' }}>{error}</div>}
                 {status === 'success' && <div style={{ color: 'green' }}>{message}</div>}
             </Paper>
-        </Box>
+        </>
     );
 };
 
