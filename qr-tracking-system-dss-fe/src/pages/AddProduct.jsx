@@ -94,13 +94,8 @@ const AddProduct = () => {
                                 disabled={loading}
                                 sx={{
                                     fontWeight: 'bold',
-                                    backgroundColor: '#3f51b5',
-                                    '&:hover': {
-                                        backgroundColor: '#303f9f',
-                                    },
-                                    mt: 2,
-                                }}
-                            >
+                                    backgroundColor: '#003366', color: 'white', '&:hover': { backgroundColor: '#002244', }
+                                }}>
                                 {loading ? 'Yükleniyor...' : ' Ekle'}
                             </Button>
                         </Box>

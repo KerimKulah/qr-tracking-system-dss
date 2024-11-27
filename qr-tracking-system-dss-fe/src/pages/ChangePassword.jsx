@@ -78,10 +78,9 @@ const ChangePassword = () => {
                 <Button
                     type="submit"
                     variant="contained"
-                    color="primary"
                     fullWidth
                     disabled={loading}
-                    sx={{ mt: 2 }}
+                    sx={{ mt: 2, backgroundColor: '#003366', color: 'white', '&:hover': { backgroundColor: '#002244', } }}
                 >
                     {loading ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
                 </Button>

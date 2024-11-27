@@ -44,10 +44,10 @@ function Sidebar() {
         <Box
             sx={{
                 width: '300px',
-                bgcolor: '#003366', // Koyu mavi tonu
+                bgcolor: '#003366',
                 color: 'white',
                 padding: '1rem',
-                height: '100%', // Yüksekliği %100 yapıyoruz, çünkü Drawer otomatik olarak sayfa yüksekliğine uyar
+                height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

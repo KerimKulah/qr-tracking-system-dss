@@ -67,10 +67,7 @@ const RackAdd = () => {
                     disabled={loading}
                     sx={{
                         fontWeight: 'bold',
-                        backgroundColor: '#3f51b5',
-                        '&:hover': {
-                            backgroundColor: '#303f9f',
-                        },
+                        backgroundColor: '#003366', color: 'white', '&:hover': { backgroundColor: '#002244', },
                         mt: 2,
                     }}
                 >
