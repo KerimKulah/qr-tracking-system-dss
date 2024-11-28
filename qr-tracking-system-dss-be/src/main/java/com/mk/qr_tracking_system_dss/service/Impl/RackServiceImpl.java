@@ -109,6 +109,7 @@ public class RackServiceImpl implements RackService {
 
         // Güncellenmesi gereken alanları ayarla
         existingRack.setMaxWeightCapacity(rack.getMaxWeightCapacity());
+        existingRack.setFreeWeight(rack.getMaxWeightCapacity());
         existingRack.setLocation(rack.getLocation());
 
         // Güncellenmiş rafı kaydet
