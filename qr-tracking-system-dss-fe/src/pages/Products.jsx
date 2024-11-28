@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Modal, Box, FormControl, InputLabel, Select, MenuItem, Typography, Alert, Chip, TablePagination } from '@mui/material';
-import { getAllProducts, deleteProduct, updateProduct, getTotalQuantity } from '../redux/slices/productSlice';
+import { clearError, clearMessage, getAllProducts, deleteProduct, updateProduct, getTotalQuantity } from '../redux/slices/productSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 
@@ -28,6 +28,8 @@ const Products = () => {
     };
 
     useEffect(() => {
+        dispatch(clearMessage());
+        dispatch(clearError());
         dispatch(getAllProducts());
     }, [dispatch]);
 
@@ -58,6 +60,10 @@ const Products = () => {
     const handleDeleteProduct = (productId) => {
         dispatch(deleteProduct(productId)).then(() => {
             dispatch(getAllProducts());
+            setTimeout(() => {
+                dispatch(clearMessage());
+                dispatch(clearError());
+            }, 1500);
         });
     };
 
@@ -71,6 +77,10 @@ const Products = () => {
         };
         dispatch(updateProduct(updatedProduct)).then(() => {
             dispatch(getAllProducts());
+            setTimeout(() => {
+                dispatch(clearMessage());
+                dispatch(clearError());
+            }, 1500);
         });
         setOpenModal(false);
     };
