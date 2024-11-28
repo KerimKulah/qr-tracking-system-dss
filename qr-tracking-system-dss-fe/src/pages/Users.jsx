@@ -48,11 +48,19 @@ const Users = () => {
     const handleMakeAdmin = (userId) => {
         dispatch(makeAdmin(userId));
         dispatch(getAllUsers());
+        setTimeout(() => {
+            dispatch(clearMessage());
+            dispatch(clearError());
+        }, 1500);
     };
 
     const handleDeleteUser = async (userId) => {
         await dispatch(deleteUser(userId));
         dispatch(getAllUsers());
+        setTimeout(() => {
+            dispatch(clearMessage());
+            dispatch(clearError());
+        }, 1500);
     };
 
     // Kullanıcı sayfa değişimi
