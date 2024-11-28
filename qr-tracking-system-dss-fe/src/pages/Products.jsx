@@ -114,7 +114,7 @@ const Products = () => {
                                 <TableCell>Açıklaması</TableCell>
                                 <TableCell>Ağırlığı</TableCell>
                                 <TableCell>Kategorisi</TableCell>
-                                <TableCell>Toplam Miktar</TableCell>
+                                <TableCell>Stoktaki Adeti</TableCell>
                                 <TableCell>Stok Durumu</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>
