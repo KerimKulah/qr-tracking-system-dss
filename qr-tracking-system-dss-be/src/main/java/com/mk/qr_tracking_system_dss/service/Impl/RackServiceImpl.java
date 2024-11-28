@@ -32,15 +32,12 @@ public class RackServiceImpl implements RackService {
 
     @Override
     public void deleteRackById(Long id) {
-        Rack rack = rackRepository.findById(id)
+        rackRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile raf bulunamadı."));
         List<Package> packagesInRack = packageRepository.findByRackId(id);
         if (!packagesInRack.isEmpty()) {
             throw new IllegalArgumentException("Bu rafın içinde paketler var. Rafı silemezsiniz.");
         }
-        rack.setMaxWeightCapacity(0);
-        rack.setLocation("Kaldırıldı");
-        rackRepository.save(rack);
         rackRepository.deleteById(id);
     }
 
