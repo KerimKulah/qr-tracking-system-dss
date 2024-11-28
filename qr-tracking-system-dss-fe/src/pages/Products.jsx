@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Modal, Box, FormControl, InputLabel, Select, MenuItem, Typography, Alert, Chip } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Modal, Box, FormControl, InputLabel, Select, MenuItem, Typography, Alert, Chip, TablePagination } from '@mui/material';
 import { getAllProducts, deleteProduct, updateProduct, getTotalQuantity } from '../redux/slices/productSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -16,6 +16,8 @@ const Products = () => {
     const [productWeight, setProductWeight] = useState('');
     const [productCategory, setProductCategory] = useState('');
     const [quantities, setQuantities] = useState({});
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5); // Her sayfada 5 ürün
 
     const categories = ['Elektronik', 'Gida', 'Giyim', 'Spor', 'Egitim', 'Kozmetik', 'Oyuncak', 'Diger'];
 
@@ -81,6 +83,17 @@ const Products = () => {
         product.id.toString().includes(searchTerm)
     );
 
+    // Sayfa değiştirildiğinde
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    // Sayfa başına gösterilecek satır sayısı değiştirildiğinde
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     return (
         <div>
             <h2>ÜRÜN LİSTESİ</h2>
@@ -94,6 +107,7 @@ const Products = () => {
                     padding: '1rem',
                     width: '100%',
                 }}>
+
                 <TextField
                     label="Ürün Ara"
                     variant="outlined"
@@ -120,7 +134,7 @@ const Products = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {filteredProducts.map((product) => (
+                            {filteredProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((product) => (
                                 <TableRow key={product.id}>
                                     <TableCell>{product.id}</TableCell>
                                     <TableCell>{product.productName}</TableCell>
@@ -131,7 +145,6 @@ const Products = () => {
                                         {quantities[product.id] !== undefined ? quantities[product.id] : 'Yükleniyor...'}
                                     </TableCell>
                                     <TableCell>
-                                        {/* Stok durumu renkli chip */}
                                         <Chip
                                             label={
                                                 quantities[product.id] !== undefined
@@ -156,13 +169,13 @@ const Products = () => {
                                             onClick={() => handleUpdateProduct(product)}
                                             variant="contained"
                                             sx={{
-                                                backgroundColor: 'white',  // İç kısım beyaz
-                                                color: 'black',  // Yazı rengi siyah
+                                                backgroundColor: 'white',
+                                                color: 'black',
                                                 padding: '3px',
-                                                border: '1px solid black',  // Siyah border
+                                                border: '1px solid black',
                                                 '&:hover': {
-                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                    backgroundColor: 'black',
+                                                    color: 'white',
                                                 },
                                             }} >
                                             <EditNoteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
@@ -174,12 +187,12 @@ const Products = () => {
                                             sx={{
                                                 marginLeft: '5px',
                                                 padding: '3px',
-                                                backgroundColor: 'white',  // İç kısım beyaz
-                                                color: 'black',  // Yazı rengi siyah
-                                                border: '1px solid black',  // Siyah border
+                                                backgroundColor: 'white',
+                                                color: 'black',
+                                                border: '1px solid black',
                                                 '&:hover': {
-                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                    backgroundColor: 'black',
+                                                    color: 'white',
                                                 },
                                             }} >
                                             <DeleteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
@@ -191,6 +204,17 @@ const Products = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+
+                {/* Sayfalama */}
+                <TablePagination
+                    rowsPerPageOptions={[5]}
+                    component="div"
+                    count={filteredProducts.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
 
                 {/* Güncelleme Modal */}
                 <Modal
@@ -214,7 +238,6 @@ const Products = () => {
                         <Typography variant="h5" gutterBottom>
                             Ürün Güncelle
                         </Typography>
-                        {/* Success and error messages */}
                         <Box sx={{ marginBottom: 2 }}>
                             {message && <Alert severity="success">{message}</Alert>}
                             {error && <Alert severity="error">{error}</Alert>}
@@ -239,20 +262,21 @@ const Products = () => {
                                 required
                             />
                             <TextField
-                                label="Ürün Ağırlığı"
+                                label="Ürün Ağırlığı (kg)"
                                 variant="outlined"
                                 fullWidth
-                                type="number"
                                 value={productWeight}
                                 onChange={(e) => setProductWeight(e.target.value)}
                                 style={{ marginBottom: '10px' }}
                                 required
                             />
-                            <FormControl fullWidth style={{ marginBottom: '10px' }} required>
-                                <InputLabel>Kategori</InputLabel>
+                            <FormControl fullWidth style={{ marginBottom: '10px' }}>
+                                <InputLabel>Kategori Seçin</InputLabel>
                                 <Select
                                     value={productCategory}
                                     onChange={(e) => setProductCategory(e.target.value)}
+                                    label="Kategori Seçin"
+                                    required
                                 >
                                     {categories.map((category, index) => (
                                         <MenuItem key={index} value={category}>
@@ -264,8 +288,8 @@ const Products = () => {
                             <Button
                                 onClick={handleSaveUpdate}
                                 variant="contained"
-                                color="primary"
                                 fullWidth
+                                style={{ marginTop: '10px' }}
                             >
                                 Güncelle
                             </Button>

@@ -130,155 +130,164 @@ const Racks = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {message && <p style={{ color: 'green' }}>{message}</p>}
 
-            <TextField
-                label="Raf Ara"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Raf, konum veya ağırlık arayın..."
-            />
+            <Paper
+                elevation={3}
+                sx={{
+                    padding: '1rem',
+                    width: '100%',
+                }}>
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Konum</TableCell>
-                            <TableCell>Maksimum Kapasite</TableCell>
-                            <TableCell>Mevcut Ağırlık</TableCell>
-                            <TableCell>Kalan Kapasite</TableCell>
-                            <TableCell>Aksiyonlar</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredRacks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((rack) => (
-                            <TableRow key={rack.id}>
-                                <TableCell>{rack.id}</TableCell>
-                                <TableCell>{rack.location}</TableCell>
-                                <TableCell>{rack.maxWeightCapacity} kg</TableCell>
-                                <TableCell>{rack.currentWeight} kg</TableCell>
-                                <TableCell>{rack.freeWeight} kg</TableCell>
-                                <TableCell>
-                                    <Button
-                                        onClick={() => handleUpdateClick(rack)}
-                                        variant="contained"
-                                        sx={{
-                                            marginLeft: '5px',
-                                            padding: '3px',
-                                            backgroundColor: 'white',  // İç kısım beyaz
-                                            color: 'black',  // Yazı rengi siyah
-                                            border: '1px solid black',  // Siyah border
-                                            '&:hover': {
-                                                backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                color: 'white',  // Hover durumunda yazı beyaz olacak
-                                            },
-                                        }} >
-                                        <EditNoteIcon sx={{ marginRight: '4px', fontSize: '18px' }} />
-                                        Güncelle
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => handleDelete(rack.id)}
-                                        sx={{
-                                            marginLeft: '5px',
-                                            padding: '3px',
-                                            backgroundColor: 'white',  // İç kısım beyaz
-                                            color: 'black',  // Yazı rengi siyah
-                                            border: '1px solid black',  // Siyah border
-                                            '&:hover': {
-                                                backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                color: 'white',  // Hover durumunda yazı beyaz olacak
-                                            },
-                                        }} >
-                                        <DeleteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
-                                        Sil
-                                    </Button>
-                                    <Button variant="contained"
-                                        sx={{
-                                            marginLeft: '5px',
-                                            padding: '3px',
-                                            backgroundColor: 'white',  // İç kısım beyaz
-                                            color: 'black',  // Yazı rengi siyah
-                                            border: '1px solid black',  // Siyah border
-                                            '&:hover': {
-                                                backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                color: 'white',  // Hover durumunda yazı beyaz olacak
-                                            },
-                                        }} >
-                                        Paketler
-                                    </Button>
-                                </TableCell>
+                <TextField
+                    label="Raf Ara"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Raf, konum veya ağırlık arayın..."
+                />
+
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Konum</TableCell>
+                                <TableCell>Maksimum Kapasite</TableCell>
+                                <TableCell>Mevcut Ağırlık</TableCell>
+                                <TableCell>Kalan Kapasite</TableCell>
+                                <TableCell>Aksiyonlar</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {filteredRacks.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((rack) => (
+                                <TableRow key={rack.id}>
+                                    <TableCell>{rack.id}</TableCell>
+                                    <TableCell>{rack.location}</TableCell>
+                                    <TableCell>{rack.maxWeightCapacity} kg</TableCell>
+                                    <TableCell>{rack.currentWeight} kg</TableCell>
+                                    <TableCell>{rack.freeWeight} kg</TableCell>
+                                    <TableCell>
+                                        <Button
+                                            onClick={() => handleUpdateClick(rack)}
+                                            variant="contained"
+                                            sx={{
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <EditNoteIcon sx={{ marginRight: '4px', fontSize: '18px' }} />
+                                            Güncelle
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => handleDelete(rack.id)}
+                                            sx={{
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <DeleteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
+                                            Sil
+                                        </Button>
+                                        <Button variant="contained"
+                                            sx={{
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            Paketler
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-            {/* Sayfalama */}
-            <TablePagination
-                component="div"
-                count={filteredRacks.length}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[5]}
-            />
+                {/* Sayfalama */}
+                <TablePagination
+                    component="div"
+                    count={filteredRacks.length}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={[5]}
+                />
 
-            {/* Güncelleme Modalı */}
-            <Modal open={openModal} onClose={handleCloseModal}>
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                        p: 4,
-                        borderRadius: 2,
-                    }}
-                >
-                    <Typography variant="h6" gutterBottom>
-                        Rafı Güncelle
-                    </Typography>
-                    <Typography variant="h7" gutterBottom>
-                        Not : Paket bulunan rafın ağırlığı değiştirilemez.
-                    </Typography>
-                    <TextField
-                        label="Maksimum Kapasite"
-                        name="maxWeightCapacity"
-                        type="number"
-                        value={selectedRack?.maxWeightCapacity || ''}
-                        onChange={handleChange}
-                        error={Boolean(errors.maxWeightCapacity)}
-                        helperText={errors.maxWeightCapacity}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Konum"
-                        name="location"
-                        value={selectedRack?.location || ''}
-                        onChange={handleChange}
-                        error={Boolean(errors.location)}
-                        helperText={errors.location}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                        <Button variant="contained" color="primary" onClick={handleUpdateSubmit}>
-                            Kaydet
-                        </Button>
-                        <Button variant="outlined" color="secondary" onClick={handleCloseModal}>
-                            İptal
-                        </Button>
+                {/* Güncelleme Modalı */}
+                <Modal open={openModal} onClose={handleCloseModal}>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            bgcolor: 'background.paper',
+                            boxShadow: 24,
+                            p: 4,
+                            borderRadius: 2,
+                        }}
+                    >
+                        <Typography variant="h6" gutterBottom>
+                            Rafı Güncelle
+                        </Typography>
+                        <Typography variant="h7" gutterBottom>
+                            Not : Paket bulunan rafın ağırlığı değiştirilemez.
+                        </Typography>
+                        <TextField
+                            label="Maksimum Kapasite"
+                            name="maxWeightCapacity"
+                            type="number"
+                            value={selectedRack?.maxWeightCapacity || ''}
+                            onChange={handleChange}
+                            error={Boolean(errors.maxWeightCapacity)}
+                            helperText={errors.maxWeightCapacity}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            label="Konum"
+                            name="location"
+                            value={selectedRack?.location || ''}
+                            onChange={handleChange}
+                            error={Boolean(errors.location)}
+                            helperText={errors.location}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                            <Button variant="contained" color="primary" onClick={handleUpdateSubmit}>
+                                Kaydet
+                            </Button>
+                            <Button variant="outlined" color="secondary" onClick={handleCloseModal}>
+                                İptal
+                            </Button>
+                        </Box>
                     </Box>
-                </Box>
-            </Modal>
+                </Modal>
+            </Paper>
+
 
             {/*  Doluluk Grafiği */}
             <Paper elevation={3} sx={{ padding: '1rem', marginTop: '2rem', maxHeight: { xs: '500px', sm: '250px' }, display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
