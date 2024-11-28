@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePassword } from '../redux/slices/userSlice';
-import { Box, Typography, TextField, Button, Alert } from '@mui/material';
+import { TextField, Button, Alert, Paper } from '@mui/material';
 
 const ChangePassword = () => {
     const dispatch = useDispatch();
@@ -38,54 +38,50 @@ const ChangePassword = () => {
     };
 
     return (
-        <Box
-            sx={{
-                maxWidth: 400,
-                margin: 'auto',
-                mt: 5,
-                p: 3,
-                bgcolor: 'background.paper',
-                boxShadow: 3,
-                borderRadius: 2,
-            }}
-        >
-            <Typography variant="h5" align="center" gutterBottom>
-                Şifre Değiştir
-            </Typography>
+        <>
 
+            <h2>ŞİFRE DEĞİŞTİRME</h2>
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
             {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
 
-            <form onSubmit={handleChangePassword}>
-                <TextField
-                    label="Yeni Şifre"
-                    type="password"
-                    fullWidth
-                    margin="normal"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                />
-                <TextField
-                    label="Yeni Şifreyi Onayla"
-                    type="password"
-                    fullWidth
-                    margin="normal"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    disabled={loading}
-                    sx={{ mt: 2, backgroundColor: '#003366', color: 'white', '&:hover': { backgroundColor: '#002244', } }}
-                >
-                    {loading ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
-                </Button>
-            </form>
-        </Box>
+            <Paper
+                elevation={3}
+                sx={{
+                    padding: '1rem',
+                    width: '100%',
+                }}>
+                <form onSubmit={handleChangePassword}>
+                    <TextField
+                        label="Yeni Şifre"
+                        type="password"
+                        fullWidth
+                        margin="normal"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                    />
+                    <TextField
+                        label="Yeni Şifreyi Onayla"
+                        type="password"
+                        fullWidth
+                        margin="normal"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        disabled={loading}
+                        sx={{ mt: 2, backgroundColor: '#003366', color: 'white', '&:hover': { backgroundColor: '#002244', } }}
+                    >
+                        {loading ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
+                    </Button>
+                </form>
+            </Paper>
+        </>
+
     );
 };
 
