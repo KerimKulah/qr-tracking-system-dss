@@ -148,7 +148,14 @@ const Racks = () => {
                 />
 
                 <TableContainer>
-                    <Table>
+                    <Table
+                        sx={{
+                            '@media (max-width: 600px)': {
+                                '& .MuiTableCell-root': {
+                                    padding: '10px', // Hücre içi boşlukları küçültmek
+                                },
+                            },
+                        }}>
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
@@ -167,7 +174,15 @@ const Racks = () => {
                                     <TableCell>{rack.maxWeightCapacity} kg</TableCell>
                                     <TableCell>{rack.currentWeight} kg</TableCell>
                                     <TableCell>{rack.freeWeight} kg</TableCell>
-                                    <TableCell>
+                                    <TableCell
+                                        sx={{
+                                            display: 'flex', // Flexbox düzeni
+                                            flexWrap: 'nowrap', // Alt alta geçmeyi önler
+                                            gap: '4px', // Butonlar arası boşluk
+                                            '@media (max-width: 600px)': {
+                                                justifyContent: 'flex-start', // Mobilde hizalama
+                                            },
+                                        }}>
                                         <Button
                                             onClick={() => handleUpdateClick(rack)}
                                             variant="contained"

@@ -1,9 +1,12 @@
 package com.mk.qr_tracking_system_dss.service.Impl;
 
 import com.mk.qr_tracking_system_dss.dto.UserDto;
+
 import com.mk.qr_tracking_system_dss.dto.UserMovementDto;
 import com.mk.qr_tracking_system_dss.entity.User;
+import com.mk.qr_tracking_system_dss.entity.Package;
 import com.mk.qr_tracking_system_dss.enums.Role;
+import com.mk.qr_tracking_system_dss.repository.MovementRepository;
 import com.mk.qr_tracking_system_dss.repository.UserRepository;
 import com.mk.qr_tracking_system_dss.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MovementRepository movementRepository;
 
     @Override
     public List<UserDto> getAllUsers() {
@@ -50,11 +54,19 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile kullanıcı bulunamadı."));
         return user.getMovements().stream()
-                .map(movement -> new UserMovementDto(
-                        movement.getId(),
-                        movement.getMovementDate(),
-                        movement.getMovementType(),
-                        movement.getAPackage().getId()))
+                .map(movement -> {
+                    Package aPackage = movement.getAPackage(); //aPackage.product.productName
+                    Long packageId = (aPackage != null) ? aPackage.getId() : null;
+                    return new UserMovementDto(
+                            movement.getId(),
+                            movement.getMovementDate(),
+                            movement.getMovementType(),
+                            packageId,
+                            movement.getAPackage().getProduct().getProductName()
+                            );
+
+
+                })
                 .collect(Collectors.toList());
     }
 

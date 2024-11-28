@@ -53,15 +53,22 @@ const Packages = () => {
                     placeholder="Ürün adı, paket ID, son kullanma tarihi, ağırlık gibi kriterlerle arama yapabilirsiniz."
                 />
                 <TableContainer>
-                    <Table>
+                    <Table
+                        sx={{
+                            '@media (max-width: 600px)': {
+                                '& .MuiTableCell-root': {
+                                    padding: '10px', // Hücre içi boşlukları küçültmek
+                                },
+                            },
+                        }}>
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
                                 <TableCell>Ürün Adı</TableCell>
                                 <TableCell>Raf</TableCell>
                                 <TableCell>Adet</TableCell>
-                                <TableCell>Son Kullanma Tarihi</TableCell>
-                                <TableCell>Paket Ağırlığı</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }} >Son Kullanma Tarihi</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Paket Ağırlığı</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>
                         </TableHead>
@@ -75,7 +82,15 @@ const Packages = () => {
                                         <TableCell>{pkg.quantityOfProduct}</TableCell>
                                         <TableCell>{pkg.productExpDate ? new Date(pkg.productExpDate).toLocaleDateString() : '-'}</TableCell>
                                         <TableCell>{pkg.packageWeight} kg</TableCell>
-                                        <TableCell>
+                                        <TableCell
+                                            sx={{
+                                                display: 'flex', // Flexbox düzeni
+                                                flexWrap: 'nowrap', // Alt alta geçmeyi önler
+                                                gap: '4px', // Butonlar arası boşluk
+                                                '@media (max-width: 600px)': {
+                                                    justifyContent: 'flex-start', // Mobilde hizalama
+                                                },
+                                            }}>
                                             <Button
                                                 variant="contained"
                                                 sx={{

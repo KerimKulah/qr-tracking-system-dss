@@ -120,7 +120,14 @@ const Products = () => {
                 />
 
                 <TableContainer>
-                    <Table>
+                    <Table
+                        sx={{
+                            '@media (max-width: 600px)': {
+                                '& .MuiTableCell-root': {
+                                    padding: '10px', // Hücre içi boşlukları küçültmek
+                                },
+                            },
+                        }}>
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
@@ -128,8 +135,8 @@ const Products = () => {
                                 <TableCell>Açıklaması</TableCell>
                                 <TableCell>Ağırlığı</TableCell>
                                 <TableCell>Kategorisi</TableCell>
-                                <TableCell>Stoktaki Adeti</TableCell>
-                                <TableCell>Stok Durumu</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Stoktaki Adeti</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Stok Durumu</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>
                         </TableHead>
@@ -164,7 +171,15 @@ const Products = () => {
                                             }
                                         />
                                     </TableCell>
-                                    <TableCell>
+                                    <TableCell
+                                        sx={{
+                                            display: 'flex', // Flexbox düzeni
+                                            flexWrap: 'nowrap', // Alt alta geçmeyi önler
+                                            gap: '4px', // Butonlar arası boşluk
+                                            '@media (max-width: 600px)': {
+                                                justifyContent: 'flex-start', // Mobilde hizalama
+                                            },
+                                        }}>
                                         <Button
                                             onClick={() => handleUpdateProduct(product)}
                                             variant="contained"

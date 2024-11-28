@@ -15,4 +15,5 @@ public class UserMovementDto {
     private LocalDateTime movementDate;
     private MovementType movementType;
     private Long packageId;
+    private String productName;
 }

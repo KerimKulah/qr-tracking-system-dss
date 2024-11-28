@@ -19,7 +19,6 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE package SET deleted = true WHERE id = ?")
-@Where(clause = "deleted = false")
 @Entity
 public class Package extends  BaseEntity{
 
