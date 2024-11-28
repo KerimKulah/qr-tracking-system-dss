@@ -135,6 +135,15 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 <p>Kameradan QR Okutulunca Açılan Paket Detayları Ekranı : </p>
 <img src="https://github.com/user-attachments/assets/989ba800-12e2-4d1b-ac27-e8435763dc03" alt="Resim 2" width="750" />
 
+<p>Diger Sekmelerden Görüntüler : </p>
+<img src="https://github.com/user-attachments/assets/4d609f5c-eafd-49ac-9a09-1999fb9e7435" alt="Resim 2" width="750" />
+<img src="https://github.com/user-attachments/assets/797c2df3-20b9-49b2-b94e-2e2a394a41eb" alt="Resim 2" width="750" />
+
+
+
+
+
+
 
 
 
