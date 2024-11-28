@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers, deleteUser, makeAdmin, getMovements } from '../redux/slices/adminSlice';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Modal, Box, Typography, TextField, TablePagination } from '@mui/material';
 import { clearError, clearMessage } from '../redux/slices/adminSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import FingerprintIcon from '@mui/icons-material/Fingerprint';
 
 const Users = () => {
     const dispatch = useDispatch();
@@ -15,6 +18,7 @@ const Users = () => {
     const [movementPage, setMovementPage] = useState(0); // Hareketler sayfa
     const [rowsPerUserPage, setRowsPerUserPage] = useState(5); // Kullanıcılar sayfa başına gösterilecek satır sayısı
     const [rowsPerMovementPage, setRowsPerMovementPage] = useState(5); // Hareketler sayfa başına gösterilecek satır sayısı
+
 
     useEffect(() => {
         dispatch(clearMessage());
@@ -132,25 +136,57 @@ const Users = () => {
 
                                         <Button
                                             onClick={() => handleMakeAdmin(user.id)}
-                                            variant="outlined"
                                             color="primary"
-                                            sx={{ whiteSpace: 'nowrap' }}
-                                        >
+                                            variant="contained"
+                                            sx={{
+                                                whiteSpace: 'nowrap',
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <AdminPanelSettingsIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
                                             Admin Yap
                                         </Button>
                                         <Button
                                             onClick={() => handleDeleteUser(user.id)}
-                                            variant="outlined"
-                                            color="secondary"
-                                            sx={{ whiteSpace: 'nowrap' }}
-                                        >
+                                            variant="contained"
+                                            sx={{
+                                                whiteSpace: 'nowrap',
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <DeleteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
                                             Sil
                                         </Button>
                                         <Button
                                             onClick={() => handleOpenMovements(user.id)}
-                                            variant="outlined"
-                                            color="info"
-                                            sx={{ whiteSpace: 'nowrap' }}>
+                                            variant="contained"
+                                            sx={{
+                                                whiteSpace: 'nowrap',
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <FingerprintIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
                                             Hareketler
                                         </Button>
                                     </TableCell>

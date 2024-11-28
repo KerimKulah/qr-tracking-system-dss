@@ -7,10 +7,13 @@ import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import { Inventory } from '@mui/icons-material';
+import { getRackPackages } from '../redux/slices/rackSlice';
+
 
 const Racks = () => {
     const dispatch = useDispatch();
-    const { racks, error, message } = useSelector((state) => state.rack);
+    const { racks, error, message, rackPackages } = useSelector((state) => state.rack);
     const [openModal, setOpenModal] = useState(false);
     const [selectedRack, setSelectedRack] = useState(null);
     const [errors, setErrors] = useState({});
@@ -18,6 +21,9 @@ const Racks = () => {
     const [filteredRacks, setFilteredRacks] = useState([]);
     const [page, setPage] = useState(0);  // Sayfa numarası
     const [rowsPerPage, setRowsPerPage] = useState(5);  // Sayfa başına satır sayısı
+    const [openPackagesModal, setOpenPackagesModal] = useState(false);
+    const [packagesPage, setPackagesPage] = useState(0);  // Geçerli sayfa
+    const [rowsPerPackagesPage, setRowsPerPackagesPage] = useState(5);  // Sayfa başına satır sayısı
 
     useEffect(() => {
         dispatch(clearMessage());
@@ -35,6 +41,16 @@ const Racks = () => {
                 || rack.id.toString().includes(searchTerm)
             ));
     }, [racks, searchTerm]);
+
+    // PAKET MODALI İÇİN SAYFALAMA
+    const handleChangePackagesPage = (event, newPage) => {
+        setPackagesPage(newPage);  // Sayfa numarasını güncelle
+    };
+    const handleChangeRowsPerPackagesPage = (event) => {
+        setRowsPerPackagesPage(parseInt(event.target.value, 10));  // Sayfa başına gösterilecek satır sayısını güncelle
+        setPackagesPage(0);  // Sayfa numarasını sıfırla
+    };
+    const displayedPackages = rackPackages.slice(packagesPage * rowsPerPackagesPage, packagesPage * rowsPerPackagesPage + rowsPerPackagesPage);
 
     // Grafik
     ChartJS.register(ArcElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -110,14 +126,18 @@ const Racks = () => {
         }
     };
 
-
-
     const handleDelete = (rackId) => {
         dispatch(deleteRack(rackId));
     };
 
     const handleViewPackages = (rackId) => {
-        console.log('Paketleri Görüntüle:', rackId);
+        dispatch(getRackPackages(rackId)).then(() => {
+            setOpenPackagesModal(true);
+        });
+    };
+
+    const handleClosePackagesModal = () => {
+        setOpenPackagesModal(false);
     };
 
     const handleChange = (e) => {
@@ -215,9 +235,11 @@ const Racks = () => {
                                                 },
                                             }} >
                                             <DeleteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
-                                            Sil
+                                            SİL
                                         </Button>
-                                        <Button variant="contained"
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => handleViewPackages(rack.id)}
                                             sx={{
                                                 marginLeft: '5px',
                                                 padding: '3px',
@@ -229,6 +251,7 @@ const Racks = () => {
                                                     color: 'white',  // Hover durumunda yazı beyaz olacak
                                                 },
                                             }} >
+                                            <Inventory sx={{ marginRight: '5px', fontSize: '18px' }} />
                                             Paketler
                                         </Button>
                                     </TableCell>
@@ -248,6 +271,68 @@ const Racks = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     rowsPerPageOptions={[5]}
                 />
+
+
+                {/* Paketler Modalı */}
+                <Modal open={openPackagesModal} onClose={handleClosePackagesModal}>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 600,
+                            bgcolor: 'background.paper',
+                            boxShadow: 24,
+                            p: 4,
+                            borderRadius: 2,
+                        }}
+                    >
+                        <Typography variant="h6" gutterBottom>
+                            Paketler
+                        </Typography>
+                        <TableContainer>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Paket ID</TableCell>
+                                        <TableCell>Paketteki Ürün</TableCell>
+                                        <TableCell>Paket Ağırlığı</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {displayedPackages.map((packageItem) => (
+                                        <TableRow key={packageItem.id}>
+                                            <TableCell>{packageItem.id}</TableCell>
+                                            <TableCell>{packageItem.product.productName}</TableCell>
+                                            <TableCell>{packageItem.packageWeight} kg</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                        {/* Sayfalama bileşeni */}
+                        <TablePagination
+                            rowsPerPageOptions={[5]}  // Sayfa başına 5 paket göster
+                            component="div"
+                            count={rackPackages.length}  // Tüm paketlerin sayısı
+                            rowsPerPage={rowsPerPackagesPage}  // Sayfa başına gösterilen paket sayısı
+                            page={packagesPage}  // Geçerli sayfa
+                            onPageChange={handleChangePackagesPage}  // Sayfa numarası değiştiğinde çağrılır
+                            onRowsPerPageChange={handleChangeRowsPerPackagesPage}  // Sayfa başına gösterilen paket sayısı değiştiğinde çağrılır
+                        />
+
+                        <Button
+                            variant="contained"
+                            onClick={handleClosePackagesModal}
+                            sx={{ marginTop: '1rem', backgroundColor: '#003366', color: 'white' }}
+                        >
+                            Kapat
+                        </Button>
+                    </Box>
+                </Modal>
+
 
                 {/* Güncelleme Modalı */}
                 <Modal open={openModal} onClose={handleCloseModal}>
@@ -309,7 +394,7 @@ const Racks = () => {
                 <Doughnut data={chartData} options={chartOptions} />
                 <Box
                     sx={{
-                        width: { xs: '100%', sm: '58%' },
+                        width: { xs: '100%', sm: '60%' },
                         marginLeft: { sm: '2rem', xs: 0 },
                         display: 'flex',
                         alignItems: 'center',
