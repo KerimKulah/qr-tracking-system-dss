@@ -127,11 +127,17 @@ const Racks = () => {
     };
 
     const handleDelete = (rackId) => {
-        dispatch(deleteRack(rackId));
+        dispatch(deleteRack(rackId)).then(() => {
+            setTimeout(() => {
+                dispatch(getRacks());
+            }, 1000);
+        });
     };
 
     const handleViewPackages = (rackId) => {
         dispatch(getRackPackages(rackId)).then(() => {
+            dispatch(clearMessage());
+            dispatch(clearError());
             setOpenPackagesModal(true);
         });
     };
@@ -145,8 +151,8 @@ const Racks = () => {
     };
 
     return (
-        <div>
-            <h2>Raf Listesi</h2>
+        <div style={{ height: '90vh' }}>
+            <h2>RAF LİSTESİ</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {message && <p style={{ color: 'green' }}>{message}</p>}
 
