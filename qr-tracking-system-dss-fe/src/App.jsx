@@ -16,6 +16,7 @@ import Packages from './pages/Packages';
 import ChangePassword from './pages/ChangePassword';
 import PackageExit from './pages/PackageExit';
 import NotFoundPage from './pages/NotFoundPage';
+import PersonelAnaliz from './pages/PersonelAnaliz';
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
                 <CssBaseline />
                 <Container maxWidth="lg">
                   <Routes>
+                    <Route path="/analiz" element={<PersonelAnaliz />} />
                     <Route path="*" element={<NotFoundPage />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />

@@ -146,6 +146,9 @@ function Sidebar() {
                         <ListItem button component={Link} to="/createUser/" sx={{ pl: 4, backgroundColor: 'transparent' }}>
                             <ListItemText primary="Personel Oluşturma" sx={{ color: 'white' }} />
                         </ListItem>
+                        <ListItem button component={Link} to="/analiz/" sx={{ pl: 4, backgroundColor: 'transparent' }}>
+                            <ListItemText primary="Performans Grafiği" sx={{ color: 'white' }} />
+                        </ListItem>
                     </List>
                 </Collapse>
 

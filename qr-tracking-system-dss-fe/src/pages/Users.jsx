@@ -13,7 +13,6 @@ const Users = () => {
     const [filteredUsers, setFilteredUsers] = useState([]); // Filtrelenmiş kullanıcılar için state
     const [userPage, setUserPage] = useState(0); // Kullanıcılar sayfa
     const [movementPage, setMovementPage] = useState(0); // Hareketler sayfa
-
     const [rowsPerUserPage, setRowsPerUserPage] = useState(5); // Kullanıcılar sayfa başına gösterilecek satır sayısı
     const [rowsPerMovementPage, setRowsPerMovementPage] = useState(5); // Hareketler sayfa başına gösterilecek satır sayısı
 
@@ -130,6 +129,7 @@ const Users = () => {
                                                 justifyContent: 'flex-start', // Mobilde hizalama
                                             },
                                         }}>
+
                                         <Button
                                             onClick={() => handleMakeAdmin(user.id)}
                                             variant="outlined"
