@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPackages, exitPackage } from '../redux/slices/packageSlice';
 import { Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import QrCodeIcon from '@mui/icons-material/QrCode';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const Packages = () => {
     const dispatch = useDispatch();
@@ -74,22 +77,53 @@ const Packages = () => {
                                         <TableCell>{pkg.packageWeight} kg</TableCell>
                                         <TableCell>
                                             <Button
-                                                variant="outlined"
-                                                color="primary"
-                                                onClick={() => handleExitPackage(pkg.id)}
-                                                style={{ marginRight: '10px' }}
-                                            >
-                                                Çıkart
-                                            </Button>
-                                            <Button variant="outlined" color="secondary" onClick={() => console.log(pkg)}>
+                                                variant="contained"
+                                                sx={{
+                                                    marginLeft: '5px',
+                                                    padding: '3px',
+                                                    backgroundColor: 'white',  // İç kısım beyaz
+                                                    color: 'black',  // Yazı rengi siyah
+                                                    border: '1px solid black',  // Siyah border
+                                                    '&:hover': {
+                                                        backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                        color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                    },
+                                                }} >
+                                                <EditNoteIcon sx={{ marginRight: '4px', fontSize: '18px' }} />
                                                 Güncelle
                                             </Button>
                                             <Button
-                                                variant="outlined"
-                                                color="info"
+                                                onClick={() => handleExitPackage(pkg.id)}
+                                                variant="contained"
+                                                sx={{
+                                                    marginLeft: '5px',
+                                                    padding: '3px',
+                                                    backgroundColor: 'white',  // İç kısım beyaz
+                                                    color: 'black',  // Yazı rengi siyah
+                                                    border: '1px solid black',  // Siyah border
+                                                    '&:hover': {
+                                                        backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                        color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                    },
+                                                }} >
+                                                <ExitToAppIcon sx={{ marginRight: '4px', fontSize: '17px' }} />  {/* Çıkış simgesi */}
+                                                Çıkart
+                                            </Button>
+                                            <Button
                                                 onClick={() => handleShowQrCode(pkg.qrCode)} // QR kodunu gösterme
-                                                style={{ marginLeft: '10px' }}
-                                            >
+                                                variant="contained"
+                                                sx={{
+                                                    marginLeft: '5px',
+                                                    padding: '3px',
+                                                    backgroundColor: 'white',  // İç kısım beyaz
+                                                    color: 'black',  // Yazı rengi siyah
+                                                    border: '1px solid black',  // Siyah border
+                                                    '&:hover': {
+                                                        backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                        color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                    },
+                                                }}>
+                                                <QrCodeIcon sx={{ marginRight: '4px', fontSize: '17px' }} />  {/* QR Kod simgesi */}
                                                 QR
                                             </Button>
                                         </TableCell>

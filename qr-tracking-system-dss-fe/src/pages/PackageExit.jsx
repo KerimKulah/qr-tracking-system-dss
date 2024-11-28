@@ -5,7 +5,7 @@ import { exitPackage } from "../redux/slices/packageSlice";
 import { Paper } from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import successSoundFile from '../assets/sounds/success.mp3';
 
 const PackageExit = () => {
     const [packageId, setPackageId] = useState(null); // QR'dan gelen packageId
@@ -13,6 +13,7 @@ const PackageExit = () => {
     const qrCodeScannerRef = useRef(null); // QR kod tarayıcı referansı
     const [isScannerActive, setIsScannerActive] = useState(false); // Tarayıcı durumu
     const [cameraPermissionDenied, setCameraPermissionDenied] = useState(false); // Kamera izni durumu
+    const [exitSuccess, setExitSuccess] = useState(false); // Çıkışın başarı durumu
     const dispatch = useDispatch();
 
     const startScanner = async () => {
@@ -62,9 +63,14 @@ const PackageExit = () => {
         if (packageId) {
             dispatch(exitPackage(packageId))
                 .then(() => {
-                    alert("Paket başarıyla çıkarıldı!");
-                    setPackageId(null); // State sıfırla
-                    setConfirmExit(false);
+                    const successSound = new Audio(successSoundFile);
+                    successSound.play();
+                    setExitSuccess(true); // Çıkış başarılı oldu mesajını g
+                    setPackageId(null); // Paket ID'sini sıfırla
+                    setConfirmExit(false); // Onay penceresini kapat
+                    setTimeout(() => {
+                        setExitSuccess(false); // Başarı mesajını kapat
+                    }, 2000);
                 })
                 .catch((error) => {
                     alert("Paket çıkışı sırasında bir hata oluştu.");
@@ -75,19 +81,18 @@ const PackageExit = () => {
 
     return (
         <div>
-            <h1>Paket Çıkışı</h1>
+            <h2>PAKET ÇIKIŞI</h2>
             <Paper
                 elevation={3}
                 sx={{
                     padding: '1rem',
                     width: '100%',
                 }}>
-
                 <Typography variant="body1" sx={{ marginBottom: 2 }}>
-                    QR Okuyucuyu butona basarak başlatabilirsiniz. Tarayıcıyı kullanarak paket çıkışı yapabilirsiniz.
+                    Tarayıcıyı butona basarak başlatın ve paketteki QR kodu okutarak çıkışını yapın.
                 </Typography>
                 {/* Kamera Tarayıcıyı Başlat Butonu */}
-                {!isScannerActive && (
+                {!isScannerActive && !exitSuccess && (
                     <Button
                         onClick={startScanner}
                         fullWidth
@@ -110,23 +115,56 @@ const PackageExit = () => {
 
                 {/* Onay Penceresi */}
                 {confirmExit && (
-                    <div style={{ marginTop: "20px", padding: "10px", border: "1px solid black" }}>
+                    <div
+                        style={{
+                            marginTop: "20px",
+                            padding: "10px",
+                            border: "1px solid black",
+                            position: "fixed", // Sabitleme
+                            bottom: "20px", // Alt kısma yapışması için
+                            left: "50%", // Ekranın ortasına hizalanma
+                            transform: "translateX(-50%)", // Yatayda tam ortalama
+                            width: "90%", // Mobil uyumlu genişlik
+                            maxWidth: "400px", // Maksimum genişlik
+                            zIndex: 1000, // Üstte görünmesi için
+                            backgroundColor: "#fff", // Arka plan rengini beyaz yapalım
+                            borderRadius: "10px", // Köşe yuvarlama
+                        }}
+                    >
                         <p>
                             Paket ID: <strong>{packageId}</strong>
                         </p>
                         <p>Paket çıkışını onaylıyor musunuz?</p>
                         <button
                             onClick={confirmPackageExit}
-                            style={{ marginRight: "10px", padding: "10px 20px", backgroundColor: "green", color: "white" }}
+                            style={{
+                                marginRight: "10px",
+                                padding: "10px 20px",
+                                backgroundColor: "green",
+                                color: "white",
+                                borderRadius: "5px"
+                            }}
                         >
                             Evet
                         </button>
                         <button
                             onClick={() => setConfirmExit(false)}
-                            style={{ padding: "10px 20px", backgroundColor: "red", color: "white" }}
+                            style={{
+                                padding: "10px 20px",
+                                backgroundColor: "red",
+                                color: "white",
+                                borderRadius: "5px"
+                            }}
                         >
                             Hayır
                         </button>
+                    </div>
+                )}
+
+                {/* Başarı Durumu Mesajı */}
+                {exitSuccess && (
+                    <div style={{ marginTop: "20px", padding: "10px", border: "1px solid green", color: "green" }}>
+                        <p>Paket başarıyla çıkarıldı!</p>
                     </div>
                 )}
             </Paper>

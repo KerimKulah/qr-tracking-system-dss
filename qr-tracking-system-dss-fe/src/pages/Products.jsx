@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Modal, Box, FormControl, InputLabel, Select, MenuItem, Typography, Alert } from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Modal, Box, FormControl, InputLabel, Select, MenuItem, Typography, Alert, Chip } from '@mui/material';
 import { getAllProducts, deleteProduct, updateProduct, getTotalQuantity } from '../redux/slices/productSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 const Products = () => {
     const dispatch = useDispatch();
@@ -16,6 +18,12 @@ const Products = () => {
     const [quantities, setQuantities] = useState({});
 
     const categories = ['Elektronik', 'Gida', 'Giyim', 'Spor', 'Egitim', 'Kozmetik', 'Oyuncak', 'Diger'];
+
+    const getStockStatus = (quantity) => {
+        if (quantity <= 50) return 'low';
+        if (quantity <= 100) return 'medium';
+        return 'high';
+    };
 
     useEffect(() => {
         dispatch(getAllProducts());
@@ -67,7 +75,10 @@ const Products = () => {
 
     const filteredProducts = products.filter(product =>
         product.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.productCategory.toLowerCase().includes(searchTerm.toLowerCase())
+        product.productCategory.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.productDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.productWeight.toString().includes(searchTerm) ||
+        product.id.toString().includes(searchTerm)
     );
 
     return (
@@ -103,7 +114,8 @@ const Products = () => {
                                 <TableCell>Açıklaması</TableCell>
                                 <TableCell>Ağırlığı</TableCell>
                                 <TableCell>Kategorisi</TableCell>
-                                <TableCell>Toplam Miktar</TableCell> {/* New column for total quantity */}
+                                <TableCell>Toplam Miktar</TableCell>
+                                <TableCell>Stok Durumu</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>
                         </TableHead>
@@ -116,22 +128,61 @@ const Products = () => {
                                     <TableCell>{product.productWeight} kg</TableCell>
                                     <TableCell>{product.productCategory}</TableCell>
                                     <TableCell>
-                                        {quantities[product.id] !== undefined ? quantities[product.id] : 'Yükleniyor...'} {/* Display total quantity */}
+                                        {quantities[product.id] !== undefined ? quantities[product.id] : 'Yükleniyor...'}
+                                    </TableCell>
+                                    <TableCell>
+                                        {/* Stok durumu renkli chip */}
+                                        <Chip
+                                            label={
+                                                quantities[product.id] !== undefined
+                                                    ? quantities[product.id] <= 50
+                                                        ? 'Kritik'
+                                                        : quantities[product.id] <= 100
+                                                            ? 'Orta'
+                                                            : 'İyi'
+                                                    : 'Yükleniyor...'
+                                            }
+                                            color={
+                                                getStockStatus(quantities[product.id]) === 'low'
+                                                    ? 'error'
+                                                    : getStockStatus(quantities[product.id]) === 'medium'
+                                                        ? 'warning'
+                                                        : 'success'
+                                            }
+                                        />
                                     </TableCell>
                                     <TableCell>
                                         <Button
                                             onClick={() => handleUpdateProduct(product)}
                                             variant="contained"
-                                            sx={{ backgroundColor: "#003366", color: "white" }}
-                                        >
+                                            sx={{
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                padding: '3px',
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <EditNoteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
                                             Güncelle
                                         </Button>
                                         <Button
                                             onClick={() => handleDeleteProduct(product.id)}
                                             variant="contained"
-                                            color="red"
-                                            sx={{ backgroundColor: "darkred", color: "white", marginLeft: '2px' }}
-                                        >
+                                            sx={{
+                                                marginLeft: '5px',
+                                                padding: '3px',
+                                                backgroundColor: 'white',  // İç kısım beyaz
+                                                color: 'black',  // Yazı rengi siyah
+                                                border: '1px solid black',  // Siyah border
+                                                '&:hover': {
+                                                    backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
+                                                    color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                },
+                                            }} >
+                                            <DeleteIcon sx={{ marginRight: '3px', fontSize: '18px' }} />
                                             SİL
                                         </Button>
                                     </TableCell>
@@ -141,7 +192,7 @@ const Products = () => {
                     </Table>
                 </TableContainer>
 
-                {/*Güncelleme Modal */}
+                {/* Güncelleme Modal */}
                 <Modal
                     open={openModal}
                     onClose={() => setOpenModal(false)}
@@ -210,14 +261,14 @@ const Products = () => {
                                     ))}
                                 </Select>
                             </FormControl>
-                            <Box sx={{ display: 'flex', gap: 2 }}>
-                                <Button onClick={handleSaveUpdate} variant="contained" color="primary" fullWidth>
-                                    Kaydet
-                                </Button>
-                                <Button onClick={() => setOpenModal(false)} variant="outlined" color="secondary" fullWidth>
-                                    Kapat
-                                </Button>
-                            </Box>
+                            <Button
+                                onClick={handleSaveUpdate}
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                            >
+                                Güncelle
+                            </Button>
                         </form>
                     </Box>
                 </Modal>

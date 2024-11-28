@@ -36,6 +36,7 @@ function App() {
                 <CssBaseline />
                 <Container maxWidth="lg">
                   <Routes>
+                    <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/CreateUser" element={<CreateUser />} />
                     <Route path="/users" element={<Users />} />

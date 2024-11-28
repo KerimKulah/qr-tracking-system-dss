@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, clearMessage, clearError } from '../redux/slices/productSlice';
-import { Button, TextField, MenuItem, Select, InputLabel, FormControl, Typography, Box, Paper, Alert } from '@mui/material';
+import { Button, TextField, MenuItem, Select, InputLabel, FormControl, Box, Paper, Alert } from '@mui/material';
 
 const AddProduct = () => {
     const dispatch = useDispatch();
-    const { message, error, loading, validationError } = useSelector((state) => state.product);
+    const { message, error, loading } = useSelector((state) => state.product);
 
     const [productData, setProductData] = useState({
         productName: '',
@@ -14,10 +14,19 @@ const AddProduct = () => {
         productCategory: ''
     });
 
+    const [weightError, setWeightError] = useState(false); // Ağırlık hatasını tutar
+
     const categories = ['Elektronik', 'Gida', 'Giyim', 'Spor', 'Egitim', 'Kozmetik', 'Oyuncak', 'Diger'];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'productWeight') {
+            const weight = parseFloat(value);
+            // 0 veya daha küçükse hata durumu tetiklenir
+            setWeightError(weight <= 0);
+        }
+
         setProductData((prevData) => ({
             ...prevData,
             [name]: value
@@ -30,6 +39,14 @@ const AddProduct = () => {
         dispatch(clearMessage());
         dispatch(clearError());
     };
+
+    // Form validasyonları
+    const isFormValid =
+        productData.productName.trim() !== '' &&
+        productData.productDescription.trim() !== '' &&
+        productData.productWeight.trim() !== '' &&
+        !weightError && // Ağırlık hatası yoksa
+        productData.productCategory.trim() !== '';
 
     return (
         <>
@@ -65,6 +82,8 @@ const AddProduct = () => {
                             onChange={handleChange}
                             fullWidth
                             required
+                            error={weightError} // Hata varsa kırmızı renkte gösterir
+                            helperText={weightError ? 'Ağırlık 0 ve altı olamaz.' : ''} // Hata mesajı
                         />
                         <FormControl fullWidth required>
                             <InputLabel>Kategori</InputLabel>
@@ -86,12 +105,15 @@ const AddProduct = () => {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
-                                disabled={loading}
+                                disabled={!isFormValid || loading} // Form doğru değilse veya yükleniyorsa buton devre dışı
                                 sx={{
                                     fontWeight: 'bold',
-                                    backgroundColor: '#003366', color: 'white', '&:hover': { backgroundColor: '#002244', }
-                                }}>
-                                {loading ? 'Yükleniyor...' : ' Ekle'}
+                                    backgroundColor: '#003366',
+                                    color: 'white',
+                                    '&:hover': { backgroundColor: '#002244' }
+                                }}
+                            >
+                                {loading ? 'Yükleniyor...' : 'Ekle'}
                             </Button>
                         </Box>
                     </Box>
