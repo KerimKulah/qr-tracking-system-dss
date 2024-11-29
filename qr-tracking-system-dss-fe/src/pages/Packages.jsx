@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPackages, exitPackage } from '../redux/slices/packageSlice';
-import { Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import {
+    Button,
+    TextField,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Typography,
+    Box,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    TablePagination
+} from '@mui/material';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -12,7 +29,8 @@ const Packages = () => {
     const [selectedQrCode, setSelectedQrCode] = useState(null);
     const [open, setOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [page, setPage] = useState(0); // Aktif sayfa
+    const [rowsPerPage, setRowsPerPage] = useState(5); // Her sayfada gösterilecek paket sayısı
 
     useEffect(() => {
         dispatch(getPackages());
@@ -32,6 +50,23 @@ const Packages = () => {
         setSelectedQrCode(null);
     };
 
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage); // Sayfa değiştirildiğinde yeni sayfa set edilir
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10)); // Gösterilecek satır sayısını değiştir
+        setPage(0); // Yeni satır sayısı seçildiğinde ilk sayfaya dön
+    };
+
+    // Arama kriterlerine göre filtreleme
+    const filteredPackages = packages.filter((pkg) =>
+        pkg.product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    // Sayfalandırma için dilimleme
+    const paginatedPackages = filteredPackages.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
     return (
         <>
             <h2>PAKET LİSTESİ</h2>
@@ -50,7 +85,7 @@ const Packages = () => {
                     margin="normal"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Ürün adı, paket ID, son kullanma tarihi, ağırlık gibi kriterlerle arama yapabilirsiniz."
+                    placeholder="Ürünlere göre arama yapın..."
                 />
                 <TableContainer>
                     <Table
@@ -67,14 +102,14 @@ const Packages = () => {
                                 <TableCell>Ürün Adı</TableCell>
                                 <TableCell>Raf</TableCell>
                                 <TableCell>Adet</TableCell>
-                                <TableCell sx={{ whiteSpace: 'nowrap' }} >Son Kullanma Tarihi</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Son Kullanma Tarihi</TableCell>
                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>Paket Ağırlığı</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {packages && packages.length > 0 ? (
-                                packages.map((pkg) => (
+                            {paginatedPackages.length > 0 ? (
+                                paginatedPackages.map((pkg) => (
                                     <TableRow key={pkg.id}>
                                         <TableCell>{pkg.id}</TableCell>
                                         <TableCell>{pkg.product.productName}</TableCell>
@@ -84,11 +119,11 @@ const Packages = () => {
                                         <TableCell>{pkg.packageWeight} kg</TableCell>
                                         <TableCell
                                             sx={{
-                                                display: 'flex', // Flexbox düzeni
-                                                flexWrap: 'nowrap', // Alt alta geçmeyi önler
-                                                gap: '4px', // Butonlar arası boşluk
+                                                display: 'flex',
+                                                flexWrap: 'nowrap',
+                                                gap: '4px',
                                                 '@media (max-width: 600px)': {
-                                                    justifyContent: 'flex-start', // Mobilde hizalama
+                                                    justifyContent: 'flex-start',
                                                 },
                                             }}>
                                             <Button
@@ -96,14 +131,14 @@ const Packages = () => {
                                                 sx={{
                                                     marginLeft: '5px',
                                                     padding: '3px',
-                                                    backgroundColor: 'white',  // İç kısım beyaz
-                                                    color: 'black',  // Yazı rengi siyah
-                                                    border: '1px solid black',  // Siyah border
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    border: '1px solid black',
                                                     '&:hover': {
-                                                        backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                        color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
                                                     },
-                                                }} >
+                                                }}>
                                                 <EditNoteIcon sx={{ marginRight: '4px', fontSize: '18px' }} />
                                                 Güncelle
                                             </Button>
@@ -113,32 +148,32 @@ const Packages = () => {
                                                 sx={{
                                                     marginLeft: '5px',
                                                     padding: '3px',
-                                                    backgroundColor: 'white',  // İç kısım beyaz
-                                                    color: 'black',  // Yazı rengi siyah
-                                                    border: '1px solid black',  // Siyah border
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    border: '1px solid black',
                                                     '&:hover': {
-                                                        backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                        color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
                                                     },
-                                                }} >
-                                                <ExitToAppIcon sx={{ marginRight: '4px', fontSize: '17px' }} />  {/* Çıkış simgesi */}
+                                                }}>
+                                                <ExitToAppIcon sx={{ marginRight: '4px', fontSize: '17px' }} />
                                                 Çıkart
                                             </Button>
                                             <Button
-                                                onClick={() => handleShowQrCode(pkg.qrCode)} // QR kodunu gösterme
+                                                onClick={() => handleShowQrCode(pkg.qrCode)}
                                                 variant="contained"
                                                 sx={{
                                                     marginLeft: '5px',
                                                     padding: '3px',
-                                                    backgroundColor: 'white',  // İç kısım beyaz
-                                                    color: 'black',  // Yazı rengi siyah
-                                                    border: '1px solid black',  // Siyah border
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    border: '1px solid black',
                                                     '&:hover': {
-                                                        backgroundColor: 'black',  // Hover durumunda arka plan siyah olacak
-                                                        color: 'white',  // Hover durumunda yazı beyaz olacak
+                                                        backgroundColor: 'black',
+                                                        color: 'white',
                                                     },
                                                 }}>
-                                                <QrCodeIcon sx={{ marginRight: '4px', fontSize: '17px' }} />  {/* QR Kod simgesi */}
+                                                <QrCodeIcon sx={{ marginRight: '4px', fontSize: '17px' }} />
                                                 QR
                                             </Button>
                                         </TableCell>
@@ -154,6 +189,17 @@ const Packages = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
+
+                {/* Sayfalandırma Kontrolleri */}
+                <TablePagination
+                    component="div"
+                    count={filteredPackages.length} // Toplam öğe sayısı
+                    page={page} // Aktif sayfa
+                    onPageChange={handleChangePage} // Sayfa değiştirme
+                    rowsPerPage={rowsPerPage} // Sayfada gösterilecek öğe sayısı
+                    onRowsPerPageChange={handleChangeRowsPerPage} // Öğe sayısını değiştirme
+                    rowsPerPageOptions={[5]} // Seçenekler
+                />
 
                 {/* QR Kodu Gösteren Modal */}
                 <Dialog open={open} onClose={handleCloseModal}>

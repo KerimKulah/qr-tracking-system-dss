@@ -32,6 +32,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductById(Long id) {
        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bu ID ile ürün bulunamadı."));
+       if (!packageRepository.findByProductIdIncludeDeleted(id).isEmpty()) {
+           throw new IllegalArgumentException("Bu ürün paketlerde işlem görmüş olduğu için silinemez.");
+       }
        product.setProductWeight(0);
        product.setProductDescription("Ürün silinmiştir.");
        productRepository.save(product);

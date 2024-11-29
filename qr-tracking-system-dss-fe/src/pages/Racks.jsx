@@ -414,6 +414,8 @@ const Racks = () => {
                     <Typography variant="body1"><b>Toplam Kalan Kapasite:</b> {freeSpace} kg</Typography>
                 </Box>
             </Paper>
+
+            {/* Burada DepoGrafigi componenti eklenmeli manuel olan kaldırılmalı */}
         </div>
     );
 };
