@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { List, ListItem, ListItemText, ListItemIcon, Collapse, Typography, Divider, Box, IconButton, Drawer } from '@mui/material';
 import { ExpandLess, ExpandMore, Inventory, Category, Menu, AlignHorizontalLeft, People, Settings } from '@mui/icons-material';
 import LogoutButton from './LogoutButton';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from '../redux/slices/userSlice';
 
 function Sidebar() {
@@ -37,8 +35,6 @@ function Sidebar() {
     const toggleMobileSidebar = () => {
         setMobileOpen(!mobileOpen);
     };
-
-    // USER BILGISI (fullName ve Role) ALMASI GEREKIYOR HOŞGELDINIZ DENMESI İÇİN VE KULLANICI AYARLARI SEKMESININ YOKOLMASI İÇİN
 
     const drawerContent = (
         <Box

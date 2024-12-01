@@ -353,8 +353,7 @@ const Racks = () => {
                             boxShadow: 24,
                             p: 4,
                             borderRadius: 2,
-                        }}
-                    >
+                        }}>
                         <Typography variant="h6" gutterBottom>
                             Rafı Güncelle
                         </Typography>
