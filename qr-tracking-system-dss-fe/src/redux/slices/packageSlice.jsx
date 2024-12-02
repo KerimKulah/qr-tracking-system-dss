@@ -61,7 +61,7 @@ const packageSlice = createSlice({
         });
         builder.addCase(exitPackage.fulfilled, (state, action) => {
             state.status = 'success';
-            state.message = action.payload.message;
+            state.message = "Paket başarıyla çıkarıldı";
         });
         builder.addCase(exitPackage.rejected, (state, action) => {
             state.status = 'failed';
@@ -85,7 +85,7 @@ const packageSlice = createSlice({
         });
         builder.addCase(updatePackage.fulfilled, (state, action) => {
             state.status = 'success';
-            state.message = action.payload.message;
+            state.message = "Paket başarıyla güncellendi";
         });
         builder.addCase(updatePackage.rejected, (state, action) => {
             state.status = 'failed';
@@ -93,7 +93,7 @@ const packageSlice = createSlice({
         });
         builder.addCase(changeRack.fulfilled, (state, action) => {
             state.status = 'success';
-            state.message = action.payload.message;
+            state.message = "Paketin rafı başarıyla taşındı";
         });
         builder.addCase(changeRack.rejected, (state, action) => {
             state.status = 'failed';
@@ -101,6 +101,8 @@ const packageSlice = createSlice({
         });
     }
 });
+
+export const { clearState } = packageSlice.actions;
 
 export default packageSlice.reducer;
 

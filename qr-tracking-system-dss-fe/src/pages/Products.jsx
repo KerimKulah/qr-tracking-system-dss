@@ -143,9 +143,9 @@ const Products = () => {
                                 <TableCell>ID</TableCell>
                                 <TableCell>Adı</TableCell>
                                 <TableCell>Açıklaması</TableCell>
-                                <TableCell>Ağırlığı</TableCell>
-                                <TableCell>Kategorisi</TableCell>
-                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Stoktaki Adeti</TableCell>
+                                <TableCell>Ağırlık</TableCell>
+                                <TableCell>Kategori</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Stok</TableCell>
                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>Stok Durumu</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>

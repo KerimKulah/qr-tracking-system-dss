@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPackages, exitPackage } from '../redux/slices/packageSlice';
+import { getPackages, exitPackage, clearState } from '../redux/slices/packageSlice';
 import {
     Button,
     TextField,
@@ -34,10 +34,15 @@ const Packages = () => {
 
     useEffect(() => {
         dispatch(getPackages());
+        dispatch(clearState())
     }, [dispatch]);
 
     const handleExitPackage = (id) => {
-        dispatch(exitPackage(id));
+        dispatch(exitPackage(id)).then(() => {
+            setTimeout(() => {
+                dispatch(clearState())
+            }, 1000);
+        });
     };
 
     const handleShowQrCode = (qrCode) => {
@@ -64,14 +69,26 @@ const Packages = () => {
         pkg.product.productName.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    // Son kullanma tarihi ile gün sayısını hesaplama fonksiyonu
+    const getDaysRemaining = (expiryDate) => {
+        if (!expiryDate) return null;
+
+        const today = new Date();
+        const expDate = new Date(expiryDate);
+        const timeDiff = expDate - today; // Zaman farkı milisaniye cinsinden
+        const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Milisaniyeyi gün sayısına çevir
+
+        return daysRemaining;
+    };
+
     // Sayfalandırma için dilimleme
     const paginatedPackages = filteredPackages.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     return (
         <>
             <h2>PAKET LİSTESİ</h2>
-            {status === 'failed' && <Typography color="error">{error}</Typography>}
-            {status === 'success' && <Typography color="primary">{message}</Typography>}
+            {status === 'failed' && <Typography color="red">{error}</Typography>}
+            {status === 'success' && <Typography color="green">{message}</Typography>}
             <Paper
                 elevation={3}
                 sx={{
@@ -99,11 +116,11 @@ const Packages = () => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
-                                <TableCell>Ürün Adı</TableCell>
-                                <TableCell>Raf</TableCell>
+                                <TableCell sx={{ whiteSpace: 'nowrap' }}>Paketteki Ürün</TableCell>
                                 <TableCell>Adet</TableCell>
                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>Son Kullanma Tarihi</TableCell>
                                 <TableCell sx={{ whiteSpace: 'nowrap' }}>Paket Ağırlığı</TableCell>
+                                <TableCell>Raf</TableCell>
                                 <TableCell>İşlemler</TableCell>
                             </TableRow>
                         </TableHead>
@@ -111,12 +128,23 @@ const Packages = () => {
                             {paginatedPackages.length > 0 ? (
                                 paginatedPackages.map((pkg) => (
                                     <TableRow key={pkg.id}>
-                                        <TableCell>{pkg.id}</TableCell>
+                                        <TableCell >{pkg.id}</TableCell>
                                         <TableCell>{pkg.product.productName}</TableCell>
-                                        <TableCell>{pkg.rack.location}</TableCell>
                                         <TableCell>{pkg.quantityOfProduct}</TableCell>
-                                        <TableCell>{pkg.productExpDate ? new Date(pkg.productExpDate).toLocaleDateString() : '-'}</TableCell>
+                                        <TableCell>
+                                            {pkg.productExpDate ? (
+                                                <>
+                                                    {new Date(pkg.productExpDate).toLocaleDateString()}
+                                                    <Typography sx={{ whiteSpace: 'nowrap', marginLeft: '5px' }} variant="caption" color={getDaysRemaining(pkg.productExpDate) <= 7 ? 'red' : 'green'}>
+                                                        ({getDaysRemaining(pkg.productExpDate)} gün kaldı)
+                                                    </Typography>
+                                                </>
+                                            ) : (
+                                                '-'
+                                            )}
+                                        </TableCell>
                                         <TableCell>{pkg.packageWeight} kg</TableCell>
+                                        <TableCell>{pkg.rack.location}</TableCell>
                                         <TableCell
                                             sx={{
                                                 display: 'flex',
