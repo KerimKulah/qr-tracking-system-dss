@@ -1,12 +1,14 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { Box, Button, Modal, Paper, Typography } from '@mui/material';
+import { Box, Button, Modal, Paper, Typography, IconButton } from '@mui/material';
 import PerformansGrafigi from '../components/PerformansGrafigi';
 import { useMediaQuery } from '@mui/material';
 import DepoGrafigi from '../components/DepoGrafigi';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from '../redux/slices/userSlice';
 import React, { useState, useEffect } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 function Home() {
     const isMobile = useMediaQuery('(max-width:600px)');
@@ -126,6 +128,17 @@ function Home() {
                         borderRadius: 2,
                         overflowY: 'auto',
                     }}>
+                    <IconButton
+                        onClick={handleCloseModal}
+                        sx={{
+                            position: 'absolute',
+                            top: 8,
+                            right: 8,
+                            color: 'grey.500',
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
 
                     <Typography>
                         <strong>ÜRÜN EKLEME</strong>

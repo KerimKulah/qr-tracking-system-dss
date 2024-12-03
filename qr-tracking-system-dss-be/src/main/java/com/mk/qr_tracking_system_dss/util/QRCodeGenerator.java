@@ -15,7 +15,7 @@ import java.util.Base64;
 @Component
 public class QRCodeGenerator {
     public String generateQRCode(Long packageId) {
-        String data = "http://localhost:8080/PackageDetail/" + packageId;
+        String data = "https://172.20.10.3:8080/PackageDetail/" + packageId;
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 300, 300);
