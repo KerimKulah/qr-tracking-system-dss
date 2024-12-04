@@ -8,8 +8,6 @@
 QR Kodlu Ürün(Depo) Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
 Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgilerine erişim sağlanabilmesi, stokların güncellenmesi ve web üzerinden ürünlerin yönetilmesi üzerine kuruludur.
 
-- **Not:** Bu proje şu an da mühendislik projem olarak geliştirilmektedir.
-
 ## 2. Kullanılan Teknolojiler
 - **Java 21 (JDK 21)**: Uygulamanın temel programlama dili; nesne yönelimli programlama, çoklu iş parçacığı ve koleksiyonlar gibi kavramları destekler.
 - **Maven Wrapper**: Maven'ın belirli bir sürümünü projeye entegre etmek ve projeyi çalıştırmak için kullanılan bir araçtır. Projeyi herhangi bir Maven kurulumu olmadan, doğru sürümle çalıştırmanıza olanak tanır.
@@ -21,11 +19,12 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **ZXing**: QR kodları oluşturma ve okuma kütüphanesidir.
 - **Thymeleaf**: Sunucu tarafında sayfa gösterimi yapar.
 - **Vite**: Hızlı bir geliştirme sunucusu ve build aracı, özellikle modern JavaScript projelerinde kullanılır.
-- **NodeJS (20.18)** JavaScript çalıştırma ortamı, özellikle frontend ve backend geliştirmede kullanılır.
-- **NPM (10.8)** Node.js için paket yöneticisi, bağımlılıkları yönetir ve projeyi çalıştırmak için gerekli araçları sağlar.
+- **NodeJS (20.18)**: JavaScript çalıştırma ortamı, özellikle frontend ve backend geliştirmede kullanılır.
+- **NPM (10.8)**: Node.js için paket yöneticisi, bağımlılıkları yönetir ve projeyi çalıştırmak için gerekli araçları sağlar.
 - **React**: Dinamik ve bileşen tabanlı kullanıcı arayüzleri oluşturmak için kullanılan bir JavaScript kütüphanesi.
 - **Metarial UI**: Google’ın Material Design prensiplerine dayalı, şık ve uyumlu UI bileşenleri sunar.
-- **Diğer**:Redux Toolkit, html5-qrcode, Router-Dom ...
+- **Python, Flask, pandas, scikit-learn ile Kategori Tahmin Modeli**: Flask ile sunulan Random Forest tabanlı model, ürün adına göre kategori tahmini yapar. scikit-learn ve pandas kullanılarak eğitildi. 
+- **Diğer**: Redux Toolkit, html5-qrcode, Router-Dom ...
 
 ## 3. Hedef Kullanıcılar
 - **E-Ticaret Depoları**: Online siparişleri hızlı bir şekilde karşılamak isteyen firmalar.
