@@ -57,7 +57,7 @@ function PersonelAnaliz() {
     const getPerformanceColor = () => {
         const performance = getPerformanceStatus();
         if (performance === 'Verimli') return 'green';
-        if (performance === 'Orta') return 'yellow';
+        if (performance === 'Orta') return 'blue';
         return 'red';
     };
 

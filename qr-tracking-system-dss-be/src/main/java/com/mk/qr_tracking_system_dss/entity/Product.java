@@ -1,6 +1,5 @@
 package com.mk.qr_tracking_system_dss.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mk.qr_tracking_system_dss.enums.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
 import java.util.List;
 
 @Getter
@@ -27,8 +25,9 @@ import java.util.List;
         @NotBlank(message = "Ürün açıklaması gerekli")
         private String productDescription;
 
-        @Enumerated(EnumType.STRING)
-        private Category productCategory;
+        @NotBlank(message = "Ürün kategorisi gerekli")
+        @NotNull(message = "Ürün kategorisi gerekli")
+        private String productCategory;
 
         @NotNull(message = "Ürün ağırlığı gerekli")
         private double productWeight;
