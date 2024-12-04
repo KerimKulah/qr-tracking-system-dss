@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPackages, exitPackage, clearState } from '../redux/slices/packageSlice';
+import { getPackages, exitPackage, clearState, updatePackage } from '../redux/slices/packageSlice';
 import {
     Button,
     TextField,
@@ -29,8 +29,12 @@ const Packages = () => {
     const [selectedQrCode, setSelectedQrCode] = useState(null);
     const [open, setOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [page, setPage] = useState(0); // Aktif sayfa
-    const [rowsPerPage, setRowsPerPage] = useState(5); // Her sayfada gösterilecek paket sayısı
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [openStockModal, setOpenStockModal] = useState(false);
+    const [newStock, setNewStock] = useState('');
+    const [selectedPackage, setSelectedPackage] = useState('');
+
 
     useEffect(() => {
         dispatch(getPackages());
@@ -53,6 +57,41 @@ const Packages = () => {
     const handleCloseModal = () => {
         setOpen(false);
         setSelectedQrCode(null);
+    };
+
+    // RAF DEĞİŞTİRME
+
+
+
+
+
+    // STOK GUNCELLEME BUTONU
+    const handleShowStockModal = (pkg) => {
+        setSelectedPackage(pkg);
+        setNewStock(pkg.quantityOfProduct); // Mevcut stok miktarını input için ayarla
+        setOpenStockModal(true);
+    };
+
+    const handleCloseStockModal = () => {
+        setOpenStockModal(false);
+        setSelectedPackage(null);
+        setNewStock('');
+    };
+
+    const handleStockUpdate = () => {
+        const updatedData = {
+            ...selectedPackage, // Tüm paket bilgilerini koruyoruz
+            quantityOfProduct: newStock, // Yeni stok değerini güncelliyoruz
+        };
+
+        setOpenStockModal(false);
+        dispatch(updatePackage(updatedData)).then(() => {
+            dispatch(getPackages());
+            setTimeout(() => {
+                dispatch(clearState());
+                setOpenStockModal(false);
+            }, 3000);
+        });
     };
 
     const handleChangePage = (event, newPage) => {
@@ -156,25 +195,15 @@ const Packages = () => {
                                             }}>
                                             <Button
                                                 variant="contained"
-                                                sx={{
-                                                    marginLeft: '5px',
-                                                    padding: '3px',
-                                                    backgroundColor: 'white',
-                                                    color: 'black',
-                                                    border: '1px solid black',
-                                                    '&:hover': {
-                                                        backgroundColor: 'black',
-                                                        color: 'white',
-                                                    },
-                                                }}>
-                                                <EditNoteIcon sx={{ marginRight: '4px', fontSize: '18px' }} />
-                                                Güncelle
+                                                onClick={() => handleShowStockModal(pkg)}
+                                                sx={{ padding: '3px', color: 'black', backgroundColor: 'white', border: '1px solid black' }}>
+                                                <EditNoteIcon sx={{ marginRight: '4px' }} />
+                                                Stok Güncelle
                                             </Button>
                                             <Button
                                                 onClick={() => handleExitPackage(pkg.id)}
                                                 variant="contained"
                                                 sx={{
-                                                    marginLeft: '5px',
                                                     padding: '3px',
                                                     backgroundColor: 'white',
                                                     color: 'black',
@@ -228,6 +257,26 @@ const Packages = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage} // Öğe sayısını değiştirme
                     rowsPerPageOptions={[5]} // Seçenekler
                 />
+
+                {/* Stok Update Modal */}
+                <Dialog sx={{ height: "1000px" }} open={openStockModal} onClose={handleCloseStockModal}>
+                    <DialogContent>
+                        <TextField
+                            type="number"
+                            label="Yeni Stok"
+                            value={newStock}
+                            onChange={(e) => setNewStock(e.target.value)}
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseStockModal}>İptal</Button>
+                        <Button onClick={handleStockUpdate} color="primary">
+                            Güncelle
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
 
                 {/* QR Kodu Gösteren Modal */}
                 <Dialog open={open} onClose={handleCloseModal}>
