@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const backendIp = import.meta.env.SERVER_IP;
+
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: `${backendIp}:8080/`,
     headers: { 'Content-Type': 'application/json' },
 });
 

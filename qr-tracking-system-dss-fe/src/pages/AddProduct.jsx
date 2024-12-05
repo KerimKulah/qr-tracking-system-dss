@@ -18,6 +18,8 @@ const AddProduct = () => {
     const [suggestedCategory, setSuggestedCategory] = useState('');
     const [selectManual, setSelectManual] = useState(false);  // Kategori manual seçilecek mi?
 
+    const Ip = import.meta.env.SERVER_IP;
+
     const categories = ['Elektronik', 'Telefon', 'Giyilebilir Teknoloji', 'Gida ve İcecek', 'Giyim', 'Spor', 'Egitim', 'Kozmetik', 'Oyuncak', 'Saglik', 'Diger'];
 
     const handleChange = (e) => {
@@ -47,7 +49,7 @@ const AddProduct = () => {
         if (!productName.trim()) return;
 
         try {
-            const response = await fetch('http://localhost:5000/predict', {
+            const response = await fetch(`${Ip}:5000/predict`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

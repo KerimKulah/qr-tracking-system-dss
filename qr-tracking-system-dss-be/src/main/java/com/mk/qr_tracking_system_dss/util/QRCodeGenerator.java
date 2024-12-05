@@ -5,6 +5,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -14,8 +15,14 @@ import java.util.Base64;
 
 @Component
 public class QRCodeGenerator {
+
+    @Value("${base.ipv4}")
+    private String serverIp;
+
     public String generateQRCode(Long packageId) {
-        String data = "http://localhost:8080/PackageDetail/" + packageId;
+
+        String data = serverIp + ":8080/PackageDetail/" + packageId;
+
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 300, 300);

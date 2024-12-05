@@ -26,15 +26,14 @@ export const updatePackage = createAsyncThunk('package/update', async (updatedDa
         const response = await axiosInstance.put(`/packages/update/${updatedData.id}`, updatedData);
         return response.data;
     } catch (error) {
-        // Hata mesajını backend'den gelen response'dan alıyoruz
         const errorMessage = error.response?.data || 'Bilinmeyen bir hata oluştu.';
         return rejectWithValue(errorMessage);
     }
 }
 );
 
-export const changeRack = createAsyncThunk('package/changeRack', async (data) => {
-    const response = await axiosInstance.put(`/packages/changeRack/${data.packageId}/${data.newRackId}`);
+export const changeRack = createAsyncThunk('package/changeRack', async ({ packageId, newRackId }) => {
+    const response = await axiosInstance.put(`/packages/changeRack/${packageId}/${newRackId}`);
     return response.data;
 });
 

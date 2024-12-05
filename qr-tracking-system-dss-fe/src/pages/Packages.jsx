@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPackages, exitPackage, clearState, updatePackage } from '../redux/slices/packageSlice';
+import { getPackages, exitPackage, clearState, updatePackage, changeRack } from '../redux/slices/packageSlice';
 import {
     Button,
     TextField,
@@ -11,9 +11,14 @@ import {
     TableHead,
     TableRow,
     Paper,
+    Modal,
     Typography,
+    FormControl,
+    InputLabel,
     Box,
     Dialog,
+    Select,
+    MenuItem,
     DialogActions,
     DialogContent,
     DialogTitle,
@@ -22,6 +27,9 @@ import {
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import AlignHorizontalLeft from '@mui/icons-material/AlignHorizontalLeft';
+import { findSuitableRacks } from '../redux/slices/rackSlice';
+
 
 const Packages = () => {
     const dispatch = useDispatch();
@@ -33,7 +41,56 @@ const Packages = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [openStockModal, setOpenStockModal] = useState(false);
     const [newStock, setNewStock] = useState('');
-    const [selectedPackage, setSelectedPackage] = useState('');
+    const [selectedPackage, setSelectedPackage] = useState(null);
+
+    // RAF DEĞİŞTİRME
+    const suitableRacks = useSelector((state) => state.rack.suitableRacks);
+    const [openRackChangeModal, setOpenRackChangeModal] = useState(false);
+    const [newRack, setNewRack] = useState("");
+
+    const handleOpenRackChangeModal = (pkg) => {
+        setSelectedPackage(pkg)
+        setNewRack(pkg.rack);
+        dispatch(findSuitableRacks({
+            productId: pkg.product.id,
+            quantityOfProduct: pkg.quantityOfProduct
+        }))
+            .then(() => {
+                setOpenRackChangeModal(true);
+            })
+            .catch((error) => {
+                console.error("Rafları bulurken bir hata oluştu:", error);
+            });
+
+    };
+
+    // SİLİNECEK
+
+    useEffect(() => {
+        if (newRack && newRack.id) {
+            console.log(newRack.id);  // Raf ID'sini doğru şekilde yazdırabilirsiniz
+        }
+    }, [newRack]);  // newRack değiştiğinde çalışır
+
+
+    const closeRackChangeModal = () => {
+        setSelectedPackage(null)
+        setNewRack("");
+        setOpenRackChangeModal(false);
+    };
+
+    const handleChangeRack = () => {
+        dispatch(changeRack({
+            packageId: selectedPackage.id,
+            newRackId: newRack.id
+        })).then(() => {
+            dispatch(getPackages());
+        })
+        closeRackChangeModal();
+        setTimeout(() => {
+            dispatch(clearState())
+        }, 2000);
+    };
 
 
     useEffect(() => {
@@ -45,7 +102,7 @@ const Packages = () => {
         dispatch(exitPackage(id)).then(() => {
             setTimeout(() => {
                 dispatch(clearState())
-            }, 1000);
+            }, 2000);
         });
     };
 
@@ -59,12 +116,6 @@ const Packages = () => {
         setSelectedQrCode(null);
     };
 
-    // RAF DEĞİŞTİRME
-
-
-
-
-
     // STOK GUNCELLEME BUTONU
     const handleShowStockModal = (pkg) => {
         setSelectedPackage(pkg);
@@ -75,7 +126,7 @@ const Packages = () => {
     const handleCloseStockModal = () => {
         setOpenStockModal(false);
         setSelectedPackage(null);
-        setNewStock('');
+        setNewStock(null);
     };
 
     const handleStockUpdate = () => {
@@ -194,9 +245,16 @@ const Packages = () => {
                                                 },
                                             }}>
                                             <Button
+                                                onClick={() => handleOpenRackChangeModal(pkg)}
+                                                variant="contained"
+                                                sx={{ whiteSpace: 'nowrap', padding: '3px', color: 'black', backgroundColor: 'white', border: '1px solid black' }}>
+                                                <AlignHorizontalLeft sx={{ color: 'black', marginRight: '4px', fontSize: '17px' }} />
+                                                Raf Değiştir
+                                            </Button>
+                                            <Button
                                                 variant="contained"
                                                 onClick={() => handleShowStockModal(pkg)}
-                                                sx={{ padding: '3px', color: 'black', backgroundColor: 'white', border: '1px solid black' }}>
+                                                sx={{ whiteSpace: 'nowrap', padding: '3px', color: 'black', backgroundColor: 'white', border: '1px solid black' }}>
                                                 <EditNoteIcon sx={{ marginRight: '4px' }} />
                                                 Stok Güncelle
                                             </Button>
@@ -276,6 +334,52 @@ const Packages = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
+
+                {/* Raf Değiştirme Modalı */}
+                <Modal open={openRackChangeModal} onClose={closeRackChangeModal}>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            height: 150,
+                            bgcolor: 'background.paper',
+                            boxShadow: 24,
+                            p: 4,
+                            borderRadius: 1,
+                        }}>
+
+                        {/* Uygun Rafların Listelenmesi */}
+                        {suitableRacks.length > 0 ? (
+                            <FormControl fullWidth>
+                                <InputLabel>Raf Seç</InputLabel>
+                                <Select
+                                    onChange={(e) => setNewRack(e.target.value)}
+                                    label="Yeni Rafı Seç">
+                                    {suitableRacks.map((rack) => (
+                                        <MenuItem key={rack.id} value={rack}>
+                                            {rack.location}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                                <DialogActions>
+                                    <Button onClick={closeRackChangeModal}>İptal</Button>
+                                    <Button onClick={handleChangeRack} color="primary">
+                                        Güncelle
+                                    </Button>
+
+                                </DialogActions>
+                            </FormControl>
+                        ) : (
+                            <Typography sx={{ textAlign: 'center', width: '100%' }}>
+                                UYGUN RAF YOK
+                            </Typography>
+                        )}
+
+                    </Box>
+                </Modal>
 
 
                 {/* QR Kodu Gösteren Modal */}
