@@ -23,7 +23,7 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 - **NPM (10.8)**: Node.js için paket yöneticisi, bağımlılıkları yönetir ve projeyi çalıştırmak için gerekli araçları sağlar.
 - **React**: Dinamik ve bileşen tabanlı kullanıcı arayüzleri oluşturmak için kullanılan bir JavaScript kütüphanesi.
 - **Metarial UI**: Google’ın Material Design prensiplerine dayalı, şık ve uyumlu UI bileşenleri sunar.
-- **Python, Flask, pandas, scikit-learn ile Kategori Tahmin Modeli**: Flask ile sunulan Random Forest tabanlı model, ürün adına göre kategori tahmini yapar. scikit-learn ve pandas kullanılarak eğitildi. 
+- **Python, Flask, pandas, scikit-learn ile Kategori Tahmin Modeli**: Flask ile sunulan Random Forest tabanlı model, ürün adına göre kategori tahmini yapar. Modelin eğitimi için kullanılan veri seti, Kaggle'dan alınmış ve düzenlenmiştir. Linkten ulaşabilirsiniz : [DATASET](https://www.kaggle.com/datasets/bilalelebi/trendyol-product-dataset) 
 - **Diğer**: Redux Toolkit, html5-qrcode, Router-Dom ...
 
 ## 3. Hedef Kullanıcılar
