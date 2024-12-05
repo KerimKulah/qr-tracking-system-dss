@@ -53,7 +53,9 @@ function Home() {
                         Qrtaksis, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır.
                         Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgilerine erişim sağlanabilmesi,
                         stokların güncellenmesi ve web üzerinden ürünlerin yönetilmesi üzerine kuruludur.
-                        Detaylı bilgi için nasıl kullanılır butonuna basınız.
+                        <Typography sx={{ marginTop: "0.5rem" }}>
+                            Detaylı bilgi için nasıl kullanılır butonuna basınız.
+                        </Typography>
                         <Button
                             onClick={handleOpenModal}
                             sx={{
