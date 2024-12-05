@@ -178,7 +178,7 @@ Projeyi başarıyla başlattığınızda, ilgili servisler çalışmaya başlaya
 
 
 
-## 9. Front-end Ekran Görüntüleri (Kullanım videosu eklenecek.)
+## 9. Ekran Görüntüleri (Kullanım videosu eklenecek.)
 
 <p>Giriş Ekranı : </p>
 <img src="https://github.com/user-attachments/assets/caf36eda-b297-4822-8526-91b72475ef99" alt="Resim 1" width="750" />
