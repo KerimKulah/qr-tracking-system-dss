@@ -2,7 +2,7 @@
   <img src="https://github.com/user-attachments/assets/a662fe1c-4b93-4ee6-9d97-38f71ace8fa0" width="400" height="240" />
 </p>
 
-<h1 align="center">QR Kodlu Depo Takip ve Karar Destek Sistemi (Qrtaksis)</h1>
+<h1 align="center">QR Kodlu Depo Takip ve Karar Destek Sistemi (QRTaksis)</h1>
 
 ## 1. Proje Tanımı
 QR Kodlu Ürün(Depo) Takip ve Karar Destek Sistemi, depo ortamlarında ürünlerin etkili bir şekilde yönetilmesi, izlenmesi ve güncellenmesi amacıyla geliştirilmiş bir yazılımdır. 
@@ -120,13 +120,71 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 | **AuthController**        | POST            | `/auth/login`                                      | Kullanıcıyı sisteme giriş yapar.                                                                   |
 |                          | POST            | `/auth/verifyToken`                                | Token'ı doğrular ve geçerli olup olmadığını kontrol eder.                                          |
 
-## 8. Front-end Ekran Görüntüleri (Yapım Aşamasında)
+
+
+## 8. Projeyi Çalıştırmak
+
+Projeyi çalıştırmadan önce, `predict.py`, `vite.config.js` ve `application.properties` dosyalarına göz atın ve gerekli SSL/IP ayarlamalarını belirtilen şekilde yapın.
+Daha sonra gerekli yazılımları indirin : Java 21 (JDK 21), MySQL, NodeJS (20.18), NPM (10.18), Python
+
+
+### Adım 1: Backend (Java / Spring Boot) Uygulamasını Çalıştırmak
+1. Proje dizinine gidin ve Maven ile projeyi temizleyin ve derleyin:
+    - Proje dizinine gidin:
+      ```bash
+      cd "C:\....\qr-tracking-system-dss\qr-tracking-system-dss-be"
+      ```
+    - Maven temizleme ve kurulum:
+      ```bash
+      mvnw clean install
+      ```
+    - Spring Boot uygulamasını çalıştırma:
+      ```bash
+      mvnw spring-boot:run
+      ```
+
+### Adım 2: Frontend (React / Vite) Uygulamasını Çalıştırmak
+2. Proje dizinine gidin ve NPM bağımlılıklarını yükleyin, ardından Vite geliştirici sunucusunu başlatın:
+    - Proje dizinine gidin:
+      ```bash
+      cd "C:\....\qr-tracking-system-dss\qr-tracking-system-dss-fe"
+      ```
+    - NPM bağımlılıklarını yükleme:
+      ```bash
+      npm install
+      ```
+    - Vite geliştirici sunucusunu başlatma:
+      ```bash
+      npm run dev
+      ```
+
+### Adım 3: Python Modeli Çalıştırmak
+3. Modeli çalıştırmak için `predict.py` dosyasını çalıştırın:
+    - Önce gerekli Kütüphaneleri yükleyin:
+      ```bash
+      pip install flask pandas scikit-learn
+      ```
+    - Proje dizinine gidin:
+      ```bash
+      cd "C:\....\qr-tracking-system-dss\qr-tracking-system-dss-model"
+      ```
+    - Python komutunu çalıştırın, modeli oluşturur ve Flask ile ayağa kaldırır : 
+      ```bash
+      python predict.py
+      ```
+
+Projeyi başarıyla başlattığınızda, ilgili servisler çalışmaya başlayacak ve sisteme erişim sağlayabileceksiniz.
+İlk oluşan giriş bilgileri : Admin, 12345 olacaktır. O Şekilde giriş yapabilirsiniz.
+
+
+
+## 9. Front-end Ekran Görüntüleri (Kullanım videosu eklenecek.)
 
 <p>Giriş Ekranı : </p>
 <img src="https://github.com/user-attachments/assets/caf36eda-b297-4822-8526-91b72475ef99" alt="Resim 1" width="750" />
 
 <p>Panel Ana Ekranı : </p>
-<img src="https://github.com/user-attachments/assets/520bb28e-7d67-4a56-982b-c5912a390746" alt="Resim 2" width="750" />
+<img src="https://github.com/user-attachments/assets/919b5453-3931-4849-b334-6d3a9def5a70" alt="Resim 2" width="750" />
 
 <p>Personel Ekranı ve Personel Hareketleri Modalı : </p>
 <img src="https://github.com/user-attachments/assets/2dc65b32-5749-4fe2-aaff-8be686238360" alt="Resim 2" width="750" />
@@ -135,11 +193,11 @@ Mobil cihazlar aracılığıyla QR kodlarının okutulabilmesi ve ürün bilgile
 <img src="https://github.com/user-attachments/assets/989ba800-12e2-4d1b-ac27-e8435763dc03" alt="Resim 2" width="750" />
 
 <p>Diger Sekmelerden Görüntüler : </p>
+<img src="https://github.com/user-attachments/assets/69ddcf8d-06d2-458d-80cf-70776116c2b5" alt="Resim 2" width="750" />
+<img src="https://github.com/user-attachments/assets/4b5ef124-0fbc-46e9-81fe-32591c342f46" alt="Resim 2" width="750" />
+<img src="https://github.com/user-attachments/assets/49ea457a-6008-483c-9dec-86325cacb24b" alt="Resim 2" width="750" />
 <img src="https://github.com/user-attachments/assets/4d609f5c-eafd-49ac-9a09-1999fb9e7435" alt="Resim 2" width="750" />
 <img src="https://github.com/user-attachments/assets/797c2df3-20b9-49b2-b94e-2e2a394a41eb" alt="Resim 2" width="750" />
-
-
-
 
 
 
